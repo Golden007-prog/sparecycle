@@ -1,0 +1,48 @@
+name: Isolated diagnostic verification
+run-name: SpareCycle verification ${{ inputs.nonce }}
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Bounded base64 public-source verification payload
+        required: true
+        type: string
+      nonce:
+        description: Server-generated correlation nonce
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: sparecycle-review-${{ inputs.nonce }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Read the pinned verifier
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            scripts/review-verify.mjs
+            scripts/review-parser-policy.mjs
+          sparse-checkout-cone-mode: false
+      - name: Prepare the pinned syntax parser on the trusted host
+        env:
+          SPARECYCLE_ACORN_ROOT: ${{ runner.temp }}/sparecycle-parser
+        run: npm install --prefix "$SPARECYCLE_ACORN_ROOT" --ignore-scripts --no-audit --no-fund --package-lock=false --no-save acorn@8.19.0
+      - name: Verify inside restricted containers
+        env:
+          REVIEW_PAYLOAD: ${{ inputs.payload }}
+          SPARECYCLE_ACORN_ROOT: ${{ runner.temp }}/sparecycle-parser
+        run: node scripts/review-verify.mjs
+      - name: Retain metadata-only proof
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sparecycle-proof-${{ inputs.nonce }}
+          path: review-proof/proof.json
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0

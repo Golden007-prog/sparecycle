@@ -1,0 +1,13 @@
+# SpareCycle Review API contract (v2)
+
+This extension keeps the existing recovery planner intact. GET `/api/review` returns public configuration only. POST `/api/review` accepts the discriminated `ReviewAction` in `lib/review/types.ts`, with `Content-Type: application/json` and a Supabase user access token in `Authorization: Bearer …`. Every action is authenticated; organization identifiers are selectors, never authorization.
+
+Successful POST responses are `{ data: result, requestId }`. `organizations` returns an array, `overview` returns `ReviewOverview`, creation/mutation returns its updated record, invite creation returns `{ token, expiresAt }`, redemption returns the organization, and budget updates return the organization. Job actions return `ReviewJob`. Errors return `{ error, code, requestId }`: 400 invalid input, 401 invalid session, 403 denied role/origin, 404 inaccessible resource, 409 stale evidence or conflicting state, 429 quota exhausted, 502 provider failure, 503 missing integration. Responses are private/no-store. Invalid input is rejected before any billable call.
+
+Request bodies are limited to 32 KB. Evidence text is limited to 8,000 characters, titles to 160, and descriptions to 2,000. Pagination for this pilot is a bounded latest-record overview, not an unbounded fleet export. GitHub user tokens are verified against the selected repository and used only for connection ownership verification; never persisted or sent to a model. Production OAuth onboarding can replace this one-time connection proof. App installation tokens remain server-only.
+
+Each recovery change binds a laptop evidence version, repository base commit and patch hash. New evidence invalidates approval and test claims. Each billable stage reserves durable organization quota before execution. Browser clients cannot finalize jobs, write test results, forge approvals, or declare a project connected. A separate server worker secret authorizes trusted result writes; user JWT and organization checks still apply.
+
+The first verification profile is intentionally narrow: `node-diagnostics-v1`, for a bounded JavaScript diagnostics module and its existing tests. Baseline failure and candidate success must both come from isolated Nebius Sandboxes with network disabled. Unavailable infrastructure produces an unavailable result, never a passed badge. Hardware diagnosis and physical repair require technician verification. An independent reviewer approves the exact tested patch before a draft pull request is published. Publication does not merge or mark a laptop repaired.
+
+The detailed OpenAPI specification and request/response tests are completed alongside implementation. No Postman cloud workspace is modified.

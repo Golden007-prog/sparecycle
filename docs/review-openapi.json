@@ -1,0 +1,870 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SpareCycle Review API",
+    "version": "2.0.0",
+    "description": "Organization-scoped laptop evidence and recovery change review. Every POST uses a live Supabase user session. Project ownership, membership, roles, quota, job state and independent approvals are enforced server-side. The Node diagnostics profile restricts changes to src/diagnostics/*.mjs and existing tests/diagnostics/*.test.mjs."
+  },
+  "servers": [
+    {
+      "url": "https://sparecycle-topaz.vercel.app"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development"
+    }
+  ],
+  "paths": {
+    "/api/review": {
+      "get": {
+        "operationId": "getReviewConfiguration",
+        "summary": "Read public connection configuration",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Public URLs, publishable auth key and configured service flags. No server credentials or live connectivity claims.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewConfig"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "executeReviewAction",
+        "summary": "Perform an authenticated organization action",
+        "security": [
+          {
+            "SupabaseUserSession": []
+          }
+        ],
+        "description": "JSON only, at most 32 KiB. Unknown properties are rejected. No browser-supplied role, test result, approval result or model output is accepted. A missing Origin is allowed for authenticated non-browser clients; browser origins must match APP_ORIGIN or the request host. Responses are private and never cached.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/organizations"
+                  },
+                  {
+                    "$ref": "#/components/schemas/createOrganization"
+                  },
+                  {
+                    "$ref": "#/components/schemas/overview"
+                  },
+                  {
+                    "$ref": "#/components/schemas/createLaptop"
+                  },
+                  {
+                    "$ref": "#/components/schemas/addEvidence"
+                  },
+                  {
+                    "$ref": "#/components/schemas/connectProject"
+                  },
+                  {
+                    "$ref": "#/components/schemas/createChange"
+                  },
+                  {
+                    "$ref": "#/components/schemas/runJob"
+                  },
+                  {
+                    "$ref": "#/components/schemas/resumeJob"
+                  },
+                  {
+                    "$ref": "#/components/schemas/cancelJob"
+                  },
+                  {
+                    "$ref": "#/components/schemas/approveChange"
+                  },
+                  {
+                    "$ref": "#/components/schemas/createInvite"
+                  },
+                  {
+                    "$ref": "#/components/schemas/redeemInvite"
+                  },
+                  {
+                    "$ref": "#/components/schemas/setBudget"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "action"
+                }
+              },
+              "examples": {
+                "organizations": {
+                  "value": {
+                    "action": "organizations"
+                  }
+                },
+                "createOrganization": {
+                  "value": {
+                    "action": "createOrganization",
+                    "name": "Recovery pilot"
+                  }
+                },
+                "createChange": {
+                  "value": {
+                    "action": "createChange",
+                    "organizationId": "11111111-1111-4111-8111-111111111111",
+                    "laptopId": "22222222-2222-4222-8222-222222222222",
+                    "projectId": null,
+                    "title": "Intermittent fan noise at intake",
+                    "description": "The reported noise has not yet been reproduced. Collect diagnostics before proposing a repair.",
+                    "modelTier": "lightning"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful action, with a request identifier.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid JSON, input schema or bounded path.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, expired or invalid session.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Disallowed origin, missing membership or insufficient role.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record or invitation is unavailable to this caller.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Use GET or POST.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Stale evidence, conflicting job state or unmet review requirement.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Organization budget or service quota is exhausted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected internal failure; raw provider errors are not returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "An upstream integration did not complete safely.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Required integration or database is not configured or available.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "A bounded upstream operation exceeded its deadline.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewError"
+                }
+              }
+            }
+          }
+        },
+        "x-action-results": {
+          "organizations": "ReviewOrganization[]",
+          "createOrganization": "ReviewOrganization",
+          "overview": "ReviewOverview",
+          "createLaptop": "LaptopPassport",
+          "addEvidence": "LaptopEvidence",
+          "connectProject": "ReviewProject",
+          "createChange": "RecoveryChange",
+          "runJob": "ReviewJob",
+          "resumeJob": "ReviewJob",
+          "cancelJob": "ReviewJob",
+          "approveChange": "RecoveryChange",
+          "createInvite": "{token:string,expiresAt:date-time}",
+          "redeemInvite": "ReviewOrganization",
+          "setBudget": "ReviewOrganization"
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "SupabaseUserSession": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Supabase user JWT",
+        "description": "A signed-in user access token. Never use a service-role or provider API key."
+      }
+    },
+    "schemas": {
+      "organizations": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "organizations"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "additionalProperties": false
+      },
+      "createOrganization": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "createOrganization"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "action",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "overview": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "overview"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          }
+        },
+        "required": [
+          "action",
+          "organizationId"
+        ],
+        "additionalProperties": false
+      },
+      "createLaptop": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "createLaptop"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "assetTag": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "manufacturer": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "operatingSystem": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "required": [
+          "action",
+          "organizationId",
+          "assetTag",
+          "manufacturer",
+          "model",
+          "operatingSystem"
+        ],
+        "additionalProperties": false
+      },
+      "addEvidence": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "addEvidence"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "laptopId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "technician_note",
+              "diagnostic_log",
+              "test_result"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 8000
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        },
+        "required": [
+          "action",
+          "organizationId",
+          "laptopId",
+          "kind",
+          "content",
+          "source"
+        ],
+        "additionalProperties": false
+      },
+      "connectProject": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "connectProject"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "repository": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*\\/[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "installationId": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "targetPath": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160,
+            "pattern": "^src\\/diagnostics\\/[A-Za-z0-9_-]+\\.mjs$"
+          },
+          "testPaths": {
+            "minItems": 1,
+            "maxItems": 4,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160,
+              "pattern": "^tests\\/diagnostics\\/[A-Za-z0-9_-]+\\.test\\.mjs$"
+            }
+          },
+          "githubUserToken": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 300,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          }
+        },
+        "required": [
+          "action",
+          "organizationId",
+          "repository",
+          "installationId",
+          "targetPath",
+          "testPaths",
+          "githubUserToken"
+        ],
+        "additionalProperties": false
+      },
+      "createChange": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "createChange"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "laptopId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "projectId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 160
+          },
+          "description": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 2000
+          },
+          "modelTier": {
+            "type": "string",
+            "enum": [
+              "nano",
+              "lightning",
+              "super",
+              "ultra"
+            ]
+          }
+        },
+        "required": [
+          "action",
+          "organizationId",
+          "laptopId",
+          "projectId",
+          "title",
+          "description",
+          "modelTier"
+        ],
+        "additionalProperties": false
+      },
+      "runJob": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "runJob"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "changeId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "investigate",
+              "patch",
+              "verify",
+              "review",
+              "publish"
+            ]
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          }
+        },
+        "required": [
+          "action",
+          "organizationId",
+          "changeId",
+          "stage",
+          "idempotencyKey"
+        ],
+        "additionalProperties": false
+      },
+      "resumeJob": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "resumeJob"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "jobId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          }
+        },
+        "required": [
+          "action",
+          "organizationId",
+          "jobId"
+        ],
+        "additionalProperties": false
+      },
+      "cancelJob": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "cancelJob"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "jobId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          }
+        },
+        "required": [
+          "action",
+          "organizationId",
+          "jobId"
+        ],
+        "additionalProperties": false
+      },
+      "approveChange": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "approveChange"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "changeId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "evidenceVersion": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "baseCommit": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "patchHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "action",
+          "organizationId",
+          "changeId",
+          "evidenceVersion",
+          "baseCommit",
+          "patchHash"
+        ],
+        "additionalProperties": false
+      },
+      "createInvite": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "createInvite"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "reviewer",
+              "technician",
+              "viewer"
+            ]
+          }
+        },
+        "required": [
+          "action",
+          "organizationId",
+          "role"
+        ],
+        "additionalProperties": false
+      },
+      "redeemInvite": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "redeemInvite"
+          },
+          "token": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 500,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          }
+        },
+        "required": [
+          "action",
+          "token"
+        ],
+        "additionalProperties": false
+      },
+      "setBudget": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "setBudget"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "monthlyBudgetCents": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "action",
+          "organizationId",
+          "monthlyBudgetCents"
+        ],
+        "additionalProperties": false
+      },
+      "ReviewError": {
+        "type": "object",
+        "required": [
+          "error",
+          "code",
+          "requestId"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "ReviewResponse": {
+        "type": "object",
+        "required": [
+          "data",
+          "requestId"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "description": "Action result: organization/list, overview, created or updated record, job, or invitation. See the action result mapping in x-action-results."
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "ReviewConfig": {
+        "type": "object",
+        "required": [
+          "version",
+          "authConfigured",
+          "supabaseUrl",
+          "supabasePublishableKey",
+          "githubConfigured",
+          "githubInstallUrl",
+          "nebiusConfigured",
+          "sandboxConfigured",
+          "models",
+          "limitations"
+        ],
+        "properties": {
+          "version": {
+            "const": "2"
+          },
+          "authConfigured": {
+            "type": "boolean"
+          },
+          "supabaseUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "supabasePublishableKey": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Publishable or legacy anon key only; never a secret/service key."
+          },
+          "githubConfigured": {
+            "type": "boolean"
+          },
+          "githubInstallUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "nebiusConfigured": {
+            "type": "boolean"
+          },
+          "sandboxConfigured": {
+            "type": "boolean"
+          },
+          "runnerConfigured": {
+            "type": "boolean"
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "tier",
+                "id",
+                "label"
+              ],
+              "properties": {
+                "tier": {
+                  "enum": [
+                    "nano",
+                    "lightning",
+                    "super",
+                    "ultra"
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

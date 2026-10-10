@@ -6,4 +6,8 @@ dist/
 .claude-flow/
 test-results/
 *.log
+.secrets/
+*.pem
+*.key
+supabase/.temp/
 .prototype-archive/

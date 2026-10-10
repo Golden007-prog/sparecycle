@@ -1,13 +1,15 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
+import { parseEnv } from 'node:util';
 
 // Compare actual private values locally; never print credential contents.
 const tracked = execFileSync('git', ['ls-files', '-z'], { encoding: 'utf8' }).split('\0').filter(Boolean);
-const forbidden = tracked.filter(path => /(^|\/)(\.env(?!\.example$)|\.vercel\/|test-results\/|node_modules\/|\.prototype-archive\/)/.test(path));
+const forbidden = tracked.filter(path => /(^|\/)(\.env(?!\.example$)|\.vercel\/|test-results\/|node_modules\/|\.prototype-archive\/|\.secrets\/)|\.(pem|key)$/.test(path));
 const envText = existsSync('.env.local') ? readFileSync('.env.local', 'utf8') : '';
-const secrets = [...envText.matchAll(/^(?:NEBIUS_API_KEY|LANGSMITH_API_KEY|VERCEL_OIDC_TOKEN)=(.*)$/gm)]
-  .map(match => match[1].trim().replace(/^['"]|['"]$/g, '')).filter(value => value.length > 12);
+const privateFields = ['NEBIUS_API_KEY','LANGSMITH_API_KEY','VERCEL_OIDC_TOKEN','REVIEW_WORKER_SECRET','GITHUB_APP_PRIVATE_KEY','GITHUB_APP_CLIENT_SECRET','SUPABASE_SECRET_KEY'];
+const parsedEnv = parseEnv(envText);
+const secrets = privateFields.map(key=>parsedEnv[key]).filter(value=>value?.length > 12);
 const walk = path => existsSync(path) ? readdirSync(path, { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? walk(join(path, entry.name)) : [join(path, entry.name)]) : [];
 const files = [...new Set([...tracked, ...walk('dist')])];
 const leaked = files.filter(path => {
