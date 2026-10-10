@@ -1,6 +1,6 @@
 # SpareCycle Review: Devpost submission draft
 
-Editorial draft updated 10 October 2026. The current source passed 166 automated tests and its production build. Real hosted Auth/persistence, four Nebius model tiers, isolated tests and an App-authored draft PR have been exercised. Final Review v2 deployment verification is pending at this update; record it in [VALIDATION.md](VALIDATION.md) before publishing this copy. The YouTube video and Devpost entry remain unsubmitted.
+Editorial draft updated 10 October 2026 for published runtime `97d81a166e2ed3ad9b41ce3795a48eeb9877d9fe`. Its 166 automated tests, production build and [GitHub CI](https://github.com/Golden007-prog/sparecycle/actions/runs/38028508283) passed. Vercel production is READY; live access, tenant isolation and desktop/mobile screens were checked. A fresh Nano investigation succeeded through the deployed app. Real hosted Auth/persistence, four Nebius model tiers, isolated tests and an App-authored draft PR have been exercised. The requested local delivery also built successfully. [VALIDATION.md](VALIDATION.md) distinguishes these observations. The YouTube video and Devpost entry remain unsubmitted.
 
 ## Submission fields
 
@@ -8,7 +8,7 @@ Editorial draft updated 10 October 2026. The current source passed 166 automated
 - **Tagline:** From a laptop's diagnostic evidence to a tested, independently approved software fix.
 - **Track:** Best Apps and Agents
 - **Application:** https://sparecycle-topaz.vercel.app
-- **Review desk:** https://sparecycle-topaz.vercel.app/review — confirm the final v2 deployment before submission
+- **Review desk:** https://sparecycle-topaz.vercel.app/review
 - **Workshop planner:** https://sparecycle-topaz.vercel.app/app
 - **Public source:** https://github.com/Golden007-prog/sparecycle
 - **Actual draft PR:** https://github.com/Golden007-prog/sparecycle/pull/1
@@ -57,10 +57,13 @@ These failures informed the harness. The final successful example demonstrates o
 ## Accomplishments
 
 - **166 source tests and the production build passed**, covering application behavior, authorization, database invariants and provider boundaries.
+- The published runtime passed CI and is live on Vercel. Nine production API checks verified configuration, request guards, owner access to the existing published proof and outsider isolation. Desktop/mobile browser checks confirmed the published record and no horizontal overflow in the inspected layouts.
 - Three synthetic actors exercised real Supabase authentication, invitations, persisted passports/evidence and tenant separation after three migrations were applied.
 - Nano, Lightning, Super and Ultra all completed real Nebius calls. The Nano/Ultra synthetic probes classified the issue as software in 4.775 and 3.639 seconds respectively; those are individual observations, not comparative benchmarks.
 - A [real isolated run](https://github.com/Golden007-prog/sparecycle/actions/runs/38027193047) demonstrated a failing baseline and passing candidate against unchanged tests. The selected-repository App then authored a draft PR containing only the reviewed parser change.
-- Retrieved investigation and patch traces contained empty input/output objects. The pilot ledger recorded 11 cents in conservative internal bookkeeping; this is not a provider bill or a measured commercial unit cost.
+- A subsequent investigation through the stable production URL completed with Nano, classified the synthetic issue as software and used no inference retries. This new case produced no patch, approval or PR; the complete PR workflow is the separate case above.
+- Retrieved investigation and patch traces contained empty input/output objects. The pilot ledger recorded 11 cents before the final production Nano call; that historical conservative bookkeeping is not the current balance, a provider bill or a measured commercial unit cost.
+- The requested local delivery was synchronized to the published runtime, installed from the dependency lockfile and built successfully. Its targeted source/bundle credential-exclusion scan reported no issues; existing private settings and the user's untracked batch template were preserved.
 
 The complete evidence, identities, failures and limitations are in [VALIDATION.md](VALIDATION.md). These checks use synthetic laptop evidence, not physical repair outcomes or customer data.
 
@@ -80,12 +83,12 @@ The [200-item enterprise map](review-enterprise-backlog.csv) contains 8 foundati
 
 ## Judge testing instructions
 
-1. Open the final verified Review URL and explore the clearly labeled synthetic workspace. It does not pretend to run live models or tests.
+1. Open [the deployed Review desk](https://sparecycle-topaz.vercel.app/review) and explore the clearly labeled synthetic workspace. It does not pretend to run live models or tests.
 2. Inspect the public verification run and App-authored draft PR linked above; the baseline/candidate proof and single-file scope can be checked without a login.
 3. For the authenticated flow, use dedicated judge accounts supplied through Devpost's private testing instructions after account delivery and access have been verified. Never commit passwords or place QA credentials in this public document.
 4. Follow the [company setup guide](REVIEW-COMPANY-SETUP.md) to view the laptop evidence, exact patch, tests and separate-account approval. New billable jobs remain subject to the documented pilot quotas; arrange adequate free judge access before submission.
 
-No judge credentials are asserted to have been provisioned by this draft. Do not submit until the final deployment, account access and judging-period availability have been checked.
+No judge credentials are asserted to have been provisioned by this draft. The deployment was verified with controlled QA accounts; separately verify judge account delivery and judging-period availability before submitting.
 
 ## Platform feedback
 
@@ -99,7 +102,8 @@ The official rules were rechecked on 10 October 2026. Required runtime use is me
 
 - [ ] Confirm entrant eligibility, ownership, licenses and acceptance of the official rules.
 - [ ] Select Best Apps and Agents and reconcile this draft with the final deployed build.
-- [ ] Record the final source commit and Vercel deployment, verify public routes and authenticated judge access.
+- [x] Record the published source commit and READY Vercel deployment; verify production routes and controlled QA access.
+- [ ] Provision and verify dedicated judge access and delivery of its private testing instructions.
 - [ ] Keep the repository public with its MIT license and complete setup instructions.
 - [ ] Upload a public YouTube demonstration **under three minutes** showing the working product.
 - [ ] Supply English description, testing instructions and genuine platform feedback.
