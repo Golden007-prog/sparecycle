@@ -162,7 +162,7 @@ test('review requires verification and model rejection prevents approval state',
   const result = await missing.service({ review: async () => { called = true; throw new Error('must not run'); } })(resume) as ReviewJob;
   assert.equal(result.status, 'failed'); assert.equal(called, false); assert.match(result.message, /Complete isolated/);
   const rejected = fixture('review'); rejected.state.checkpoint = { snapshot: artifacts.snapshot, candidate: artifacts.candidate, verification: artifacts.proof };
-  const rejectedResult = await rejected.service({ review: async input => { assert.equal(input.modelTier, 'lightning'); return { ...artifacts.review, approved: false, reasons: ['A boundary case is not handled.'], usage }; } })(resume) as ReviewJob;
+  const rejectedResult = await rejected.service({ review: async input => { assert.equal(input.modelTier, 'super'); assert.equal(input.evidence,focusedEvidence(rejected.state.context)); return { ...artifacts.review, approved: false, reasons: ['A boundary case is not handled.'], usage }; } })(resume) as ReviewJob;
   assert.equal(rejectedResult.status, 'failed'); assert.equal(rejected.state.context.change.status, 'failed'); assert.equal(rejected.state.context.change.approval, null);
 });
 

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { PGlite } from '@electric-sql/pglite';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { authenticateReviewRequest, reviewAuthConfig, ReviewAccessError } from '../lib/review/auth.js';
+import { authenticateReviewRequest, createReviewFetch, reviewAuthConfig, ReviewAccessError } from '../lib/review/auth.js';
 import { ReviewStore, ReviewStoreError } from '../lib/review/store.js';
 
 const users = { owner:'11111111-1111-4111-8111-111111111111', reviewer:'22222222-2222-4222-8222-222222222222', outsider:'33333333-3333-4333-8333-333333333333', anonymous:'44444444-4444-4444-8444-444444444444' };
@@ -287,11 +287,62 @@ test('server authentication calls getUser and never authorizes from metadata',as
   let checked=''; let header='';
   const factory=((_url: string,_key: string,options: any)=>{
     header=options.global.headers.Authorization;
+    assert.equal(options.db.retry,false);
+    assert.equal(typeof options.global.fetch,'function');
     return {auth:{getUser:async(jwt:string)=>{checked=jwt;return {data:{user:{id:users.owner,email:'review@example.test',is_anonymous:false,user_metadata:{role:'owner'}}},error:null};}}} as unknown as SupabaseClient;
   }) as typeof createClient;
   const result=await authenticateReviewRequest(`Bearer ${token}`,env,factory);
   assert.equal(checked,token); assert.equal(header,`Bearer ${token}`); assert.equal(result.userId,users.owner);
   await assert.rejects(authenticateReviewRequest('Basic abc',env,factory),(e:any)=>e instanceof ReviewAccessError && e.status===401);
+});
+
+test('real auth client bounds a stalled response body and reports a sanitized service outage',async()=>{
+  const env={SUPABASE_URL:'https://example.supabase.co',SUPABASE_PUBLISHABLE_KEY:'sb_publishable_public'};
+  let calls=0; let aborted=false;
+  const transport:typeof fetch=async (_input,init)=>{
+    calls++;
+    return new Response(new ReadableStream({start(controller){
+      controller.enqueue(new TextEncoder().encode('{"id":'));
+      init!.signal!.addEventListener('abort',()=>{aborted=true;controller.error(init!.signal!.reason);},{once:true});
+    }}),{status:200,headers:{'Content-Type':'application/json'}});
+  };
+  const started=Date.now();
+  await assert.rejects(authenticateReviewRequest('Bearer valid-looking-user-token-1234567890',env,createClient,{fetch:transport,timeoutMs:25}),
+    (e:any)=>e instanceof ReviewAccessError && e.status===503 && e.code==='AUTH_UNAVAILABLE' && !e.message.includes('token'));
+  assert.equal(calls,1); assert.equal(aborted,true); assert.ok(Date.now()-started<1000);
+});
+
+test('database requests share the bounded transport and do not retry transient errors',async()=>{
+  const env={SUPABASE_URL:'https://example.supabase.co',SUPABASE_PUBLISHABLE_KEY:'sb_publishable_public'};
+  let databaseCalls=0;
+  const transport:typeof fetch=async input=>{
+    if(String(input).includes('/auth/v1/user')) return Response.json({id:users.owner,email:'review@example.test',is_anonymous:false});
+    databaseCalls++;
+    return Response.json({code:'XX000',message:'private upstream detail'},{status:503,headers:{'Retry-After':'60'}});
+  };
+  const auth=await authenticateReviewRequest('Bearer valid-looking-user-token-1234567890',env,createClient,{fetch:transport,timeoutMs:25});
+  await assert.rejects(new ReviewStore(auth.client,auth.userId).listOrganizations(),
+    (e:any)=>e instanceof ReviewStoreError && e.status===503 && !e.message.includes('private upstream'));
+  assert.equal(databaseCalls,1);
+});
+
+test('bounded fetch preserves request and explicit abort signals, including stalled headers',async()=>{
+  let calls=0; let aborted=false;
+  const transport:typeof fetch=(_input,init)=>{
+    calls++;
+    return new Promise((_resolve,reject)=>init!.signal!.addEventListener('abort',()=>{aborted=true;reject(init!.signal!.reason);},{once:true}));
+  };
+  await assert.rejects(createReviewFetch(transport,15)('https://example.supabase.co/rest/v1/review_jobs'),(e:any)=>e.name==='TimeoutError');
+  assert.equal(aborted,true); assert.equal(calls,1);
+  for(const origin of ['request','init'] as const){
+    const parent=new AbortController();
+    const reason=new DOMException('Caller cancelled.','AbortError');
+    const request=new Request('https://example.supabase.co/rest/v1/review_jobs',origin==='request'?{signal:parent.signal}:{});
+    const pending=createReviewFetch(transport,500)(request,origin==='init'?{signal:parent.signal}:{});
+    parent.abort(reason);
+    await assert.rejects(pending,(e:any)=>e===reason);
+  }
+  assert.equal(calls,3);
 });
 
 test('store database errors do not leak provider details or secrets',async()=>{

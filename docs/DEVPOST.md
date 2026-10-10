@@ -1,112 +1,109 @@
-# SpareCycle: Devpost submission draft
+# SpareCycle Review: Devpost submission draft
 
-Editorial draft for published website/company runtime `e17998f`. The release has passed its automated suite, production builds and local workflow checks; public website routes and workshop links were verified on production. The latest real Nebius review was recorded on the preceding company runtime `0a28d2b`; the website release did not change the AI backend. Keep claims aligned with the detailed release evidence. The video and Devpost entry remain unsubmitted.
+Editorial draft updated 10 October 2026. The current source passed 166 automated tests and its production build. Real hosted Auth/persistence, four Nebius model tiers, isolated tests and an App-authored draft PR have been exercised. Final Review v2 deployment verification is pending at this update; record it in [VALIDATION.md](VALIDATION.md) before publishing this copy. The YouTube video and Devpost entry remain unsubmitted.
 
 ## Submission fields
 
-- **Name:** SpareCycle
-- **Tagline:** Turn a pile of repairable laptops into a plan for the whole workshop.
+- **Name:** SpareCycle Review
+- **Tagline:** From a laptop's diagnostic evidence to a tested, independently approved software fix.
 - **Track:** Best Apps and Agents
-- **Live application:** https://sparecycle-topaz.vercel.app
-- **Workshop:** https://sparecycle-topaz.vercel.app/app
-- **Public source:** https://github.com/Golden007-prog/sparecycle — website/company runtime `e17998f` published on main.
+- **Application:** https://sparecycle-topaz.vercel.app
+- **Review desk:** https://sparecycle-topaz.vercel.app/review — confirm the final v2 deployment before submission
+- **Workshop planner:** https://sparecycle-topaz.vercel.app/app
+- **Public source:** https://github.com/Golden007-prog/sparecycle
+- **Actual draft PR:** https://github.com/Golden007-prog/sparecycle/pull/1
+- **Actual isolated verification:** https://github.com/Golden007-prog/sparecycle/actions/runs/38027193047
 - **Public YouTube video:** remaining submission task
-- **Built with:** React, Vite, TypeScript, Vercel, NVIDIA Nemotron, Nebius Token Factory, optional LangSmith
+- **Built with:** React, Vite, TypeScript, Vercel, Supabase Auth/PostgreSQL, NVIDIA Nemotron through Nebius Token Factory, GitHub App/Actions, LangSmith
 
 ## Inspiration
 
-A donated laptop can be one component away from useful. Across a workshop, several devices may compete for the same tested part and the same technician shift.
+Laptop recovery involves both physical decisions and the software used to make them. A technician may record a valid observation, yet a faulty diagnostic parser can discard it. The result can look like a device problem until someone connects the asset evidence to the code responsible for reporting it.
 
-Reuse organizations already salvage usable components from unsuitable computers. [PCs for People describes this practice](https://www.pcsforpeople.org/faqs/). Repair systems also manage stock, donor parts, and individual repair decisions. We focused on the decision between those records: which combination of complete repairs should the workshop attempt today?
+SpareCycle began with whole-batch refurbishment planning: how should limited tested parts, money and technician time be allocated across laptops? Review extends that evidence discipline to software. Its central product idea is a continuous, inspectable chain from an organization's laptop passport to the specific code change, unchanged tests, separate approval and draft PR. When the evidence points to physical work, the workflow stops for a technician.
 
-SpareCycle makes that trade-off visible and reviewable. It is designed for coordinators turning limited parts and labor into the next useful batch of computers.
+Our initial audience is a small refurbishment or IT operations team that owns its diagnostic scripts. We want a coordinator and a developer to be able to inspect the same case without losing its connection to the laptop. Customer demand and competitive exclusivity remain hypotheses to validate.
 
 ## What it does
 
-A coordinator completes three-step setup for a local company profile, then imports Devices and Parts CSV files, imports a JSON batch, or opens the synthetic example. Each browser can hold up to eight company profiles with 20 saved batches per profile. Named batches keep their own limits and autosave locally. The coordinator reviews diagnosed needs and declared compatibility before planning.
+A team signs in, creates an organization, invites a reviewer and registers a laptop passport. Technician notes, diagnostic logs and test results become append-only evidence revisions. The organization connects a selected public GitHub repository and chooses one supported JavaScript diagnostics parser plus its existing tests.
 
-SpareCycle allocates eligible parts across complete repair candidates. Its workshop schematic shows component sources and device outcomes, while device inspection provides the exact allocations and evidence. The coordinator can compare a transparent baseline with the optimized plan, inspect rejected assignments, and see what remains blocked.
+Nebius Nemotron investigates the evidence. A supported software finding can proceed to a patch proposal. The harness preserves the parser's public exports and rejects unsafe syntax, ambient system access, test changes and dependency changes. It runs the original source and proposed source in isolated containers against the same unchanged tests. A fresh model request reviews the actual defect, source diff and proof. A different organization reviewer then approves the exact evidence revision, base commit and patch before the GitHub App creates a draft PR.
 
-When a donor component fails, one change triggers a new plan. JSON evidence packets and CSV work orders carry allocations and outstanding checks forward.
+Adding evidence invalidates old approval and verification. A changed repository base requires refreshed work. Passing tests alone cannot authorize publication, and a merged software change cannot certify a physical repair.
 
-A model catalog adds 291 historical laptop listing variants from a Kaggle dataset whose uploader declares CC0-1.0. It helps staff compare source names and specifications. These are third-party retailer claims with historical INR prices, not manufacturer-approved compatibility records or current resale values. The [source and quality report](DATA-SOURCES.md) records exclusions, provenance and limitations.
+The demonstrated defect is small and concrete: a battery-log parser rejected a valid zero-percent reading because it treated zero as false. The original suite produced **three passes and one failure**; the candidate produced **four passes** with the same named tests. The App published [draft PR #1](https://github.com/Golden007-prog/sparecycle/pull/1), changing only the parser and leaving the tests unchanged. Approval used separate controlled QA accounts; it was not a real employee's operational decision.
 
-Workspace backups can be validated and restored as separate company profiles with new identifiers, preserving existing local records. The company profiles organize one browser's work; they are not authenticated, shared company accounts.
-
-The demonstration's diagnostic records, compatibility declarations, costs and outcome counts are synthetic. A planned repair is not a computer already fixed or delivered. Final QA, data-wipe evidence, supported-software policy, and technician review remain separate release requirements.
+The original Workshop remains available for constrained batch planning, donor-failure replay, CSV/JSON intake and local workspace backups. Its reference catalog has 291 historical laptop listing variants derived from a Kaggle dataset with an uploader-declared CC0 license. Those retailer claims are reference material, not manufacturer-approved compatibility or current prices. [Data provenance](DATA-SOURCES.md) records the source and exclusions.
 
 ## How we built it
 
-React, Vite, and TypeScript provide the workshop interface. A deterministic allocator enforces compatibility, stock conservation, donor availability, and the active resource limits. The comparison uses the same inputs and constraints for each plan.
+The React/TypeScript interface preserves the cream, navy and cobalt visual design while separating passports, changes, projects, activity and organization settings. Vercel serves the interface and bounded API stages. Supabase Auth validates users; PostgreSQL membership and row-level security scope shared records to organizations. Transactional operations protect evidence revisions, invitations, approval, job leases and spend reservations. Database access carries the user's JWT, with a separate server proof required for trusted execution results.
 
-NVIDIA Nemotron is integrated through Nebius Token Factory. It structures supplied notes into drafts for review and explains calculated results. Its bounded tools are list_inventory, inspect_device, and compute_recovery_plan. The model reads known records and invokes the planner; it cannot invent compatibility, diagnose hardware, or override an allocation constraint.
+**Nebius Token Factory performs every AI call.** The router offers Nano for economical investigation, Lightning for investigation, Super for patching and a new-context model review, and an explicitly enabled Ultra escalation. All four tiers completed actual calls during development. Routing is a deliberate cost/quality hypothesis, not a claim that all endpoints perform equally well. Strict schemas, bounded inputs/outputs, deadlines and no automatic inference retries constrain each stage.
 
-Vercel hosts the frontend and server routes. Company profiles, saved batches, CSV/JSON imports and backup restoration use validated local browser state. Optional LangSmith tracing records operational metadata while hiding inventory text and generated content. Supabase is not used; authenticated shared persistence remains future work.
+The actual verification provider is **GitHub Actions isolated container**. The runner pins its verifier commit and container image, disables guest networking, removes guest credentials and applies resource limits. It verifies source, evidence and candidate identities and compares named subtests, nesting and order. A separate Nebius Sandboxes adapter exists, but beta access was not activated and is not claimed as used.
+
+The GitHub App mints short-lived tokens scoped to selected repositories. It creates draft PRs after approval; it cannot silently merge through this workflow. LangSmith receives operational metadata with input/output capture disabled. Investigation and patch traces were retrieved and their input/output objects were empty.
 
 ## Challenges
 
-The hardest problem is not producing a fluent recommendation. It is preserving the facts that make the recommendation usable.
+Generated code and a plausible explanation are insufficient evidence that a defect was fixed. An early model proposal was effectively comment-only source and did not become an accepted repair. We tightened executable-code and export-preservation checks. Integration testing also found hash differences caused by PostgreSQL JSONB key ordering, which required stable canonical hashing. The review prompt needed the original case evidence to judge the actual reported defect, not merely whether a patch looked reasonable.
 
-Every selected candidate needs all required components. A scarce part cannot serve two devices. Unknown compatibility must remain blocked. A donor failure must invalidate dependent assignments. Limits must constrain both the baseline and optimized plan.
+The work also exposed a long-running database request. Authentication and database transport now have eight-second deadlines covering response bodies, automatic database retries are disabled, and outages return sanitized errors. Durable reservations and private checkpoints prevent an interrupted model call from being blindly repeated against the same credit allowance.
 
-We also distinguish modeled repair completion from release readiness. A solver cannot inspect a laptop or certify that its data has been erased.
+These failures informed the harness. The final successful example demonstrates one bounded workflow; it does not establish unattended reliability or general-purpose software repair.
 
-## Accomplishments we are proud of
+## Accomplishments
 
-The implementation combines company setup and batch preparation with evidence review, constrained allocation, baseline comparison, failure replay, and reviewable work orders. Company setup, saved-batch isolation, CSV import, catalog search and safe backup restoration were exercised in local browser checks; the published company interface loaded successfully.
+- **166 source tests and the production build passed**, covering application behavior, authorization, database invariants and provider boundaries.
+- Three synthetic actors exercised real Supabase authentication, invitations, persisted passports/evidence and tenant separation after three migrations were applied.
+- Nano, Lightning, Super and Ultra all completed real Nebius calls. The Nano/Ultra synthetic probes classified the issue as software in 4.775 and 3.639 seconds respectively; those are individual observations, not comparative benchmarks.
+- A [real isolated run](https://github.com/Golden007-prog/sparecycle/actions/runs/38027193047) demonstrated a failing baseline and passing candidate against unchanged tests. The selected-repository App then authored a draft PR containing only the reviewed parser change.
+- Retrieved investigation and patch traces contained empty input/output objects. The pilot ledger recorded 11 cents in conservative internal bookkeeping; this is not a provider bill or a measured commercial unit cost.
 
-The company release passed 56 automated tests: 24 API, 11 domain, 3 export, 7 CSV and 11 workspace tests. Domain checks include an independent brute-force oracle over 24 small fixtures. Production builds and [GitHub CI](https://github.com/Golden007-prog/sparecycle/actions/runs/38020705745) passed. In the fixed synthetic demonstration, a $25 purchase budget and 180-minute shift allow seven projected complete repairs versus five for the intake-order baseline. Removing one donor-RAM component changes the plan to six, also confirmed in the earlier browser checks. These results describe the supplied synthetic records; they are not actual devices repaired or evidence of customer improvement.
-
-The central technical claim is testable: allocations must satisfy the supplied rules. The AI has useful bounded tools, while deterministic code owns resource decisions and unresolved facts remain visible.
+The complete evidence, identities, failures and limitations are in [VALIDATION.md](VALIDATION.md). These checks use synthetic laptop evidence, not physical repair outcomes or customer data.
 
 ## What we learned
 
-Existing refurbishment platforms already do substantial work in harvesting, stock management, repair routing, and AI-assisted diagnosis. The useful contribution has to be specific.
+The useful product is the connection between evidence and an accountable action. A laptop passport matters when a new observation can invalidate an outdated conclusion. Test proof matters when it binds to the exact source and unchanged tests. Approval matters when another person must inspect that specific result before publication.
 
-Whole-batch decisions are different from a sequence of individually attractive repairs. Showing the trade-off, the constraint, and the consequence of a failure is more useful than presenting a recommendation without its evidence.
+The system also needs an honest stopping point. Hardware findings require technician work; unsupported code requires another execution profile; private enterprise repositories require a qualified private runner. Visible uncertainty is part of the workflow.
 
-## What's next
+## What's next and business scope
 
-We want to evaluate de-identified batches with coordinators and technicians. The first pilot should measure input-preparation time, review time, plan corrections, and actual completed releases under matched constraints.
+The first design-partner pilot should pair a refurbishment or managed-IT team with its diagnostic-script maintainer. Measure time from a reviewed evidence bundle to an accepted change, reviewer corrections, abstentions, regression rate and total cost. A workspace subscription with usage-based execution is a pricing hypothesis to validate after those measurements; no customers, revenue or measured operational savings are claimed.
 
-A team version would need shared inventory, authenticated roles, reservation handling, audit history, reliable imports, and durable usage quotas. Regional refurbishers and managed school-IT providers are buyer hypotheses. No customers, revenue, measured operational improvement, or competitive exclusivity are claimed.
+Enterprise expansion needs SSO/SAML/SCIM, customer-controlled private runners, retention/deletion policy, measured backup restoration, external security assessment and supported hardware validation. Customer SMTP, production Auth redirects and the complete delivered-email recovery flow remain readiness gates. Recovery/resend screens exist, but interface tests do not prove mail delivery.
 
-The [interactive roadmap](https://sparecycle-topaz.vercel.app/roadmap.html) and [feature catalog](FEATURES.md) organize 520 workflow stories, including 216 MVP candidates. The catalog currently marks 29 stories shipped and 491 planned; these are story classifications, not counts of distinct UI controls. Company features awaiting acceptance remain planned. The [company quickstart](COMPANY-QUICKSTART.md) and [adoption guide](COMPANY-ADOPTION.md) define a small coordinator-led pilot, rather than claiming the full roadmap is implemented.
+The [200-item enterprise map](review-enterprise-backlog.csv) contains 8 foundation mappings, 20 narrow pilot mappings, 129 later items and 43 requiring domain validation. These are not 200 shipped capabilities. The earlier 520-story catalog is also a planning artifact. We prioritize a reliable evidence-to-PR path over a claimed feature count. [Enterprise acceptance gates](REVIEW-ENTERPRISE-ROADMAP.md) describe the next work.
 
-## Integration and release evidence
+## Judge testing instructions
 
-- Exact successful deployed NVIDIA model ID: **nvidia/Nemotron-3_5-Lightning**.
-- Real deployed intake: **succeeded in 9.35 seconds**.
-- Fresh company-release batch-agent completion: **succeeded in 4.1 seconds**, executing list_inventory and compute_recovery_plan. The returned plan had seven projected candidates versus a five-candidate baseline, $25 cost and 150 technician minutes. An earlier baseline review succeeded in 2.8 seconds.
-- LangSmith: an **earlier successful plan root and inventory/planning children were inspected with empty inputs/outputs** in the sparecycle project. That trace records 2.49 seconds of server execution. The fresh request returned `fcdf679d-8ea7-44fc-9582-a8fcfccf0915`; its trace contents have not been reinspected.
-- Tests/build: **56 tests passed; production builds and GitHub CI passed**. Local browser checks covered setup, saved-batch isolation, persistence, CSV holds, review reset, safe backup restore, catalog and roadmap filters, and mobile navigation at 355 CSS pixels without horizontal overflow.
-- Public application: the **published company interface loaded and setup opened** at https://sparecycle-topaz.vercel.app. The full company workflow checks above were local; the new deployed smoke check also included the successful live agent request.
-- Public source: company runtime **`0a28d2b` published on main** at https://github.com/Golden007-prog/sparecycle; Vercel deployment `dpl_9nirUUvw9qafyiXsCnXdoQaJFH7P`.
-- Public YouTube recording: **remaining submission task**.
+1. Open the final verified Review URL and explore the clearly labeled synthetic workspace. It does not pretend to run live models or tests.
+2. Inspect the public verification run and App-authored draft PR linked above; the baseline/candidate proof and single-file scope can be checked without a login.
+3. For the authenticated flow, use dedicated judge accounts supplied through Devpost's private testing instructions after account delivery and access have been verified. Never commit passwords or place QA credentials in this public document.
+4. Follow the [company setup guide](REVIEW-COMPANY-SETUP.md) to view the laptop evidence, exact patch, tests and separate-account approval. New billable jobs remain subject to the documented pilot quotas; arrange adequate free judge access before submission.
 
-Detailed observations and remaining checks are in [VALIDATION.md](VALIDATION.md). The public YouTube video and final entrant submission review remain before treating the entry as submission-ready. Deployment and source publication do not themselves submit the project to Devpost.
-
-The official FAQ permits a web app hosted elsewhere when it uses the required NVIDIA model through Nebius Token Factory. [Platform clarification](https://nebiusglobalaihackathon.devpost.com/details/faqs).
-
-Do not claim use of Nebius AI Cloud, Serverless Jobs, Tavily, Supabase, local NVIDIA hardware, model fine-tuning, or a completed pilot unless actually added and verified.
+No judge credentials are asserted to have been provisioned by this draft. Do not submit until the final deployment, account access and judging-period availability have been checked.
 
 ## Platform feedback
 
-On 10 October 2026, a production intake request to nvidia/Nemotron-3_5-Lightning through Nebius succeeded in 9.35 seconds. A complete batch-agent review succeeded in 2.8 seconds and executed both inventory and planning tools. Its delivered LangSmith root and tool records were inspected with empty inputs/outputs. The final completion reported 356 completion tokens, zero reasoning tokens, and a stop finish reason. Integration testing showed that reasoning settings and bounded tool-loop termination matter for concise structured responses. These are individual smoke observations, not a latency, cost, or reliability benchmark. The deterministic plan remains authoritative when reviewing generated explanations.
+Token Factory's compatible inference interface let the same bounded harness call four NVIDIA model tiers. Structured JSON and provider usage metadata made routing and cost reservations practical. Model-specific reasoning settings, strict executable-output checks and evidence-grounded review still mattered: an early malformed proposal was blocked and the prompt/harness needed refinement. Separately activated Sandbox entitlement was unavailable, so the demonstration identifies GitHub Actions as the actual execution provider while keeping all inference on Nebius.
 
-After publishing the company-workspace runtime, another deployed review succeeded in 4.1 seconds and reproduced the seven-versus-five plan using actual inventory and planning tools. This confirms a fresh successful integration request, not a general performance guarantee; its newly returned trace ID has not had a second privacy-content inspection.
+We used Nebius Token Factory and NVIDIA Nemotron; we do not claim Nebius AI Cloud deployment, Serverless Jobs, live Nebius Sandboxes, Tavily, fine-tuning, local NVIDIA hardware or a completed customer pilot. The earlier Workshop's real tool calls and synthetic allocation comparison remain recorded as historical evidence.
 
 ## Eligibility and submission checklist
 
-- [ ] Confirm entrant eligibility and accept the official rules.
-- [ ] Select Best Apps and Agents and verify required NVIDIA Nemotron usage on Nebius.
-- [ ] Reconcile this draft with the shipped feature set and final evaluation results.
-- [ ] Add the live URL and confirm anonymous judge access.
-- [ ] Publish source with the MIT license, setup instructions, and necessary assets.
-- [ ] Upload a **public YouTube video of no more than three minutes** showing the working product and required integration.
-- [ ] Include project description, test instructions, and genuine platform feedback.
-- [ ] Provide English material or English translations.
-- [ ] Submit by **30 October 2026, 10:30 p.m. IST** (10 a.m. PDT).
-- [ ] Keep access free to judges through **15 December 2026**.
+The official rules were rechecked on 10 October 2026. Required runtime use is met by NVIDIA model calls through Token Factory; external frontend hosting does not imply Nebius AI Cloud deployment. [Official project and track requirements](https://nebiusglobalaihackathon.devpost.com/rules).
 
-Recheck the [official rules](https://nebiusglobalaihackathon.devpost.com/rules), [submission page](https://nebiusglobalaihackathon.devpost.com/), and FAQ before submitting. No outcome is guaranteed.
+- [ ] Confirm entrant eligibility, ownership, licenses and acceptance of the official rules.
+- [ ] Select Best Apps and Agents and reconcile this draft with the final deployed build.
+- [ ] Record the final source commit and Vercel deployment, verify public routes and authenticated judge access.
+- [ ] Keep the repository public with its MIT license and complete setup instructions.
+- [ ] Upload a public YouTube demonstration **under three minutes** showing the working product.
+- [ ] Supply English description, testing instructions and genuine platform feedback.
+- [ ] Submit by **30 October 2026, 10:30 p.m. IST** (10 a.m. PDT).
+- [ ] Provide free, unrestricted judge access until judging ends, **15 December 2026, noon Pacific Time** (16 December, 1:30 a.m. IST).
+
+Dates, video and testing requirements come from the [official rules](https://nebiusglobalaihackathon.devpost.com/rules); recheck them before submission. Publishing this draft, source or application does not submit an entry. No outcome is guaranteed.

@@ -2,7 +2,73 @@
 
 Recorded 10 October 2026. This ledger separates observed prototype behavior from pending integration and submission work. All repair outcomes below use synthetic records. No physical repairs, customer results, or production-service guarantees are claimed.
 
-## Release identity
+## SpareCycle Review v2 — source and live integration evidence
+
+The current Review source passed **166 automated tests** and the production build (`npm test`, `npm run build`). The test suite combines the earlier Workshop tests with Review API, authorization, PostgreSQL/RLS, harness, service, GitHub, isolated-runner and account-flow checks. These results apply to the tested working source; final v2 source publication and production deployment identity must be recorded after release. A production build passing locally is not a completed Vercel deployment.
+
+The end-to-end integration used the real configured Supabase project, Nebius Token Factory and GitHub App. The synthetic regression was a battery-log parser rejecting a valid zero-percent reading because of a JavaScript truthiness condition. The App created [draft PR #1](https://github.com/Golden007-prog/sparecycle/pull/1), authored by `sparecycle-review[bot]`. Only `src/diagnostics/battery.mjs` changed; the tests were unchanged. This demonstrates a software workflow, not an actual laptop repair or a customer deployment.
+
+| Check | Recorded result | Scope |
+| --- | --- | --- |
+| Full source suite | 166 passed | Local automated checks, including mocked transports and actual local PostgreSQL behavior |
+| Production build | Passed | TypeScript and Vite build; v2 production release verification pending below |
+| Hosted database | Three checked-in migrations applied through the connected Supabase tool | Auth, tenant tables, private worker state, transactional controls and query indexes |
+| Real account/data flow | Three synthetic QA actors exercised Auth, invitations, tenant separation, persisted laptop passport and evidence | Real hosted persistence; customer signup email delivery was not established |
+| Approval boundary | Separate author and reviewer accounts exercised approval before publication | Controlled QA accounts, not an independent employee's operational decision |
+| Isolated baseline | Three passing tests and one failing test | Real GitHub Actions execution in a restricted container with no guest network |
+| Isolated candidate | Four passing tests, no failures; same named tests | Same unchanged suite and bound source/evidence/patch identities |
+| GitHub publication | App-authored draft PR, one parser file, no test changes | Draft only; no automatic merge or device administration |
+| LangSmith privacy | Investigation and patch records retrieved with empty input/output objects | The two inspected records, not a blanket claim about every trace |
+| Pilot ledger | 11 cents recorded in conservative service bookkeeping | Rounded internal estimates/reservations, not a Nebius invoice or measured per-customer cost |
+
+The verification run is [GitHub Actions 38027193047](https://github.com/Golden007-prog/sparecycle/actions/runs/38027193047). Its provider is **GitHub Actions isolated container**, while all model inference used **Nebius Token Factory**. Nebius Sandboxes beta was not activated; the separate adapter is not claimed as live. The shared Actions pilot rejects private repositories.
+
+| Verification identity | Value |
+| --- | --- |
+| Runner ref | `review-verifier-v3` |
+| Pinned verifier commit | `828e02bef256f501cfae6b26c13e3dd69d685e7e` |
+| Original repository base | `d4ee3a06558dddd4838b104a914904cf9aeec1c2` |
+| Candidate digest | `31898275c0033d730fa088aeb169f89b4bd8932e0ed94fbd5de6b68386ca2d70` |
+| Published artifact | [Draft PR #1](https://github.com/Golden007-prog/sparecycle/pull/1) |
+
+### Actual NVIDIA model calls
+
+All four configured model tiers completed real calls through Nebius. The Nano and Ultra checks each made one investigation call using the same synthetic parser defect, with no retries. The operator explicitly enabled Ultra in local and Vercel production configuration; the separate probe did not mutate those settings. Availability of all four tiers in the deployed configuration remains part of the final production check.
+
+| Model | Observed operation | Result |
+| --- | --- | --- |
+| `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | Synthetic investigation probe | Software classification; 407 input / 592 output tokens; 4.775 seconds |
+| `nvidia/Nemotron-3_5-Lightning` | Real Review investigation | Completed the software investigation stage |
+| `nvidia/nemotron-3-super-120b-a12b` | Patch generation and later model review in a fresh context | A valid candidate completed the isolated tests and received model review before account approval |
+| `nvidia/Nemotron-3-Ultra-550b-a55b` | Synthetic investigation probe | Software classification; 407 input / 608 output tokens; 3.639 seconds |
+
+The default patch and model-review stages now use Super; the review is a new request grounded in the original evidence, exact before/after source and unchanged tests. It does not inherit the writer conversation. Using a fresh model context is separate from the required different human account. Availability on this date and four successful calls are not an evaluation of every model's accuracy or reliability. Probe timings are individual observations, not comparative benchmarks.
+
+Retrieved LangSmith records:
+
+- Investigation: `d2d58cdb-9ef0-4181-9b7c-a4d689838794`, successful Lightning request, empty inputs and outputs.
+- Patch: `b06e3d69-b872-4f47-a4ef-d3208e71a15d`, successful Super request, empty inputs and outputs.
+- Nano returned correlation `c4390667-7be3-4830-b8da-aa5970c719f8` and Ultra returned `faacdc80-fa19-42a2-b17e-93a08137bdaf`; their trace contents were not separately retrieved.
+
+### Failures discovered and corrected
+
+An earlier model patch was effectively comment-only source. The workflow did not accept it as a working repair. The harness now requires executable output preserving the original exports, and tests cover this failure. A separate integration failure exposed hash sensitivity to PostgreSQL JSONB key ordering; canonical hashing now preserves the identity across storage/reload. Model review also needed the original case title and evidence to ground its conclusions, so that context is now included as untrusted evidence. A waiting request exposed missing database transport deadlines; Auth and database fetches now have eight-second limits including response bodies, with automatic database retries disabled and sanitized outage errors.
+
+These fixes and successful reruns are recorded as development evidence. They do not establish unattended reliability, broad repair correctness, multi-language support or enterprise security certification. Test equality includes named subtests and nesting/order, not just totals. Syntax restrictions and isolated execution remain separate controls.
+
+### Remaining deployment and customer-readiness gates
+
+**Review v2 production deployment:** pending final release at the time of this source-validation update. Record the final source commit, immutable Vercel deployment, stable-alias smoke checks and real public API behavior here after deployment. The historical Workshop release below must not be used as proof that the new Review build is deployed.
+
+The actual controlled accounts passed sign-in and role checks, but custom SMTP, production redirect configuration and the complete delivered-email confirmation/recovery flow remain unverified. Recovery/resend screens and their mocked behavior exist; those checks do not prove email delivery. The latest account-readiness record includes one leaked-password-protection warning and four intentional private-table RLS INFO findings; do not describe this as zero advisor findings. See [company readiness](REVIEW-COMPANY-SETUP.md#account-readiness-checks-10-october-2026).
+
+Private enterprise runners, SSO/SCIM, retention/deletion operations, measured backup restoration, external penetration testing, real employee acceptance and physical-device validation remain outside this pilot. The 200-item enterprise request map is a backlog with partial foundations and pilot mappings, not 200 shipped features. The [delivery map](REVIEW-ENTERPRISE-ROADMAP.md) records the remaining acceptance gates.
+
+## Historical Workshop release — 10 October 2026
+
+The following observations belong to the earlier Workshop/company website releases. Their **56-test** counts, deployment identities and browser-local profile limits are retained as historical evidence, not the current Review release status.
+
+### Release identity
 
 | Field | Observation |
 | --- | --- |
@@ -14,11 +80,11 @@ Recorded 10 October 2026. This ledger separates observed prototype behavior from
 | Anonymous application access | HTML returned HTTP 200; manual planner loaded in the browser |
 | Production health | Verified aiConfigured and tracingConfigured are true; reports nvidia/Nemotron-3_5-Lightning |
 
-## Automated verification
+### Automated verification
 
 | Check | Result | Interpretation |
 | --- | --- | --- |
-| Complete current test suite | 56 passed | 24 API, 11 domain, 3 export, 7 CSV-import, and 11 workspace tests |
+| Complete Workshop test suite at this checkpoint | 56 passed | 24 API, 11 domain, 3 export, 7 CSV-import, and 11 workspace tests |
 | Production build | Passed locally and remotely | TypeScript check and Vite production build completed |
 | Allocation oracle | Included in domain tests | Independent brute-force comparison across 24 varied small fixtures |
 | Search-cap behavior | Included in domain tests | Feasible output retains an explicit incomplete-search status |
@@ -27,7 +93,7 @@ Recorded 10 October 2026. This ledger separates observed prototype behavior from
 
 Reproduction commands are npm test and npm run build. The targeted domain command is npx tsx --test tests/recovery.test.ts. Record the final commit alongside repeated release checks when source publication is complete.
 
-## Synthetic benchmark
+### Synthetic benchmark
 
 Fixture: supplied demonstration batch, $25 incremental purchase budget, 180 technician minutes, all declared eligible stock available.
 
@@ -39,7 +105,7 @@ Fixture: supplied demonstration batch, $25 incremental purchase budget, 180 tech
 
 Marking part-t480-ram-donor unavailable yields six projected candidates. The baseline and allocator share stock, eligibility, exact-SKU declarations, and resource constraints. This is a fixed algorithmic comparison, not a measurement of human performance or actual repair yield.
 
-## Browser observations
+### Browser observations
 
 Confirmed during implementation browser checks:
 
@@ -56,7 +122,7 @@ Genuine desktop and mobile browser captures are stored in docs/assets/sparecycle
 
 Still to record explicitly: manual CSV/JSON export inspection, reviewed-state invalidation, and the final deployed interaction replay. Recorded mobile navigation checks are not a comprehensive accessibility audit.
 
-## Live model and trace verification
+### Live model and trace verification
 
 | Evidence field | Status |
 | --- | --- |
@@ -76,7 +142,7 @@ The first successful generated explanation described six reused units as donors,
 
 Configuration flags, a correlation ID, and offline mocks are not substitutes for these observations. Do not include credentials, private inventory, or account secrets in this ledger.
 
-## Company prototype verification — 10 October 2026
+### Company prototype verification — 10 October 2026
 
 The expanded local interface was checked in Brave through normal browser controls:
 
@@ -101,7 +167,7 @@ A fresh request on the prior public deployment completed in 2.2 seconds, reporti
 
 Company profiles remain local browser records, not authenticated tenants. Use one active editing tab. The generated bundle is approximately 533 KB before gzip (136 KB gzip); Vite's size warning is recorded, not suppressed. A broad accessibility, load, security, and customer acceptance audit remains future work.
 
-## Public website expansion — 10 October 2026
+### Public website expansion — 10 October 2026
 
 Four public routes were added: the landing page, workflow guide, company pilot page, and data-provenance page. The workshop is separate at `/app`; direct links open company setup or the model catalog. Public pages do not make AI calls. The interactive synthetic illustration uses the actual allocator.
 
@@ -127,4 +193,4 @@ Vercel Git connection returned HTTP 400 because the account requires a GitHub Lo
 
 ## Submission status
 
-The public YouTube video has not been created. Devpost submission has not been recorded. Source publication and a complete live batch-agent request are verified; video creation and final entrant submission review remain necessary before declaring the hackathon entry complete. See RELEASE.md and DEVPOST.md for the remaining checklist and submission copy.
+The public YouTube video has not been created and Devpost submission has not been recorded. Real model calls, hosted Review persistence, isolated verification and a bot-authored draft PR are recorded above; final v2 deployment confirmation, judge access, video creation and entrant submission review remain necessary before declaring the hackathon entry complete. See [the submission draft](DEVPOST.md) and [release record](RELEASE.md). No external submission was made by updating these documents.

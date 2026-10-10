@@ -32,7 +32,7 @@ export function displayPatch(snapshot: RepositorySnapshot, candidate: CandidateP
   const after = candidate.content.replace(/\n$/, '').split('\n');
   return `--- a/${candidate.path}\n+++ b/${candidate.path}\n@@ -1,${before.length} +1,${after.length} @@\n${before.map(line=>`-${line}`).join('\n')}\n${after.map(line=>`+${line}`).join('\n')}\n`;
 }
-const tierFor = (tier: ModelTier, stage: JobStage): ModelTier => stage === 'patch' ? (tier === 'ultra' ? 'ultra' : 'super') : stage === 'review' ? 'lightning' : tier;
+const tierFor = (tier: ModelTier, stage: JobStage): ModelTier => ['patch','review'].includes(stage) ? (tier === 'ultra' ? 'ultra' : 'super') : tier;
 function repositoryBinding(project: ReviewProject): RepositoryBinding {
   const [owner,name] = project.repository.split('/');
   // Privacy is refreshed by readSnapshot; never infer it from a client field.
@@ -130,7 +130,7 @@ export function createReviewService(options: ServiceOptions) {
       if (!cp.verification) throw new ReviewEngineError('VERIFICATION_REQUIRED','Complete isolated baseline and candidate tests before review or publication.',409);
       if (job.stage === 'review') {
         await beginExternal('nebius-independent-review'); charged=job.reservedCents;
-        const review=await (options.review ?? reviewCandidate)({snapshot:cp.snapshot,candidate:cp.candidate,verification:cp.verification,modelTier:'lightning'},{env});
+        const review=await (options.review ?? reviewCandidate)({title:context.change.title,evidence,snapshot:cp.snapshot,candidate:cp.candidate,verification:cp.verification,modelTier},{env});
         if (review.usage.estimatedCostCents > job.reservedCents) throw new ReviewEngineError('USAGE_RESERVATION_EXCEEDED','Reported model usage exceeded the stage reservation. Stop and inspect provider usage before retrying.',409);
         cp.review=review; charged=review.usage.estimatedCostCents; delete cp.inFlight;
         return complete(review.approved?'completed':'failed',review.approved?'Independent model review complete. A different organization member must approve.':'The independent model reviewer requested changes.',{status:review.approved?'awaiting_approval':'failed',reviewSummary:review.reasons.join('\n')});

@@ -23,7 +23,7 @@ The [SpareCycle Review GitHub App](https://github.com/apps/sparecycle-review/ins
 | Accounts and sharing | Supabase Auth; organization membership and PostgreSQL RLS; five roles; shared passports, evidence, changes and audit history |
 | Roles | Owners/admins manage settings; reviewers/technicians can prepare work; viewers read; only owners/admins/reviewers approve, excluding the author |
 | AI provider | Nebius Token Factory for every inference stage; LangSmith is optional metadata-only tracing |
-| Model routing | Nano for economical investigation; Lightning for investigation and independent model review; Super for patch generation; Ultra only when an operator explicitly enables escalation |
+| Model routing | Nano for economical investigation; Lightning for investigation; Super for patch generation and independent review with fresh context; Ultra only when an operator explicitly enables escalation |
 | Verification | GitHub Actions isolated containers for public source; disabled guest network, resource limits, immutable input identities and unchanged-test checks |
 | Publication | A selected-repository GitHub App creates an approved draft PR; public PR text contains verification metadata rather than private laptop evidence or model rationale |
 | Budget | Default $1 organization monthly estimate ceiling and $1 aggregate service ceiling; durable reservations plus daily/active-job quotas. This neither purchases credits nor changes provider billing settings |

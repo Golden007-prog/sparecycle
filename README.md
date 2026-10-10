@@ -31,7 +31,7 @@ Actual browser capture of the public website. The interactive synthetic example 
 
 The [company setup guide](docs/REVIEW-COMPANY-SETUP.md) covers account/email prerequisites, repository connection, roles and operational limits. The synthetic Review workspace is clearly labeled and does not run models, tests or publication.
 
-Nebius Token Factory supplies all AI inference. The router offers Nano for economical investigation, Lightning for investigation and independent model review, Super for patch generation, and an explicitly enabled Ultra escalation. LangSmith records operational metadata. The current verification option is **GitHub Actions isolated container** because Nebius Sandboxes beta access has not been activated; the proof names the actual execution provider. No missing integration is replaced by a simulated pass. See the [harness and model routing](docs/review-harness.md).
+Nebius Token Factory supplies all AI inference. The router offers Nano for economical investigation, Lightning for investigation, Super for patch generation and an independent review with fresh context, and an explicitly enabled Ultra escalation. LangSmith records operational metadata. The current verification option is **GitHub Actions isolated container** because Nebius Sandboxes beta access has not been activated; the proof names the actual execution provider. No missing integration is replaced by a simulated pass. See the [harness and model routing](docs/review-harness.md).
 
 ## The workshop workflow
 
