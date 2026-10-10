@@ -46,18 +46,18 @@ The model structures supplied information and invokes allowlisted tools. It cann
 - QA, wipe evidence, and support-policy checks remain distinct from a modeled repair.
 - Keyboard use, narrow screens, visible focus, and reduced motion are reviewed.
 
-These are requirements, not blanket completed-check claims. The current suite has 37 passing tests and a passing production build. Completed browser observations and pending coverage are recorded in [VALIDATION.md](VALIDATION.md).
+These are requirements, not blanket completed-check claims. The current suite has 38 passing tests and a passing production build. Completed browser observations and pending coverage are recorded in [VALIDATION.md](VALIDATION.md).
 
-## Release evidence to complete
+## Recorded release evidence and remaining submission work
 
 | Evidence | Status |
 | --- | --- |
-| Public repository and MIT license visibility | [Repository created](https://github.com/Golden007-prog/sparecycle); source push and remote license check pending |
+| Public repository | [Source published on main](https://github.com/Golden007-prog/sparecycle); runtime commit 69c964f |
 | Live Vercel URL and anonymous access | [Live manual planner](https://sparecycle-topaz.vercel.app); anonymous HTML HTTP 200 and browser load verified |
-| Actual NVIDIA model ID and successful calls | nvidia/Nemotron-3_5-Lightning; live intake succeeded in 9.35 seconds; full batch-agent completion pending |
-| Executed tool names and metadata-only trace inspection | Actual inventory/planning tools ran in an incomplete agent request; delivered intake/planner-tool records had empty inputs/outputs |
+| Actual NVIDIA model ID and successful calls | nvidia/Nemotron-3_5-Lightning; intake succeeded in 9.35 seconds; complete batch review succeeded in 2.8 seconds |
+| Executed tool names and metadata-only trace inspection | list_inventory and compute_recovery_plan completed; successful plan root and children inspected with empty inputs/outputs |
 | Domain allocation suite | 11 tests passed on 10 October 2026; includes 24 oracle fixtures |
-| Full test/build result | 37 tests passed: 23 API, 11 domain, 3 export; production build passed |
+| Full test/build result | 38 tests passed: 24 API, 11 domain, 3 export; production build passed |
 | Browser observations | Default 7 → donor-failure 6; identity hold; invalid import rejection; valid one-device import/restoration; 390-pixel mobile and navigation focus checks |
 | Synthetic fixture | $25/180 minutes: baseline 5, allocator 7; unavailable donor RAM: 6 |
 | Public YouTube video, at most three minutes | Remaining submission task |

@@ -8,9 +8,9 @@ Recorded 10 October 2026. This ledger separates observed prototype behavior from
 | --- | --- |
 | Public application | https://sparecycle-topaz.vercel.app |
 | Public repository | https://github.com/Golden007-prog/sparecycle |
-| Repository content | Repository created; source push pending at this checkpoint |
-| Final source commit | Pending source push |
-| Latest deployment at this checkpoint | https://sparecycle-2pdf4u9m4-basuoikantik-7538s-projects.vercel.app; stable alias unchanged |
+| Repository content | Source published on main |
+| Verified runtime source commit | 69c964f |
+| Successful deployment checkpoint | Deployment identifier lrxb7vwng; stable alias https://sparecycle-topaz.vercel.app |
 | Anonymous application access | HTML returned HTTP 200; manual planner loaded in the browser |
 | Production health | Verified aiConfigured and tracingConfigured are true; reports nvidia/Nemotron-3_5-Lightning |
 
@@ -18,8 +18,8 @@ Recorded 10 October 2026. This ledger separates observed prototype behavior from
 
 | Check | Result | Interpretation |
 | --- | --- | --- |
-| Complete current test suite | 37 passed | 23 API, 11 domain, and 3 export tests |
-| Production build | Passed | TypeScript check and Vite production build completed |
+| Complete current test suite | 38 passed | 24 API, 11 domain, and 3 export tests |
+| Production build | Passed locally and remotely | TypeScript check and Vite production build completed |
 | Allocation oracle | Included in domain tests | Independent brute-force comparison across 24 varied small fixtures |
 | Search-cap behavior | Included in domain tests | Feasible output retains an explicit incomplete-search status |
 | API/privacy behavior | Offline tests passed | Includes intercepted LangSmith payload checks; this does not prove remote trace delivery |
@@ -52,7 +52,7 @@ Confirmed during implementation browser checks:
 - At 390-pixel mobile width, the document measures 375 pixels wide with no horizontal overflow.
 - Closed mobile navigation is hidden from the accessibility tree. Opening navigation focuses Recovery planner; Escape closes it and restores focus to Open navigation; page selection focuses the main content.
 
-Repeat the complete interaction set against the final production deployment after remaining updates. Genuine desktop and mobile browser captures are stored in docs/assets/sparecycle-desktop.jpg and docs/assets/sparecycle-mobile.jpg. These captures document the interface; they do not prove a completed live AI run.
+Genuine desktop and mobile browser captures are stored in docs/assets/sparecycle-desktop.jpg and docs/assets/sparecycle-mobile.jpg. These captures document the interface. The successful live agent request is separately recorded below.
 
 Still to record explicitly: manual CSV/JSON export inspection, reviewed-state invalidation, and the final deployed interaction replay. Recorded mobile navigation checks are not a comprehensive accessibility audit.
 
@@ -62,18 +62,24 @@ Still to record explicitly: manual CSV/JSON export inspection, reviewed-state in
 | --- | --- |
 | Exact NVIDIA model that completed a request | nvidia/Nemotron-3_5-Lightning |
 | Deployed intake response | Successful real request; 9.35-second observed latency |
-| Completed deployed batch review | Pending after a tool-loop fix and redeployment |
-| Actual tools executed | Earlier incomplete agent attempt executed list_inventory and compute_recovery_plan; completion is not claimed |
-| Independent returned plan compared with browser result | Pending completed live review |
-| Observed request latency and usage | Intake latency 9.35 seconds; usage/cost measurement still pending |
-| Delivered LangSmith trace inspected | Personal sparecycle project created; intake root and planner-tool records inspected |
-| Inspected trace content | Intake root and compute_recovery_plan child had empty inputs and outputs; full successful agent-run inspection remains pending |
-| Public error behavior | Initial module-path failure and incomplete agent request were visible; neither was counted as successful inference or a complete review |
+| Completed deployed batch review | Successful HTTP 200 response; 2.8-second API observation |
+| Actual tools executed | list_inventory completed; compute_recovery_plan completed |
+| Independent returned plan | Seven projected candidates, five-candidate baseline, $25 cost, 150 technician minutes; agrees with the synthetic benchmark |
+| Observed request latency and usage | Intake 9.35 seconds; plan 2.8 seconds including trace flush; successful plan completion 356 tokens, zero reasoning tokens, stop finish reason |
+| Delivered LangSmith trace inspected | Successful plan root and list_inventory/compute_recovery_plan children inspected in sparecycle; root server trace 2.49 seconds, tool children approximately 0.02 seconds |
+| Inspected trace content | Successful plan root and tool children had empty inputs and outputs; intake root was also inspected |
+| Public error behavior | Earlier integration failures were explicit and were not counted as successful requests; the final recorded plan request completed successfully |
 
-The module-path issue was corrected before the successful intake. A redundant tool round was also corrected. The latest incomplete agent request executed list_inventory and compute_recovery_plan, then exhausted its 1,500-token completion budget on reasoning and returned a length finish reason. A constrained-response configuration adjustment is being tested. The currently recorded suite has 37 passing tests and a passing production build; successful full-agent completion remains pending rather than being reported as a release blocker or a completed result.
+The final successful request used the corrected module paths, bounded tool loop, and constrained-response reasoning settings. The currently recorded suite has 38 passing tests and passing local/remote production builds. Timings and token counts are individual request observations, not a performance, reliability, or cost benchmark.
+
+The first successful generated explanation described six reused units as donors, although the deterministic reusedParts field includes both existing stock and donor components. The source prompt now explicitly defines that aggregate. Use the deterministic allocations for source attribution; generated explanations still require review. A follow-up wording check after the prompt redeployment is not recorded here.
 
 Configuration flags, a correlation ID, and offline mocks are not substitutes for these observations. Do not include credentials, private inventory, or account secrets in this ledger.
 
+## Deployment integration limitation
+
+Vercel Git connection returned HTTP 400 because the account requires a GitHub Login Connection. Manual production deployment works, and the public source repository is independently available. Automatic deployment on push is not configured. No account connection change is required to use the current live release.
+
 ## Submission status
 
-The public YouTube video has not been created. Devpost submission has not been recorded. The repository source push, completed live batch-agent evidence, video, and final entrant review remain necessary before declaring the hackathon entry complete. See RELEASE.md and DEVPOST.md for the remaining checklist and submission copy.
+The public YouTube video has not been created. Devpost submission has not been recorded. Source publication and a complete live batch-agent request are verified; video creation and final entrant submission review remain necessary before declaring the hackathon entry complete. See RELEASE.md and DEVPOST.md for the remaining checklist and submission copy.

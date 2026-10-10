@@ -8,7 +8,7 @@ Editorial draft for the completed implementation. Reconcile every feature with t
 - **Tagline:** Turn a pile of repairable laptops into a plan for the whole workshop.
 - **Track:** Best Apps and Agents
 - **Live application:** https://sparecycle-topaz.vercel.app
-- **Public repository:** https://github.com/Golden007-prog/sparecycle — repository created; source push pending.
+- **Public source:** https://github.com/Golden007-prog/sparecycle — published on main.
 - **Public YouTube video:** remaining submission task
 - **Built with:** React, Vite, TypeScript, Vercel, NVIDIA Nemotron, Nebius Token Factory, optional LangSmith
 
@@ -50,7 +50,7 @@ We also distinguish modeled repair completion from release readiness. A solver c
 
 The intended completed entry combines one coherent workflow: evidence review, constrained allocation, baseline comparison, failure replay, and reviewable work orders.
 
-The complete current suite passes 37 tests: 23 API, 11 domain, and 3 export tests. Domain tests include an independent brute-force oracle over 24 small fixtures, and the production build passes. In the fixed synthetic demonstration, a $25 purchase budget and 180-minute shift allow seven projected complete repairs versus five for the intake-order baseline. Removing one donor-RAM component changes the plan to six, also confirmed in the browser. These results describe the supplied synthetic records; they are not actual devices repaired or evidence of customer improvement.
+The complete current suite passes 38 tests: 24 API, 11 domain, and 3 export tests. Domain tests include an independent brute-force oracle over 24 small fixtures, and the production build passes. In the fixed synthetic demonstration, a $25 purchase budget and 180-minute shift allow seven projected complete repairs versus five for the intake-order baseline. Removing one donor-RAM component changes the plan to six, also confirmed in the browser. These results describe the supplied synthetic records; they are not actual devices repaired or evidence of customer improvement.
 
 The central technical claim is testable: allocations must satisfy the supplied rules. The AI has useful bounded tools, while deterministic code owns resource decisions and unresolved facts remain visible.
 
@@ -70,14 +70,14 @@ A team version would need shared inventory, authenticated roles, reservation han
 
 - Exact successful deployed NVIDIA model ID: **nvidia/Nemotron-3_5-Lightning**.
 - Real deployed intake: **succeeded in 9.35 seconds**.
-- Full batch-agent completion: **pending verification after a tool-loop fix**. An earlier incomplete request executed list_inventory and compute_recovery_plan, but is not counted as a successful completed review.
-- LangSmith: **delivered intake and planner-tool records inspected with empty inputs/outputs** in the sparecycle project. Full successful agent-run inspection remains pending.
-- Tests/build: **37 tests passed; production build passed**. Browser checks confirmed default planning, donor failure, identity-hold inspection, and invalid-import rejection.
+- Full batch-agent completion: **succeeded in 2.8 seconds** with list_inventory and compute_recovery_plan completed. The returned plan had seven projected candidates versus a five-candidate baseline, $25 cost, and 150 technician minutes.
+- LangSmith: **successful plan root and list_inventory/compute_recovery_plan children inspected with empty inputs/outputs** in the sparecycle project. The plan trace records 2.49 seconds of server execution; the 2.8-second API observation includes trace flushing.
+- Tests/build: **38 tests passed; production build passed**. Browser checks confirmed default planning, donor failure, identity-hold inspection, and invalid-import rejection.
 - Public application: **anonymous HTML HTTP 200 and manual planner loaded** at https://sparecycle-topaz.vercel.app.
-- Public repository: **created; source push pending** at https://github.com/Golden007-prog/sparecycle.
+- Public source: **published on main** at https://github.com/Golden007-prog/sparecycle; verified runtime source commit 69c964f.
 - Public YouTube recording: **remaining submission task**.
 
-Detailed observations and pending checks are in [VALIDATION.md](VALIDATION.md). Source publication, full batch-agent verification, the public video, and final submission review remain before treating the entry as submission-ready.
+Detailed observations and remaining checks are in [VALIDATION.md](VALIDATION.md). The public YouTube video and final entrant submission review remain before treating the entry as submission-ready. Deployment and source publication do not themselves submit the project to Devpost.
 
 The official FAQ permits a web app hosted elsewhere when it uses the required NVIDIA model through Nebius Token Factory. [Platform clarification](https://nebiusglobalaihackathon.devpost.com/details/faqs).
 
@@ -85,7 +85,7 @@ Do not claim use of Nebius AI Cloud, Serverless Jobs, Tavily, Supabase, local NV
 
 ## Platform feedback
 
-On 10 October 2026, a production intake request to nvidia/Nemotron-3_5-Lightning through Nebius succeeded in 9.35 seconds. Delivered LangSmith intake and planner-tool records were inspected with empty inputs/outputs. Batch-agent attempts executed inventory and planning tools but full completion is still being verified; the latest attempt spent its completion budget on reasoning before returning a final response. These observations are individual smoke checks, not a latency or reliability benchmark. Add the completed-agent result and measured usage before submission; do not infer cost or reliability from configuration flags.
+On 10 October 2026, a production intake request to nvidia/Nemotron-3_5-Lightning through Nebius succeeded in 9.35 seconds. A complete batch-agent review succeeded in 2.8 seconds and executed both inventory and planning tools. Its delivered LangSmith root and tool records were inspected with empty inputs/outputs. The final completion reported 356 completion tokens, zero reasoning tokens, and a stop finish reason. Integration testing showed that reasoning settings and bounded tool-loop termination matter for concise structured responses. These are individual smoke observations, not a latency, cost, or reliability benchmark. The deterministic plan remains authoritative when reviewing generated explanations.
 
 ## Eligibility and submission checklist
 

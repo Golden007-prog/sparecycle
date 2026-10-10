@@ -7,11 +7,11 @@ SpareCycle is a planning desk for laptop refurbishing coordinators. It combines 
 Built for the **Best Apps and Agents** track of the Nebius x NVIDIA Global AI Hackathon.
 
 - Live application: [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app)
-- Public repository: [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle) — repository created; source push pending.
+- Public source: [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle) — published on main.
 - Public YouTube demonstration: **remaining submission task**
 - License: [MIT](LICENSE)
-- Verified: **37 automated tests and the production build passed; the public manual planner loads anonymously.**
-- Live NVIDIA intake succeeded in **9.35 seconds**; delivered LangSmith intake and planner-tool records were inspected with empty inputs/outputs. Full batch-agent completion remains **pending verification**. See [validation evidence](docs/VALIDATION.md).
+- Verified: **38 automated tests and the production build passed; the public manual planner loads anonymously.**
+- Live NVIDIA intake succeeded in **9.35 seconds** and a complete batch-agent review in **2.8 seconds**, with actual inventory and planning tools. The successful LangSmith plan trace and tool records were inspected with empty inputs/outputs. See [validation evidence](docs/VALIDATION.md).
 
 ![SpareCycle workshop bench](docs/assets/sparecycle-desktop.jpg)
 
@@ -130,9 +130,9 @@ For the fixed synthetic fixture with a $25 purchase budget and 180 technician mi
 
 Making part-t480-ram-donor unavailable reduces the allocator's result to six projected candidates. These are reproducible modeled outcomes, not physical repairs or measured customer gains.
 
-The complete current suite passed **37 tests: 23 API, 11 domain, and 3 export tests**. The production build passed. Browser checks confirmed the default seven-candidate plan, the six-candidate donor-failure result, identity-hold inspection, invalid-import rejection, and a valid one-device JSON import followed by restoring the demo.
+The complete current suite passed **38 tests: 24 API, 11 domain, and 3 export tests**. The production build passed. Browser checks confirmed the default seven-candidate plan, the six-candidate donor-failure result, identity-hold inspection, invalid-import rejection, and a valid one-device JSON import followed by restoring the demo.
 
-At 390-pixel mobile width, no horizontal overflow was observed. Closed navigation is hidden from the accessibility tree; opening it focuses Recovery planner, Escape restores the navigation toggle, and page selection moves focus to the main content. Anonymous HTML access returned HTTP 200 and the manual planner loaded. Live intake and inspected trace records are verified; full batch-agent completion remains pending in [VALIDATION.md](docs/VALIDATION.md).
+At 390-pixel mobile width, no horizontal overflow was observed. Closed navigation is hidden from the accessibility tree; opening it focuses Recovery planner, Escape restores the navigation toggle, and page selection moves focus to the main content. Anonymous HTML access returned HTTP 200 and the manual planner loaded. A complete live batch-agent review executed list_inventory and compute_recovery_plan and returned seven projected candidates, a five-candidate baseline, $25 cost, and 150 technician minutes. These are individual smoke checks; details and remaining coverage are in [VALIDATION.md](docs/VALIDATION.md).
 
 ## Planning and evidence rules
 
@@ -146,7 +146,9 @@ At 390-pixel mobile width, no horizontal overflow was observed. Closed navigatio
 
 ## Deployment and verification
 
-The app is deployed at [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app). Production health reports NVIDIA nvidia/Nemotron-3_5-Lightning configured, and a real intake request succeeded. LangSmith intake and planner-tool records were delivered and inspected. Full batch-agent completion is still being verified. For another deployment, import the repository into Vercel, apply server environment variables, and verify anonymous access, tool execution, errors, imports, and exports.
+The app is deployed at [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app). Real intake and complete batch-agent requests succeeded using NVIDIA nvidia/Nemotron-3_5-Lightning through Nebius. LangSmith intake, successful plan, and tool records were delivered and inspected with empty inputs/outputs.
+
+The current release uses manual Vercel deployments. Automatic deployment from GitHub is not connected: Vercel's Git connection requires a GitHub Login Connection on the account. Public source and the manual production deployment work independently. For another deployment, apply server environment variables and verify anonymous access, tool execution, errors, imports, and exports.
 
 The API bounds payloads, tool execution, output, and request duration. In-memory throttles operate per server instance: restarts and horizontal scaling reset or multiply them. They are not a durable account-wide spend cap. A production service needs authenticated access, shared quotas, and provider budget controls.
 

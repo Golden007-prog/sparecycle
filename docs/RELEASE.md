@@ -1,10 +1,10 @@
 # SpareCycle: release-readiness checklist
 
-Release progress recorded on 10 October 2026. The manual planner is publicly deployed, real intake succeeded, and delivered intake/planner-tool trace records were inspected. Full batch-agent completion remains pending. A configured key alone does not prove successful inference or trace delivery. See [VALIDATION.md](VALIDATION.md) for the evidence ledger.
+Release progress recorded on 10 October 2026. Public source is pushed, the app is deployed, real intake and complete batch-agent review succeeded, and delivered intake/planner-tool trace records were inspected. The public video and Devpost submission remain unfinished. See [VALIDATION.md](VALIDATION.md) for the evidence ledger.
 
 ## Local application
 
-- [x] Run the complete current test suite and production build: 37 tests passed (23 API, 11 domain, 3 export); build passed. Final source commit remains to record.
+- [x] Run the complete current test suite and production build: 38 tests passed (24 API, 11 domain, 3 export); build passed. Final source commit remains to record.
 - [ ] Complete the workshop flow on desktop and a narrow mobile viewport, including keyboard navigation and dialog focus.
 - [x] Verify the 390-pixel mobile layout without horizontal overflow and mobile-navigation focus/visibility behavior.
 - [x] Import a valid one-device JSON batch, observe one projected candidate, restore the seven-candidate demo, and reject an invalid batch.
@@ -20,20 +20,20 @@ Release progress recorded on 10 October 2026. The manual planner is publicly dep
 - [x] Configure server-only Nebius credentials and record the successful model: nvidia/Nemotron-3_5-Lightning.
 - [x] Make a successful real intake request; observed latency 9.35 seconds.
 - [ ] Complete a systematic field-quality evaluation of intake drafts and missing-information handling.
-- [ ] Make a real batch-review request; record actual executed tools and check the independently returned deterministic plan.
+- [x] Complete a real batch review: 2.8 seconds, list_inventory and compute_recovery_plan completed; returned plan 7 candidates, baseline 5, $25, 150 minutes.
 - [ ] Verify explicit provider-error behavior without a simulated AI fallback.
-- [ ] If LangSmith is enabled, inspect a delivered trace and confirm inventory, notes, prompts, arguments, and generated text are hidden. A returned trace ID alone is insufficient.
-- [x] Inspect delivered intake-root and compute_recovery_plan trace records with empty inputs/outputs; retain the full successful-agent inspection as pending.
+- [x] Inspect the successful delivered LangSmith plan root and list_inventory/compute_recovery_plan children with empty inputs/outputs. Intake-root records were also inspected; this is verified delivery rather than reliance on a returned trace ID.
 - [ ] Record actual latency and usage for platform feedback. Keep account keys and private records out of evidence.
 
 ## Public release
 
-- [ ] Publish the intended source and visible MIT license; exclude credentials, private data, and generated secrets.
+- [x] Publish source on main at https://github.com/Golden007-prog/sparecycle; runtime commit 69c964f.
+- [ ] Finish the final remote documentation/license and secret-exclusion check against the release commit.
 - [x] Deploy to Vercel with production server configuration: https://sparecycle-topaz.vercel.app.
 - [x] Confirm anonymous HTML HTTP 200 and a loaded manual planner.
 - [ ] Check the production alias anonymously, including the interface, health route, and a real AI request.
 - [ ] Verify public judge access, imports, planning, failure replay, and exports against the deployed version.
-- [ ] Replace live/repository/model-verification placeholders in README and the Devpost draft with actual evidence.
+- [x] Replace live/source/model-verification placeholders with observed results; retain video and submission tasks as incomplete.
 - [ ] Record deployment URL, commit, date, browser checks, known limitations, and provider-test results.
 
 ## Submission
@@ -48,14 +48,18 @@ Release progress recorded on 10 October 2026. The manual planner is publicly dep
 
 | Evidence | Result |
 | --- | --- |
-| Public repository | [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle); created, source push pending |
+| Public repository | [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle); source pushed to main |
 | Production URL | https://sparecycle-topaz.vercel.app |
-| Commit / deployment date | Final commit pending; deployment observed 10 October 2026 |
-| Full tests / build | 37 tests passed; production build passed |
+| Runtime commit / deployment date | 69c964f; deployment observed 10 October 2026 |
+| Full tests / build | 38 tests passed; production build passed |
 | Anonymous browser verification | HTML HTTP 200 and manual planner loaded; default 7 → donor failure 6, identity hold, invalid import checked |
-| Actual Nebius model and successful tool run | Lightning intake succeeded in 9.35 seconds; complete batch-agent result pending |
-| Inspected LangSmith trace | Delivered intake-root/planner-tool records had empty inputs/outputs; successful full-agent trace pending |
+| Actual Nebius model and successful tool run | Lightning intake 9.35 seconds; complete agent review 2.8 seconds with inventory and planning tools |
+| Inspected LangSmith trace | Successful plan root and tool children had empty inputs/outputs; server trace 2.49 seconds |
 | Public YouTube video | Pending |
 | Devpost submission confirmation | Pending |
 
 Current test and browser evidence is documented in VALIDATION.md. It validates the recorded prototype behavior; it does not establish completed physical repairs, customers, or production readiness.
+
+## Deployment integration limitation
+
+The production release uses manual Vercel deployment. Git connection returned HTTP 400 because the Vercel account requires a GitHub Login Connection. The public repository and live manual deployment work independently; automatic deployment on push is not configured. No account connection change is required to use the current release.
