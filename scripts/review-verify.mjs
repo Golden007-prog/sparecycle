@@ -6,6 +6,7 @@ import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { validatePureParser } from './review-parser-policy.mjs';
+import { snapshotPreimage, candidatePreimage } from './review-integrity.mjs';
 
 const parserRoot = process.env.SPARECYCLE_ACORN_ROOT;
 if (!parserRoot) throw new Error('The trusted parser dependency is not configured.');
@@ -32,9 +33,9 @@ for (const file of snapshot.files) {
   seen.add(file.path); byteCount += Buffer.byteLength(file.content);
 }
 if (byteCount > 40_000 || snapshot.files.filter(f => sourcePath(f.path)).length !== 1 || !seen.has(snapshot.targetPath) || !snapshot.files.some(f => testPath(f.path))) fail('Invalid snapshot scope.');
-const actualSnapshotHash = digest(JSON.stringify({ repository: snapshot.repository, baseSha: snapshot.baseSha, treeSha: snapshot.treeSha, targetPath: snapshot.targetPath, files: [...snapshot.files].sort((a, b) => a.path.localeCompare(b.path)).map(f => ({ path: f.path, sha256: f.sha256, blobSha: f.blobSha })) }));
+const actualSnapshotHash = digest(snapshotPreimage(snapshot));
 if (actualSnapshotHash !== snapshot.hash || candidate.path !== snapshot.targetPath || candidate.baseSha !== snapshot.baseSha || candidate.snapshotHash !== snapshot.hash || candidate.evidenceHash !== evidenceHash || typeof candidate.content !== 'string' || Buffer.byteLength(candidate.content) > 32_000) fail('Stale candidate.');
-const actualCandidateHash = digest(JSON.stringify({ path: candidate.path, content: candidate.content, baseSha: candidate.baseSha, snapshotHash: candidate.snapshotHash, evidenceHash: candidate.evidenceHash }));
+const actualCandidateHash = digest(candidatePreimage(candidate));
 if (actualCandidateHash !== candidate.hash) fail('Unsupported candidate.');
 validatePureParser(candidate.content, parse);
 if (!/^[a-f0-9]{40}$/.test(process.env.GITHUB_SHA || '') || !/^\d+$/.test(process.env.GITHUB_RUN_ID || '')) fail('The verifier must run in a pinned GitHub Actions workflow.');

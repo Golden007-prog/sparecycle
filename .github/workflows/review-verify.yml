@@ -28,6 +28,7 @@ jobs:
           sparse-checkout: |
             scripts/review-verify.mjs
             scripts/review-parser-policy.mjs
+            scripts/review-integrity.mjs
           sparse-checkout-cone-mode: false
       - name: Prepare the pinned syntax parser on the trusted host
         env:

@@ -1,0 +1,2 @@
+export function snapshotPreimage(snapshot: { repository: { installationId: number; repositoryId: number; owner: string; name: string; defaultBranch: string; isPrivate?: boolean }; baseSha: string; treeSha: string; targetPath: string; files: Array<{ path: string; sha256: string; blobSha: string }> }): string;
+export function candidatePreimage(candidate: { path: string; content: string; baseSha: string; snapshotHash: string; evidenceHash: string }): string;

@@ -1,6 +1,7 @@
 import { createHash, createHmac, createSign, timingSafeEqual } from 'node:crypto';
 import { parse } from 'acorn';
 import { validatePureParser } from '../../scripts/review-parser-policy.mjs';
+import { snapshotPreimage, candidatePreimage } from '../../scripts/review-integrity.mjs';
 
 export type EngineEnvironment = Record<string, string | undefined>;
 export class ReviewEngineError extends Error {
@@ -31,10 +32,10 @@ const IDENTIFIER = /^[A-Za-z0-9_.-]{1,100}$/;
 export function allowedSourcePath(path: string): boolean { return /^src\/diagnostics\/[A-Za-z0-9_-]+\.mjs$/.test(path); }
 export function allowedTestPath(path: string): boolean { return /^tests\/diagnostics\/[A-Za-z0-9_-]+\.test\.mjs$/.test(path); }
 function assertRepository(repo: RepositoryBinding): void {
-  if (!Number.isSafeInteger(repo.installationId) || repo.installationId < 1 || !Number.isSafeInteger(repo.repositoryId) || repo.repositoryId < 1 || !IDENTIFIER.test(repo.owner) || !IDENTIFIER.test(repo.name) || !/^[A-Za-z0-9_/-]{1,100}$/.test(repo.defaultBranch) || repo.defaultBranch.includes('..') || repo.defaultBranch.includes('//')) throw new ReviewEngineError('INVALID_REPOSITORY', 'The repository binding is invalid.');
+  if (!Number.isSafeInteger(repo.installationId) || repo.installationId < 1 || !Number.isSafeInteger(repo.repositoryId) || repo.repositoryId < 1 || !IDENTIFIER.test(repo.owner) || !IDENTIFIER.test(repo.name) || !/^[A-Za-z0-9_/-]{1,100}$/.test(repo.defaultBranch) || repo.defaultBranch.includes('..') || repo.defaultBranch.includes('//') || (repo.isPrivate !== undefined && typeof repo.isPrivate !== 'boolean')) throw new ReviewEngineError('INVALID_REPOSITORY', 'The repository binding is invalid.');
 }
 export function snapshotHash(snapshot: Omit<RepositorySnapshot, 'hash'>): string {
-  return sha256(JSON.stringify({ repository: snapshot.repository, baseSha: snapshot.baseSha, treeSha: snapshot.treeSha, targetPath: snapshot.targetPath, files: [...snapshot.files].sort((a, b) => a.path.localeCompare(b.path)).map(f => ({ path: f.path, sha256: f.sha256, blobSha: f.blobSha })) }));
+  return sha256(snapshotPreimage(snapshot));
 }
 export function validateSnapshot(snapshot: RepositorySnapshot): void {
   assertRepository(snapshot.repository);
@@ -47,7 +48,7 @@ export function validateSnapshot(snapshot: RepositorySnapshot): void {
   if (bytes > 80_000 || snapshotHash(snapshot) !== snapshot.hash) throw new ReviewEngineError('INVALID_SNAPSHOT', 'The snapshot hash or size is invalid.');
 }
 export function candidateHash(candidate: Omit<CandidatePatch, 'hash'>): string {
-  return sha256(JSON.stringify({ path: candidate.path, content: candidate.content, baseSha: candidate.baseSha, snapshotHash: candidate.snapshotHash, evidenceHash: candidate.evidenceHash }));
+  return sha256(candidatePreimage(candidate));
 }
 export function validateCandidate(snapshot: RepositorySnapshot, candidate: CandidatePatch): void {
   validateSnapshot(snapshot);

@@ -5,3 +5,7 @@ test-results
 .env*
 !.env.example
 .git
+.secrets
+*.pem
+*.key
+supabase/.temp

@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash, createHmac, generateKeyPairSync } from 'node:crypto';
+import { PGlite } from '@electric-sql/pglite';
+import { snapshotPreimage, candidatePreimage } from '../scripts/review-integrity.mjs';
 import { candidateHash, createGitHubClient, sha256, snapshotHash, validateCandidate, validatePublishInput, validateSnapshot, verifyUserRepositoryAccess, verifyWebhookSignature, type CandidatePatch, type PublishInput, type RepositorySnapshot } from '../lib/review/github.js';
 
 function fixture(): { snapshot: RepositorySnapshot; candidate: CandidatePatch; publish: PublishInput } {
@@ -20,6 +22,45 @@ const failCode = (code: string) => (e: unknown) => Boolean(e && typeof e === 'ob
 test('snapshot and patch bind the exact source, tests, repository and evidence', () => {
   const { snapshot, candidate } = fixture(); validateSnapshot(snapshot); validateCandidate(snapshot, candidate);
   snapshot.files[1].content += '// changed'; assert.throws(() => validateCandidate(snapshot, candidate), failCode('INVALID_SNAPSHOT'));
+});
+
+test('API and verifier hashes survive reordered object keys and snapshot file order', () => {
+  const { snapshot, candidate } = fixture();
+  const reorderKeys = (value: unknown): unknown => Array.isArray(value) ? value.map(reorderKeys) : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).reverse().map(([key, item]) => [key, reorderKeys(item)])) : value;
+  const restoredSnapshot = reorderKeys(snapshot) as RepositorySnapshot;
+  const restoredCandidate = reorderKeys(candidate) as CandidatePatch;
+  restoredSnapshot.files.reverse();
+  assert.notDeepEqual(Object.keys(restoredSnapshot.repository), Object.keys(snapshot.repository));
+  assert.equal(snapshotHash(restoredSnapshot), snapshot.hash);
+  assert.equal(candidateHash(restoredCandidate), candidate.hash);
+  assert.equal(sha256(snapshotPreimage(restoredSnapshot)), snapshot.hash);
+  assert.equal(sha256(candidatePreimage(restoredCandidate)), candidate.hash);
+  validateCandidate(restoredSnapshot, restoredCandidate);
+});
+
+test('stored checkpoints retain valid snapshot, patch and approval bindings after a PostgreSQL JSONB round trip', async () => {
+  const { publish } = fixture(); const db = new PGlite();
+  try {
+    const result = await db.query<{ checkpoint: PublishInput }>('SELECT $1::jsonb AS checkpoint', [JSON.stringify(publish)]);
+    const restored = result.rows[0].checkpoint;
+    // This exercises the database representation that differs from ordinary JSON.parse(JSON.stringify(...)).
+    assert.notDeepEqual(Object.keys(restored.snapshot.repository), Object.keys(publish.snapshot.repository));
+    assert.equal(snapshotHash(restored.snapshot), publish.snapshot.hash);
+    assert.equal(candidateHash(restored.candidate), publish.candidate.hash);
+    validatePublishInput(restored);
+    assert.equal(sha256(snapshotPreimage(restored.snapshot)), publish.snapshot.hash);
+    assert.equal(sha256(candidatePreimage(restored.candidate)), publish.candidate.hash);
+  } finally { await db.close(); }
+});
+
+test('canonical snapshot hashes still bind every approved repository identity field', () => {
+  const { snapshot } = fixture();
+  for (const changed of [{ installationId: 13 }, { repositoryId: 35 }, { owner: 'other' }, { name: 'other' }, { defaultBranch: 'other' }, { isPrivate: true }]) {
+    assert.notEqual(snapshotHash({ ...snapshot, repository: { ...snapshot.repository, ...changed } }), snapshot.hash);
+  }
+  const missingPrivacy = { ...snapshot, repository: { ...snapshot.repository, isPrivate: undefined } };
+  assert.equal(snapshotHash(missingPrivacy), snapshotHash(JSON.parse(JSON.stringify(missingPrivacy))));
+  assert.notEqual(snapshotHash(missingPrivacy), snapshot.hash);
 });
 test('test edits, traversal, protected files, oversized sources and unchanged patches fail closed', () => {
   const { snapshot, candidate } = fixture();

@@ -88,6 +88,18 @@ test('an uncertain prior external call is not repeated and conservatively retain
   await service()(resume); assert.equal(state.completions.length, 1);
 });
 
+test('invalid persisted snapshots stop before a model call or budget charge', async () => {
+  const { state, service } = fixture('patch');
+  const { snapshot } = artifact(state.context);
+  state.context.change.investigation = { classification: 'software', summary: 'Observed parser failure', findings: [], nextSteps: ['Fix the parser'], model: 'test' };
+  state.checkpoint = { snapshot: { ...snapshot, hash: '0'.repeat(64) } };
+  let called = false;
+  const result = await service({ propose: async () => { called = true; throw new Error('must not run'); } })(resume) as ReviewJob;
+  assert.equal(result.status, 'failed'); assert.equal(called, false);
+  assert.equal(state.completions[0].spentCents, 0);
+  assert.equal(state.checkpoint.inFlight, undefined);
+});
+
 test('unrecognized model errors are sanitized and do not produce a successful result', async () => {
   const { state, service } = fixture();
   const result = await service({ investigate: async () => { throw new Error('private source and secret-api-token'); } })(run('investigate')) as ReviewJob;

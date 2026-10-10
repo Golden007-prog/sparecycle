@@ -1,0 +1,67 @@
+# SpareCycle Review company setup
+
+SpareCycle Review connects a laptop's diagnostic evidence to an independently approved software change. Start with two people, one laptop and one small public diagnostics repository. The original [Workshop planner](https://sparecycle-topaz.vercel.app/app) continues to use browser-local profiles; a Workshop profile does not create a Review account or organization.
+
+This is a public-source pilot with real Supabase authentication and tenant controls. It supports one pure JavaScript parser under `src/diagnostics/*.mjs` and its existing `tests/diagnostics/*.test.mjs` files. It does not run an arbitrary company build, install project dependencies, edit tests, access private code through the shared runner, deploy software to laptops or certify a hardware repair.
+
+Customer self-service signup is not yet a verified deployment capability. Controlled pilot accounts have passed browser sign-in and role checks. Before inviting a new company, complete the account-readiness checks below; those existing-account checks do not establish email delivery or recovery.
+
+## Five steps for a pilot team
+
+1. **Create your organization.** Open [Review](https://sparecycle-topaz.vercel.app/review), choose **Organization sign in**, and sign in or create an account. Complete email confirmation if the deployment requires it. Create an organization, then invite a second person as a reviewer from Organization settings. Copy the single-use invitation code through your normal team channel. The recipient signs in and redeems the code in Organization settings; SpareCycle does not send invitation emails. Codes expire after 24 hours.
+2. **Add a laptop passport.** Register an asset tag, manufacturer, model and operating system. Add a technician note, diagnostic log or test result with its source. Keep evidence relevant and remove credentials, customer files and unnecessary personal information. Every addition creates a new evidence revision; it does not rewrite the earlier history.
+3. **Connect your public diagnostics repository.** Choose **Install GitHub app**, select only the intended repository, then use **Connect project**. Enter `owner/repository`, the App installation ID, the parser path and existing test paths. The installation ID appears in GitHub's installation settings URL. Supply a short-lived, repository-scoped user token for the one-time ownership check; the connecting account must have repository write access. Both that access and the App installation are checked. The token is not saved or sent to a model. Revoke it after a successful connection if it was created only for setup.
+4. **Investigate and test a change.** Open a recovery change linked to the laptop and project. Run **Investigate → Propose patch → Test in isolation → Review**, continuing/checking progress when a remote stage is waiting. Nebius classifies the evidence and proposes a bounded patch only for a supported software problem. Hardware findings and missing evidence stop for technician work. Test proof requires a failing original parser and a passing candidate against the same unchanged tests; a clean baseline is not presented as a demonstrated repair.
+5. **Approve and open the draft.** A different owner, admin or reviewer inspects the evidence, diff and test proof, then approves that exact revision and patch. The author cannot self-approve. Publish the draft PR and follow your repository's usual review process. SpareCycle does not merge it. New evidence or a changed repository base requires refreshed proof and approval.
+
+The [SpareCycle Review GitHub App](https://github.com/apps/sparecycle-review/installations/new) is the pilot connection. An App installation or a configuration badge does not itself prove that inference, isolated verification or PR publication succeeded. Use the actual job results and [recorded validation](VALIDATION.md).
+
+## What the team can expect
+
+| Capability | Pilot behavior |
+| --- | --- |
+| Accounts and sharing | Supabase Auth; organization membership and PostgreSQL RLS; five roles; shared passports, evidence, changes and audit history |
+| Roles | Owners/admins manage settings; reviewers/technicians can prepare work; viewers read; only owners/admins/reviewers approve, excluding the author |
+| AI provider | Nebius Token Factory for every inference stage; LangSmith is optional metadata-only tracing |
+| Model routing | Nano for economical investigation; Lightning for investigation and independent model review; Super for patch generation; Ultra only when an operator explicitly enables escalation |
+| Verification | GitHub Actions isolated containers for public source; disabled guest network, resource limits, immutable input identities and unchanged-test checks |
+| Publication | A selected-repository GitHub App creates an approved draft PR; public PR text contains verification metadata rather than private laptop evidence or model rationale |
+| Budget | Default $1 organization monthly estimate ceiling and $1 aggregate service ceiling; durable reservations plus daily/active-job quotas. This neither purchases credits nor changes provider billing settings |
+
+The current hosted verification option uses GitHub Actions because Nebius Sandboxes beta is not activated for the pilot. The separate Nebius Sandbox adapter requires actual entitlement and an immutable image; it must not be described as live merely because Nebius inference works. The proof records the provider that actually executed the tests. Detailed boundaries and exact model IDs are in the [harness guide](review-harness.md).
+
+## Operator setup for a new deployment
+
+1. **Configure the selected Supabase project.** Apply every checked-in [migration](../supabase/migrations) in filename order. Set `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`. Keep the private database schema out of exposed API schemas. Generate a random server-only `REVIEW_WORKER_SECRET` of at least 32 characters and store only its SHA-256 hash in the private runtime table using the [database setup](review-database.md). The application does not need a service-role CRUD credential.
+2. **Prepare account email before customer signup.** Configure the correct site URL and allowed authentication redirects. For customer-facing confirmation and recovery mail, configure your own SMTP provider and test delivery, expired links and redirects. Supabase's built-in sender is for testing, restricts recipients to Supabase project organization team addresses, and has a low email limit; joining a SpareCycle organization does not remove that restriction. Custom SMTP and real customer email delivery are production-readiness work, not verified by database tests. See [Supabase SMTP requirements](https://supabase.com/docs/guides/auth/auth-smtp).
+3. **Configure Nebius and the GitHub App.** Set `NEBIUS_API_KEY`, App ID/private key and App slug or installation URL using [.env.example](../.env.example). The App needs selected-repository contents/PR permissions for draft publication and Actions permission on the verifier repository. Source and runner operations mint separately scoped, short-lived installation tokens. Never put the App private key or worker secret in browser settings, source control or evidence.
+4. **Pin the isolated verifier.** Set the runner repository, numeric repository ID, installation ID, reviewed ref, exact 40-character verifier commit and digest-pinned image. The commit must include the checked-in workflow and trusted verifier scripts. Enable Actions in that repository. Leave Nebius Sandbox settings blank unless that capability is activated and tested; setting an image selects that separate backend. Changing a pin needs operator review.
+5. **Verify before onboarding a company.** Deploy the server and interface, then check account confirmation and recovery, two-account tenant isolation, App access/revocation, a real Nebius call, failing-baseline/passing-candidate isolated proof, independent approval and draft-only publication. Record the actual provider, commit, run and PR evidence. Configuration flags and mock transport tests are not substitutes for these checks.
+
+Authentication uses a live Supabase user check, followed by database access with that caller's JWT. Roles come from organization membership records, not editable user metadata. Worker result writes additionally require a separate server proof. Invitations, evidence revisions, budget reservations and approvals are transactional. See the [API contract](REVIEW-API.md), [OpenAPI specification](review-openapi.json) and [database guide](review-database.md).
+
+## Account-readiness checks, 10 October 2026
+
+| Check | Verified state and remaining work |
+| --- | --- |
+| Existing-account sign-in | Controlled owner, reviewer and outsider accounts passed browser sign-in, session refresh, role-control and organization-visibility checks. All were signed out afterward. This did not test customer signup emails. |
+| Supabase Auth configuration | The project's actual Site URL, redirect allowlist, email-confirmation setting and SMTP configuration have not been inspected in this pass. Do not infer their values from the Supabase defaults or the interface's **Configured** badge: that badge checks the application URL/key configuration only. |
+| Confirmation destination | Signup requests `${window.location.origin}/review`. Configure and verify the exact production redirect `https://sparecycle-topaz.vercel.app/review` and the canonical production Site URL in Supabase; add only deliberately supported development/preview destinations. The hosted default Site URL is `http://localhost:3000`, and a requested redirect must be allowed. Test the confirmation link from a new customer address before calling signup ready. See [Supabase redirect configuration](https://supabase.com/docs/guides/auth/redirect-urls) and [password-based signup](https://supabase.com/docs/guides/auth/passwords). |
+| Email delivery | Custom SMTP delivery to an external customer address remains unverified. If the built-in sender is still in use, it only serves Supabase project-team addresses and is unsuitable for customer signup. A SpareCycle organization invitation does not grant that sender access. Verify the sender, delivery and limits with a controlled recipient; do not disable email confirmation as a workaround. See [Supabase SMTP requirements](https://supabase.com/docs/guides/auth/auth-smtp). |
+| Account recovery | The interface currently has sign-in and signup only. It has no **Forgot password** request, password-update screen or confirmation-resend action. SMTP configuration alone does not implement these flows. Deliver and test recovery, expired-link handling and confirmation resend before offering self-service customer accounts; do not promise recovery in the meantime. |
+| Password policy and advisory | The latest Supabase advisor check reported one warning, `auth_leaked_password_protection`, because breached-password rejection is disabled. Supabase documents that this protection requires **Pro or above**. No plan upgrade or setting change was made. The signup form's 12-character minimum is a client-side usability constraint, not proof of server-enforced password policy; inspect and set the server policy before customer onboarding. See [Supabase password security](https://supabase.com/docs/guides/auth/password-security). |
+| Private-table advisory information | Four informational RLS-without-policy findings remain on intentionally private tables. Their deny-by-default behavior is deliberate and covered by separate database access tests. Keep those informational findings distinct from the Auth warning; this release must not be described as having zero advisor findings. |
+
+## When a stage stops
+
+| Message or condition | Next step |
+| --- | --- |
+| Confirmation email does not arrive | Have the operator check SMTP, sender/recipient restrictions, Auth logs and redirect settings; avoid repeated signup attempts |
+| GitHub connection rejected | Check the exact repository, installation selection and the connecting user's write permission |
+| Private repository or unsupported profile | Use a public pilot repository with the supported parser/test layout; private enterprise runners require separate delivery |
+| Quota reached | Review outstanding jobs and provider usage with the operator; creating more organizations does not increase the aggregate allowance |
+| Remote verification waiting | Continue the existing job to check its receipt; do not start duplicate verification jobs |
+| New evidence or changed base commit | Investigate and verify against the new inputs before requesting a fresh approval |
+| Interrupted inference with an uncertain outcome | The reservation is settled conservatively; the operator reconciles usage before a separately reserved retry |
+
+This pilot is not an enterprise certification. SSO/SAML/SCIM, customer-controlled private runners, retention/deletion policy, backup/restore exercises, penetration testing, MDM rollout and physical-device validation remain explicit gates in the [enterprise delivery map](REVIEW-ENTERPRISE-ROADMAP.md). The [200-item backlog](review-enterprise-backlog.csv) distinguishes foundations, narrow pilot mappings, later work and claims requiring validation; it is not a list of 200 implemented features.

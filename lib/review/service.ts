@@ -1,7 +1,7 @@
 import type { authenticateReviewRequest, ReviewEnvironment } from './auth.js';
 import { ReviewAccessError } from './auth.js';
 import { createActionsRunner, type ActionsReceipt } from './actions-runner.js';
-import { createGitHubClient, ReviewEngineError, type RepositorySnapshot, type CandidatePatch, type VerificationProof, type IndependentReview, type RepositoryBinding } from './github.js';
+import { createGitHubClient, ReviewEngineError, validateSnapshot, validateCandidate, type RepositorySnapshot, type CandidatePatch, type VerificationProof, type IndependentReview, type RepositoryBinding } from './github.js';
 import { investigateChange, proposePatch, reviewCandidate, evidenceDigest, stageReservationCents } from './harness.js';
 import { createNebiusSandbox, buildVerificationProof, type SandboxReceipt, type SandboxResult } from './sandbox.js';
 import { ReviewStore, type ReviewChangeContext, type JobCompletion } from './store.js';
@@ -80,6 +80,7 @@ export function createReviewService(options: ServiceOptions) {
           cp.snapshot=await github().readSnapshot(repositoryBinding(context.project),context.project.targetPath,context.project.testPaths);
           return complete('waiting','Repository snapshot saved. Continue to ask Nemotron for the patch.');
         }
+        validateSnapshot(cp.snapshot);
         await beginExternal('nebius-patch'); charged=job.reservedCents;
         const candidate=await (options.propose ?? proposePatch)({title:context.change.title,evidence,snapshot:cp.snapshot,modelTier},{env});
         if (candidate.usage.estimatedCostCents > job.reservedCents) throw new ReviewEngineError('USAGE_RESERVATION_EXCEEDED','Reported model usage exceeded the stage reservation. Stop and inspect provider usage before retrying.',409);
@@ -88,6 +89,7 @@ export function createReviewService(options: ServiceOptions) {
         return complete('completed','Proposed patch saved. It has not passed tests yet.',{status:'patch_ready',baseCommit:cp.snapshot.baseSha,patchHash:candidate.hash,patch:displayPatch(cp.snapshot,candidate),verification:null,reviewSummary:null});
       }
       if (!cp.snapshot || !cp.candidate) throw new ReviewEngineError('PATCH_REQUIRED','Generate a patch for this exact evidence before continuing.',409);
+      validateCandidate(cp.snapshot,cp.candidate);
       if (job.stage === 'verify') {
         cp.backend ??= env.NEBIUS_SANDBOX_IMAGE_ID ? 'nebius' : 'actions';
         if (cp.backend === 'actions') {

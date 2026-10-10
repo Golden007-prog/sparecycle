@@ -1,22 +1,37 @@
 # SpareCycle
 
-**Choose the repair batch that gets more laptops ready for their next owner.**
+**Plan laptop recovery, then turn diagnostic evidence into independently reviewed software fixes.**
 
 SpareCycle is a planning desk for laptop refurbishing coordinators. It combines diagnosed device needs, tested spare parts, approved donor devices, declared exact-SKU compatibility, and a fixed workshop budget. Its deterministic allocator proposes a batch of repairs, explains blocked alternatives, and recalculates when a donor part fails.
 
 Built for the **Best Apps and Agents** track of the Nebius x NVIDIA Global AI Hackathon.
 
+**SpareCycle Review** adds authenticated organizations, laptop passports, versioned evidence and a GitHub workflow: investigate with Nebius Nemotron, propose a bounded diagnostics patch, verify it in isolation, obtain a different person's approval, and publish a draft PR. The initial company pilot supports public repositories and a narrow JavaScript diagnostics profile. Private enterprise execution and fleet administration remain later work.
+
 - Live application: [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app)
 - Workshop: [Open the planner](https://sparecycle-topaz.vercel.app/app) · [Start company setup](https://sparecycle-topaz.vercel.app/app?setup=1)
-- Public source: [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle) — website and company-pilot runtime commit `e17998f` is published on main.
+- Review: [Open the review desk](https://sparecycle-topaz.vercel.app/review) · [Company setup in five steps](docs/REVIEW-COMPANY-SETUP.md)
+- Public source: [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle)
 - Public YouTube demonstration: **remaining submission task**
 - License: [MIT](LICENSE)
-- Release evidence: **56 automated tests passed**, production builds passed, and [GitHub CI passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38022439465). Local browser checks covered company, CSV, catalog, backup and responsive website flows; public pages, setup and catalog links were verified on production. See [VALIDATION.md](docs/VALIDATION.md) for the scope of each check.
-- A fresh deployed NVIDIA batch-agent review succeeded in **4.1 seconds**, executing inventory and planning tools. Earlier live intake succeeded in 9.35 seconds and a batch review in 2.8 seconds. Earlier LangSmith root/tool records were inspected with empty inputs/outputs; the new request returned a trace ID but that trace's contents have not been reinspected.
+- Recorded Workshop release evidence: **56 automated tests passed**, production builds passed, and [GitHub CI passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38022439465). These are earlier Workshop checks, not proof of the new Review deployment. See [VALIDATION.md](docs/VALIDATION.md) for recorded release results and their scope.
+- An earlier deployed NVIDIA batch-agent review succeeded in **4.1 seconds**, executing inventory and planning tools. Earlier live intake succeeded in 9.35 seconds and a batch review in 2.8 seconds. These single-request observations are not performance benchmarks for the new Review harness.
 
 ![SpareCycle landing page](docs/assets/sparecycle-landing-desktop.jpg)
 
 Actual browser capture of the public website. The interactive synthetic example recalculates with the real allocator. See the [mobile website](docs/assets/sparecycle-landing-mobile.jpg), [company workspace](docs/assets/sparecycle-company-desktop.jpg), and [company mobile capture](docs/assets/sparecycle-company-mobile.jpg).
+
+## The Review company pilot
+
+1. Sign in, create an organization and invite a second reviewer using a single-use invitation code.
+2. Register a laptop passport and append a sourced technician note, diagnostic log or test result.
+3. Install the [SpareCycle Review GitHub App](https://github.com/apps/sparecycle-review/installations/new) on a selected public repository. Connect one `src/diagnostics/*.mjs` parser and its unchanged `tests/diagnostics/*.test.mjs` tests.
+4. Open a recovery change and run investigation, patch proposal, isolated testing and model review. Hardware findings stop for technician work. New evidence invalidates earlier proof and approval.
+5. Have a different organization reviewer inspect and approve the exact evidence, base commit and patch. Publish a **draft** PR for normal repository review; the app never merges it or marks a laptop repaired.
+
+The [company setup guide](docs/REVIEW-COMPANY-SETUP.md) covers account/email prerequisites, repository connection, roles and operational limits. The synthetic Review workspace is clearly labeled and does not run models, tests or publication.
+
+Nebius Token Factory supplies all AI inference. The router offers Nano for economical investigation, Lightning for investigation and independent model review, Super for patch generation, and an explicitly enabled Ultra escalation. LangSmith records operational metadata. The current verification option is **GitHub Actions isolated container** because Nebius Sandboxes beta access has not been activated; the proof names the actual execution provider. No missing integration is replaced by a simulated pass. See the [harness and model routing](docs/review-harness.md).
 
 ## The workshop workflow
 
@@ -50,17 +65,28 @@ React + Vite + TypeScript workshop interface
         |-- NVIDIA Nemotron through Nebius Token Factory
         |-- list_inventory / inspect_device / compute_recovery_plan
         `-- Optional LangSmith operational metadata
+
+React Review interface /review
+  `-- Vercel /api/review (verified user session)
+        |-- Supabase Auth + tenant-scoped PostgreSQL / RLS
+        |     `-- Organizations, passports, evidence, approvals, jobs, audit and quotas
+        |-- Nebius Nemotron stage router + private continuation checkpoints
+        |-- Selected-repository GitHub App + exact commit snapshots
+        |-- GitHub Actions isolated baseline/candidate tests (public-source pilot)
+        `-- Independent human approval -> draft PR
 ~~~
 
 Nemotron turns supplied notes into a draft for coordinator review and explains tool results. It does not diagnose hardware from symptoms, create compatibility facts, certify erasure, or execute repairs. The tools read the supplied inventory and invoke deterministic planning; the model does not override resource constraints.
 
-Company profiles and saved batches remain in one browser. They organize records but do not create authenticated company accounts, tenant isolation on a server, or synchronization between teammates. Supabase is not used. Shared inventory, permissions, audit history, and concurrent stock reservations belong to a future team version.
+Workshop company profiles and saved batches remain in one browser; they are separate from Review organization accounts. Review uses Supabase Auth, server-validated sessions and PostgreSQL row-level security for shared evidence and review records. Database access uses the caller's JWT rather than a service-role CRUD key, with additional server proof for trusted job results. Shared workshop stock and concurrent physical inventory reservations remain future work. See the [database boundaries](docs/review-database.md).
 
 ## Reference data and product roadmap
 
 The model catalog contains **291 historical laptop listing variants across 14 brands**, derived from a Kaggle dataset whose uploader declares **CC0-1.0**. Its last update was February 2023. The importer excluded incomplete or malformed rows and retained source-row references. Specifications remain unverified retailer claims; historical INR prices are not current offers or the planner's USD repair costs. Catalog matches never approve a replacement part, diagnosis, condition, or release. See [data sources and reproducible filtering](docs/DATA-SOURCES.md).
 
 The [interactive roadmap](https://sparecycle-topaz.vercel.app/roadmap.html) is built from `public/roadmap.html` and the [feature catalog](docs/FEATURES.md). The current catalog contains **520 workflow stories**, including **216 MVP candidates**; **29 stories are currently marked shipped and 491 planned**. These are product-planning records, not a count of distinct implemented screens or buttons. Company capabilities awaiting catalog acceptance remain planned. The roadmap is not a promise that the full product exists. Local browser checks confirmed the 216-candidate filter and exact story-ID search.
+
+The separately supplied 200 enterprise requests are mapped individually in the [Review backlog](docs/review-enterprise-backlog.csv): **8 foundation mappings, 20 narrow pilot mappings, 129 later items and 43 requiring domain validation**. A mapping can cover only part of a requested capability; these are not 200 shipped features. The [enterprise delivery map](docs/REVIEW-ENTERPRISE-ROADMAP.md) sets acceptance gates for SSO/SCIM, private runners, retention, disaster recovery, security assessment and real-device validation.
 
 ## Run locally
 
@@ -111,6 +137,8 @@ These are reproduction commands, not a claim that release checks have passed. Th
 | APP_ORIGIN | Optional canonical deployed browser origin. |
 | PORT | Local port; defaults to 3000. |
 
+Review also needs Supabase URL/publishable key, a server worker proof, GitHub App credentials and pinned runner settings. The complete variable names are in [.env.example](.env.example); follow the [Review operator setup](docs/REVIEW-COMPANY-SETUP.md#operator-setup-for-a-new-deployment) before enabling real organization jobs. No service-role key is required for application CRUD.
+
 Requests use https://api.tokenfactory.nebius.com/v1/. The OpenAI SDK is the compatibility client; **Nebius serves the NVIDIA model**. [Nebius quickstart](https://docs.tokenfactory.nebius.com/quickstart) and [API reference](https://api.tokenfactory.nebius.com/docs).
 
 Keep keys on the server. Never commit .env.local or expose credentials with a VITE_ prefix. Configuration flags indicate presence of settings, not proof of inference or trace delivery.
@@ -123,7 +151,7 @@ The supported planning size is at most 18 devices, 40 part rows, and six needed 
 
 The baseline processes devices in intake order and greedily prefers lower-cash, then lower-preparation-time parts under the same constraints. It is an algorithmic comparison, not a measured representation of human performance.
 
-## Recorded domain verification
+## Earlier Workshop verification
 
 On 10 October 2026, the targeted recovery test suite passed, including an independent brute-force comparison across **24 varied small batches** and a capped-search feasibility check:
 
@@ -159,21 +187,25 @@ The published company interface loaded and its setup dialog opened. A fresh live
 
 ## Deployment and verification
 
-The company-workspace runtime `0a28d2b` is deployed at [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app), with [this versioned deployment](https://sparecycle-8rh0xw9ax-basuoikantik-7538s-projects.vercel.app). The fresh live review used `nvidia/Nemotron-3_5-Lightning` through Nebius and returned trace ID `fcdf679d-8ea7-44fc-9582-a8fcfccf0915`. Earlier LangSmith intake, successful plan and tool records were inspected with empty inputs/outputs; the new trace's contents have not been reinspected. The delivery copy is at `E:/LOCAL helper/sparecycle`.
+The earlier Workshop runtime `0a28d2b` has [this versioned deployment](https://sparecycle-8rh0xw9ax-basuoikantik-7538s-projects.vercel.app). Its live review used `nvidia/Nemotron-3_5-Lightning` through Nebius and returned trace ID `fcdf679d-8ea7-44fc-9582-a8fcfccf0915`. Earlier LangSmith intake, successful plan and tool records were inspected with empty inputs/outputs; that trace's contents were not reinspected. Current deployment and Review end-to-end evidence belong in [VALIDATION.md](docs/VALIDATION.md); earlier Workshop checks do not establish that the new review stages ran. The delivery location is `E:/LOCAL helper/sparecycle`.
 
 The current release uses manual Vercel deployments. Automatic deployment from GitHub is not connected: Vercel's Git connection requires a GitHub Login Connection on the account. Public source and the manual production deployment work independently. For another deployment, apply server environment variables and verify anonymous access, tool execution, errors, imports, and exports.
 
-The API bounds payloads, tool execution, output, and request duration. In-memory throttles operate per server instance: restarts and horizontal scaling reset or multiply them. They are not a durable account-wide spend cap. A production service needs authenticated access, shared quotas, and provider budget controls.
+The original Workshop `/api/analyze` bounds payloads, tool execution, output and request duration, with in-memory throttles per server instance. Restarts and scaling can reset or multiply those throttles. Review instead authenticates every mutation and reserves estimated cost against durable organization and aggregate ledgers, with daily/active-job limits and exclusive leases. These internal estimates do not change Nebius billing settings; provider usage and stranded reservations still require reconciliation.
 
 ## Data and privacy
 
 Browser storage is not an encrypted vault, a team database, or a reliable backup. Export records you need to keep, and use synthetic information in the public demo.
 
+Review passports, evidence and review history are stored in the selected Supabase project under organization membership controls. The public-source runner accepts public repositories only. Customer-specific private runners, retention/deletion workflows, SSO provisioning and audited production guarantees are not included in this pilot.
+
 AI requests send supplied notes and relevant workshop context through the server to Nebius. Local storage does not mean on-device inference. Never submit customer files, passwords, device contents, or unnecessary personal information.
+
+Review also sends the selected diagnostics source/tests and relevant evidence to Nebius for the requested stages. Only explicitly reviewed patch content and verification metadata are published to GitHub; evidence and model reasoning remain outside the public PR text.
 
 Optional LangSmith tracing is designed to retain action/model/status, tool names, and aggregate counts while hiding input and output content. Verify actual trace contents before sharing them. [LangSmith privacy controls](https://docs.langchain.com/langsmith/mask-inputs-outputs).
 
-The app does not erase disks, alter hardware, purchase parts, submit external messages, or certify a device. Work orders are drafts for qualified staff. External manufacturer instructions and organizational policies remain authoritative.
+Review can publish an independently approved diagnostic patch as a draft GitHub PR. Public PR text includes verification metadata rather than private laptop evidence or model rationale. The app does not merge changes, erase disks, alter hardware, purchase parts, send invitation emails, or certify a device. Work orders are drafts for qualified staff. External manufacturer instructions and organizational policies remain authoritative.
 
 ## Research and submission materials
 
@@ -181,6 +213,11 @@ The app does not erase disks, alter hardware, purchase parts, submit external me
 - [Business hypotheses and validation](docs/BUSINESS.md)
 - [Company quickstart and CSV preparation](docs/COMPANY-QUICKSTART.md)
 - [Company adoption and pilot scope](docs/COMPANY-ADOPTION.md)
+- [Review company setup and operator prerequisites](docs/REVIEW-COMPANY-SETUP.md)
+- [Review API contract](docs/REVIEW-API.md) · [OpenAPI specification](docs/review-openapi.json)
+- [Review harness, model routing and execution providers](docs/review-harness.md)
+- [Review database and authorization boundaries](docs/review-database.md)
+- [Enterprise acceptance gates](docs/REVIEW-ENTERPRISE-ROADMAP.md) · [All 200 requested capabilities](docs/review-enterprise-backlog.csv)
 - [Kaggle source, quality report and limitations](docs/DATA-SOURCES.md)
 - [Feature catalog and roadmap status](docs/FEATURES.md)
 - [Devpost draft and eligibility checklist](docs/DEVPOST.md)
