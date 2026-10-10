@@ -1,0 +1,7 @@
+node_modules
+.prototype-archive
+.claude-flow
+test-results
+.env*
+!.env.example
+.git

@@ -1,0 +1,1018 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SpareCycle API",
+    "version": "1.0.0",
+    "description": "Review-only intake and bounded tool-calling recovery planning. Server computes allocations. No inventory persistence or mutation. See API.md for validation refinements, 24KB body and 16KB batch limits, privacy and in-memory throttling limitations."
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "operationId": "health",
+        "summary": "Report configuration, not live connectivity",
+        "responses": {
+          "200": {
+            "description": "Configuration flags",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "aiConfigured": {
+                      "type": "boolean"
+                    },
+                    "tracingConfigured": {
+                      "type": "boolean"
+                    },
+                    "model": {
+                      "type": "string"
+                    },
+                    "service": {
+                      "const": "SpareCycle"
+                    }
+                  },
+                  "required": [
+                    "aiConfigured",
+                    "tracingConfigured",
+                    "model",
+                    "service"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analyze": {
+      "post": {
+        "operationId": "analyze",
+        "summary": "Draft intake, run the recovery agent, or explain a server plan",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalysisRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validated model text and, for plan/explain, authoritative deterministic plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or oversized input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Browser origin rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Process-local request quota exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Model response, tool call or provider failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Nebius key is not configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalysisRequest": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "const": "intake"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 6000
+              }
+            },
+            "required": [
+              "action",
+              "text"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "const": "plan"
+              },
+              "batch": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 160
+                  },
+                  "devices": {
+                    "minItems": 1,
+                    "maxItems": 18,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 160
+                        },
+                        "model": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 160
+                        },
+                        "needs": {
+                          "minItems": 1,
+                          "maxItems": 6,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                          }
+                        },
+                        "repairMinutes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 600
+                        },
+                        "priority": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 10
+                        },
+                        "eligible": {
+                          "type": "boolean"
+                        },
+                        "holdReason": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 500
+                        },
+                        "intakeNote": {
+                          "type": "string",
+                          "maxLength": 1200
+                        },
+                        "qaRequired": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "label",
+                        "model",
+                        "needs",
+                        "repairMinutes",
+                        "priority",
+                        "eligible",
+                        "intakeNote",
+                        "qaRequired"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "parts": {
+                    "maxItems": 40,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        },
+                        "sku": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 160
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "stock",
+                            "donor",
+                            "purchase"
+                          ]
+                        },
+                        "donorId": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        },
+                        "quantity": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 100
+                        },
+                        "costCents": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1000000
+                        },
+                        "harvestMinutes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 600
+                        },
+                        "verified": {
+                          "type": "boolean"
+                        },
+                        "evidenceId": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "sku",
+                        "label",
+                        "source",
+                        "quantity",
+                        "costCents",
+                        "harvestMinutes",
+                        "verified",
+                        "evidenceId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "evidence": {
+                    "maxItems": 40,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 160
+                        },
+                        "detail": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1600
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "demo",
+                            "manufacturer",
+                            "technician"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "detail",
+                        "kind"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "devices",
+                  "parts",
+                  "evidence"
+                ],
+                "additionalProperties": false
+              },
+              "limits": {
+                "type": "object",
+                "properties": {
+                  "budgetCents": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 1000000
+                  },
+                  "technicianMinutes": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                  },
+                  "unavailablePartIds": {
+                    "maxItems": 40,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                    }
+                  }
+                },
+                "required": [
+                  "budgetCents",
+                  "technicianMinutes",
+                  "unavailablePartIds"
+                ],
+                "additionalProperties": false
+              },
+              "brief": {
+                "type": "string",
+                "maxLength": 2000
+              }
+            },
+            "required": [
+              "action",
+              "batch",
+              "limits"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "const": "explain"
+              },
+              "batch": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 160
+                  },
+                  "devices": {
+                    "minItems": 1,
+                    "maxItems": 18,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 160
+                        },
+                        "model": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 160
+                        },
+                        "needs": {
+                          "minItems": 1,
+                          "maxItems": 6,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                          }
+                        },
+                        "repairMinutes": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 600
+                        },
+                        "priority": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 10
+                        },
+                        "eligible": {
+                          "type": "boolean"
+                        },
+                        "holdReason": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 500
+                        },
+                        "intakeNote": {
+                          "type": "string",
+                          "maxLength": 1200
+                        },
+                        "qaRequired": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "label",
+                        "model",
+                        "needs",
+                        "repairMinutes",
+                        "priority",
+                        "eligible",
+                        "intakeNote",
+                        "qaRequired"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "parts": {
+                    "maxItems": 40,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        },
+                        "sku": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 160
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "stock",
+                            "donor",
+                            "purchase"
+                          ]
+                        },
+                        "donorId": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        },
+                        "quantity": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 100
+                        },
+                        "costCents": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1000000
+                        },
+                        "harvestMinutes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 600
+                        },
+                        "verified": {
+                          "type": "boolean"
+                        },
+                        "evidenceId": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "sku",
+                        "label",
+                        "source",
+                        "quantity",
+                        "costCents",
+                        "harvestMinutes",
+                        "verified",
+                        "evidenceId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "evidence": {
+                    "maxItems": 40,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 160
+                        },
+                        "detail": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1600
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "demo",
+                            "manufacturer",
+                            "technician"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "detail",
+                        "kind"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "devices",
+                  "parts",
+                  "evidence"
+                ],
+                "additionalProperties": false
+              },
+              "limits": {
+                "type": "object",
+                "properties": {
+                  "budgetCents": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 1000000
+                  },
+                  "technicianMinutes": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                  },
+                  "unavailablePartIds": {
+                    "maxItems": 40,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$"
+                    }
+                  }
+                },
+                "required": [
+                  "budgetCents",
+                  "technicianMinutes",
+                  "unavailablePartIds"
+                ],
+                "additionalProperties": false
+              },
+              "brief": {
+                "type": "string",
+                "maxLength": 2000
+              }
+            },
+            "required": [
+              "action",
+              "batch",
+              "limits"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "Intake": {
+        "type": "object",
+        "properties": {
+          "devices": {
+            "maxItems": 18,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 160
+                },
+                "model": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 160
+                },
+                "needs": {
+                  "maxItems": 6,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  }
+                },
+                "repairMinutes": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 600
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "note": {
+                  "type": "string",
+                  "maxLength": 1200
+                },
+                "missing": {
+                  "maxItems": 12,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                }
+              },
+              "required": [
+                "label",
+                "model",
+                "needs",
+                "repairMinutes",
+                "note",
+                "missing"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1200
+          },
+          "missing": {
+            "maxItems": 12,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          }
+        },
+        "required": [
+          "devices",
+          "summary",
+          "missing"
+        ],
+        "additionalProperties": false
+      },
+      "Explanation": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1500
+          },
+          "risks": {
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 400
+            }
+          },
+          "nextAction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 600
+          }
+        },
+        "required": [
+          "summary",
+          "risks",
+          "nextAction"
+        ],
+        "additionalProperties": false
+      },
+      "RecoveryPlan": {
+        "type": "object",
+        "properties": {
+          "assignments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "deviceId": {
+                  "type": "string"
+                },
+                "allocations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "partId": {
+                        "type": "string"
+                      },
+                      "sku": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "partId",
+                      "sku",
+                      "quantity"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "costCents": {
+                  "type": "integer"
+                },
+                "minutes": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "deviceId",
+                "allocations",
+                "costCents",
+                "minutes"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "unresolved": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "deviceId": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "deviceId",
+                "reasons"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "summary": {
+            "type": "object",
+            "properties": {
+              "recovered": {
+                "type": "integer"
+              },
+              "costCents": {
+                "type": "integer"
+              },
+              "minutes": {
+                "type": "integer"
+              },
+              "reusedParts": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "recovered",
+              "costCents",
+              "minutes",
+              "reusedParts"
+            ],
+            "additionalProperties": false
+          },
+          "baseline": {
+            "type": "object",
+            "properties": {
+              "recovered": {
+                "type": "integer"
+              },
+              "costCents": {
+                "type": "integer"
+              },
+              "minutes": {
+                "type": "integer"
+              },
+              "reusedParts": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "recovered",
+              "costCents",
+              "minutes",
+              "reusedParts"
+            ],
+            "additionalProperties": false
+          },
+          "optimal": {
+            "type": "boolean"
+          },
+          "exploredStates": {
+            "type": "integer"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "assignments",
+          "unresolved",
+          "summary",
+          "baseline",
+          "optimal",
+          "exploredStates",
+          "warnings"
+        ],
+        "additionalProperties": false
+      },
+      "AnalysisResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Intake"
+              },
+              {
+                "$ref": "#/components/schemas/Explanation"
+              }
+            ]
+          },
+          "plan": {
+            "$ref": "#/components/schemas/RecoveryPlan"
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "const": "Nebius Token Factory"
+              },
+              "model": {
+                "type": "string"
+              },
+              "latencyMs": {
+                "type": "number"
+              },
+              "traceId": {
+                "type": "string"
+              },
+              "tools": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "enum": [
+                        "list_inventory",
+                        "inspect_device",
+                        "compute_recovery_plan"
+                      ]
+                    },
+                    "status": {
+                      "enum": [
+                        "completed",
+                        "rejected"
+                      ]
+                    },
+                    "resultCount": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "status",
+                    "resultCount"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "provider",
+              "model",
+              "latencyMs",
+              "tools"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ],
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error",
+          "code"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}
