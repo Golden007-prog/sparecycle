@@ -8,10 +8,10 @@ Built for the **Best Apps and Agents** track of the Nebius x NVIDIA Global AI Ha
 
 - Live application: [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app)
 - Workshop: [Open the planner](https://sparecycle-topaz.vercel.app/app) · [Start company setup](https://sparecycle-topaz.vercel.app/app?setup=1)
-- Public source: [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle) — company-workspace runtime commit `0a28d2b` is published on main.
+- Public source: [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle) — website and company-pilot runtime commit `e17998f` is published on main.
 - Public YouTube demonstration: **remaining submission task**
 - License: [MIT](LICENSE)
-- Release evidence: **56 automated tests passed**, production builds passed, and [GitHub CI passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38020705745). Local browser checks covered company, CSV, catalog and backup flows; the published company interface loaded successfully. See [VALIDATION.md](docs/VALIDATION.md) for the scope of each check.
+- Release evidence: **56 automated tests passed**, production builds passed, and [GitHub CI passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38022439465). Local browser checks covered company, CSV, catalog, backup and responsive website flows; public pages, setup and catalog links were verified on production. See [VALIDATION.md](docs/VALIDATION.md) for the scope of each check.
 - A fresh deployed NVIDIA batch-agent review succeeded in **4.1 seconds**, executing inventory and planning tools. Earlier live intake succeeded in 9.35 seconds and a batch review in 2.8 seconds. Earlier LangSmith root/tool records were inspected with empty inputs/outputs; the new request returned a trace ID but that trace's contents have not been reinspected.
 
 ![SpareCycle landing page](docs/assets/sparecycle-landing-desktop.jpg)

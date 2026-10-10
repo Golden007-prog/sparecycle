@@ -61,6 +61,8 @@ These are requirements, not blanket completed-check claims. Company runtime `0a2
 
 ## Recorded release evidence and remaining submission work
 
+The following table records the company runtime. The subsequent website/company release `e17998f` passed [GitHub CI](https://github.com/Golden007-prog/sparecycle/actions/runs/38022439465), deployed as `dpl_B7zFE1qQzpwCfRqUa5v1U88HB35P`, and passed public page, setup, catalog-link and pilot-download checks. Its delivery-folder build and 94-file secret-exclusion scan also passed. See [RELEASE.md](RELEASE.md) for the current deployment record.
+
 | Evidence | Status |
 | --- | --- |
 | Public repository | [Company runtime `0a28d2b` published on main](https://github.com/Golden007-prog/sparecycle); [GitHub CI passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38020705745) |

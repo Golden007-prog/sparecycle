@@ -1,6 +1,6 @@
 # SpareCycle: Devpost submission draft
 
-Editorial draft for the published company-workspace runtime `0a28d2b`. The release has passed its automated suite, production builds and local workflow checks; the deployed company interface and a fresh live agent review also succeeded. Keep claims aligned with the detailed release evidence. The video and Devpost entry remain unsubmitted.
+Editorial draft for published website/company runtime `e17998f`. The release has passed its automated suite, production builds and local workflow checks; public website routes and workshop links were verified on production. The latest real Nebius review was recorded on the preceding company runtime `0a28d2b`; the website release did not change the AI backend. Keep claims aligned with the detailed release evidence. The video and Devpost entry remain unsubmitted.
 
 ## Submission fields
 
@@ -8,7 +8,8 @@ Editorial draft for the published company-workspace runtime `0a28d2b`. The relea
 - **Tagline:** Turn a pile of repairable laptops into a plan for the whole workshop.
 - **Track:** Best Apps and Agents
 - **Live application:** https://sparecycle-topaz.vercel.app
-- **Public source:** https://github.com/Golden007-prog/sparecycle — company-workspace runtime `0a28d2b` published on main.
+- **Workshop:** https://sparecycle-topaz.vercel.app/app
+- **Public source:** https://github.com/Golden007-prog/sparecycle — website/company runtime `e17998f` published on main.
 - **Public YouTube video:** remaining submission task
 - **Built with:** React, Vite, TypeScript, Vercel, NVIDIA Nemotron, Nebius Token Factory, optional LangSmith
 

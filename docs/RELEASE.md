@@ -2,7 +2,20 @@
 
 Recorded 10 October 2026. SpareCycle is a working browser-local pilot prototype. It is not a shared enterprise service, and the 520-story roadmap is not a claim that all features are implemented.
 
-## Verified company prototype release
+## Website and company pilot release
+
+Runtime commit `e17998f` adds the landing page, workflow guide, company pilot guide, data page and reproducible public pilot kit. The workshop is available at [Open workshop](https://sparecycle-topaz.vercel.app/app), with direct links for [company setup](https://sparecycle-topaz.vercel.app/app?setup=1) and the [catalog](https://sparecycle-topaz.vercel.app/app?view=catalog).
+
+- Production deployment: `dpl_B7zFE1qQzpwCfRqUa5v1U88HB35P`; [immutable deployment](https://sparecycle-5gb7g8xhv-basuoikantik-7538s-projects.vercel.app).
+- [GitHub verification passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38022439465): 56 tests, build, roadmap check, pilot-kit check and source exclusions.
+- Local browser checks verified desktop/mobile layouts, interactive donor failure, navigation focus, setup and catalog links. Production checks verified all four public pages, setup open/refresh behavior and catalog navigation.
+- The public ZIP returned HTTP 200 and its SHA-256 matched the local tested kit. The public roadmap returned HTTP 200; health retained Nebius/NVIDIA and tracing configuration.
+- The delivery folder was fast-forwarded to this runtime and its production build passed. The source/build scan checked 94 files with no credential or excluded-path findings.
+- The AI backend was unchanged by this website release. The real 4.1-second Nebius result below remains the latest recorded live model call; a health flag is not counted as a new model call.
+
+Live website capture: [sparecycle-landing-live.jpg](assets/sparecycle-landing-live.jpg).
+
+## Prior verified company runtime
 
 | Evidence | Observation |
 | --- | --- |

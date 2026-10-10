@@ -117,6 +117,10 @@ Local Brave observations:
 
 The expanded source passed all 56 automated tests and the production build. Page code is loaded separately: the workshop JavaScript chunk is approximately 202 KB and the marketing chunk 41 KB before gzip, plus shared code. These are build measurements, not a browser performance benchmark. Broad accessibility and customer acceptance audits remain future work.
 
+Published runtime `e17998f` passed [GitHub run 38022439465](https://github.com/Golden007-prog/sparecycle/actions/runs/38022439465) and Vercel deployment `dpl_B7zFE1qQzpwCfRqUa5v1U88HB35P`. On the stable public alias, all four marketing headings loaded, guide navigation worked, and the catalog CTA opened the model catalog. Setup opened step one, consumed the query flag, and stayed closed after refresh. The roadmap and pilot ZIP returned HTTP 200. The downloaded ZIP was 45,094 bytes and matched SHA-256 `9bdd5aa6cdb22d07691884f745a195a7b991cb4f7cb07ab28807c733e7437273`. Health reported Nebius/NVIDIA and tracing configured. No extra paid inference call was made for these presentation-only changes; the latest real model result remains the company-release 4.1-second result above.
+
+The requested local folder was synchronized to `e17998f`, built successfully, and scanned across 94 source/build files without private-value or excluded-path findings. The existing user batch template and private settings were preserved. A final production screenshot is `docs/assets/sparecycle-landing-live.jpg`.
+
 ## Deployment integration limitation
 
 Vercel Git connection returned HTTP 400 because the account requires a GitHub Login Connection. Manual production deployment works, and the public source repository is independently available. Automatic deployment on push is not configured. No account connection change is required to use the current live release.
