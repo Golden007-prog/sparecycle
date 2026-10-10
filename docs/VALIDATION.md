@@ -9,8 +9,8 @@ Recorded 10 October 2026. This ledger separates observed prototype behavior from
 | Public application | https://sparecycle-topaz.vercel.app |
 | Public repository | https://github.com/Golden007-prog/sparecycle |
 | Repository content | Source published on main |
-| Verified runtime source commit | 69c964f |
-| Successful deployment checkpoint | Deployment identifier lrxb7vwng; stable alias https://sparecycle-topaz.vercel.app |
+| Verified company runtime source commit | 0a28d2b |
+| Successful company deployment checkpoint | dpl_9nirUUvw9qafyiXsCnXdoQaJFH7P; stable alias https://sparecycle-topaz.vercel.app |
 | Anonymous application access | HTML returned HTTP 200; manual planner loaded in the browser |
 | Production health | Verified aiConfigured and tracingConfigured are true; reports nvidia/Nemotron-3_5-Lightning |
 
@@ -91,11 +91,31 @@ The expanded local interface was checked in Brave through normal browser control
 
 The file-chooser upload path could not be automated because the browser extension lacked file-URL permission. Pasted CSV and pasted backup flows were verified instead; file reading is not claimed as an observed browser result. Invalid-storage preservation and restore capacity/identity validation have automated regression coverage.
 
+The company release was pushed and deployed. GitHub run [38020705745](https://github.com/Golden007-prog/sparecycle/actions/runs/38020705745) passed on `0a28d2b`. All 56 tests and the production build also passed directly in `E:\LOCAL helper\sparecycle`. The source/build scan checked 73 files without finding a private credential value or forbidden tracked path.
+
+On that public deployment, the expanded setup dialog opened and the CSV templates produced one proposed and one held device. A new Nebius request completed in **4.1 seconds**, with inventory and compute tools, seven proposed devices against five baseline devices, $25 cost and 150 minutes. It returned trace correlation `fcdf679d-8ea7-44fc-9582-a8fcfccf0915`; the content of this particular trace was not separately inspected. The public roadmap returned HTTP 200. Screenshots: `docs/assets/sparecycle-company-desktop.jpg` and `docs/assets/nebius-company-live-review.jpg`.
+
 Kaggle import reproduction matched 920 source rows, 613 excluded rows, 16 duplicate accepted rows, and 291 published variants. The catalog validator verified 520 distinct story IDs, titles and user stories, 26 modules of 20 stories, 216 differentiation flags, 29 shipped-story flags and 491 planned flags. It also checks that the public roadmap payload matches the CSV.
 
 A fresh request on the prior public deployment completed in 2.2 seconds, reporting `nvidia/Nemotron-3_5-Lightning through Nebius Token Factory`, with `list_inventory` and `compute_recovery_plan` completed. Trace correlation: `bc20c59a-eca6-4359-8bcf-43bd1155d57c`. Its browser result confirms the provider path; separate trace delivery for this particular repeat request was not re-inspected.
 
 Company profiles remain local browser records, not authenticated tenants. Use one active editing tab. The generated bundle is approximately 533 KB before gzip (136 KB gzip); Vite's size warning is recorded, not suppressed. A broad accessibility, load, security, and customer acceptance audit remains future work.
+
+## Public website expansion — 10 October 2026
+
+Four public routes were added: the landing page, workflow guide, company pilot page, and data-provenance page. The workshop is separate at `/app`; direct links open company setup or the model catalog. Public pages do not make AI calls. The interactive synthetic illustration uses the actual allocator.
+
+Local Brave observations:
+
+- The landing illustration changed from seven proposals / 150 minutes to six / 125 minutes when donor memory was unavailable, and returned to seven when restored. Its inputs do not change saved workshop batches.
+- All four public pages loaded at a narrow viewport (355 CSS pixels under the current browser zoom) without page-level horizontal overflow. The landing and company pages were also visually inspected at desktop width.
+- Mobile navigation focused Home after opening, set its expanded state, and removed the menu and returned focus to the toggle on Escape.
+- The company CTA opened step one of setup. Its `setup=1` flag was consumed; refreshing did not reopen the dialog.
+- The data-page catalog CTA opened the model catalog directly. The workflow comparison uses a native table with six scoped column/row headers.
+- The actual workshop screenshot loaded; the landing page had one main heading. Website captures are in `docs/assets/sparecycle-landing-desktop.jpg` and `docs/assets/sparecycle-landing-mobile.jpg`.
+- The seven-file public pilot kit passed its reproducibility check. It includes CSV templates, quickstart, provenance, feature documentation/catalog and license. Relative Markdown links are converted to public repository links for extracted use.
+
+The expanded source passed all 56 automated tests and the production build. Page code is loaded separately: the workshop JavaScript chunk is approximately 202 KB and the marketing chunk 41 KB before gzip, plus shared code. These are build measurements, not a browser performance benchmark. Broad accessibility and customer acceptance audits remain future work.
 
 ## Deployment integration limitation
 

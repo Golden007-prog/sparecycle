@@ -7,17 +7,20 @@ SpareCycle is a planning desk for laptop refurbishing coordinators. It combines 
 Built for the **Best Apps and Agents** track of the Nebius x NVIDIA Global AI Hackathon.
 
 - Live application: [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app)
-- Public source: [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle) — the previous baseline is published on main; the company-workspace expansion is awaiting final publication and deployment verification.
+- Workshop: [Open the planner](https://sparecycle-topaz.vercel.app/app) · [Start company setup](https://sparecycle-topaz.vercel.app/app?setup=1)
+- Public source: [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle) — company-workspace runtime commit `0a28d2b` is published on main.
 - Public YouTube demonstration: **remaining submission task**
 - License: [MIT](LICENSE)
-- Release evidence: the previous baseline passed automated tests and a production build, and the public manual planner loaded anonymously. Final checks for the expanded company, import, catalog, and backup flows are tracked in [VALIDATION.md](docs/VALIDATION.md).
-- Live NVIDIA intake succeeded in **9.35 seconds** and a complete batch-agent review in **2.8 seconds**, with actual inventory and planning tools. The successful LangSmith plan trace and tool records were inspected with empty inputs/outputs. See [validation evidence](docs/VALIDATION.md).
+- Release evidence: **56 automated tests passed**, production builds passed, and [GitHub CI passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38020705745). Local browser checks covered company, CSV, catalog and backup flows; the published company interface loaded successfully. See [VALIDATION.md](docs/VALIDATION.md) for the scope of each check.
+- A fresh deployed NVIDIA batch-agent review succeeded in **4.1 seconds**, executing inventory and planning tools. Earlier live intake succeeded in 9.35 seconds and a batch review in 2.8 seconds. Earlier LangSmith root/tool records were inspected with empty inputs/outputs; the new request returned a trace ID but that trace's contents have not been reinspected.
 
-![SpareCycle workshop bench](docs/assets/sparecycle-desktop.jpg)
+![SpareCycle landing page](docs/assets/sparecycle-landing-desktop.jpg)
 
-Actual browser capture of the earlier synthetic workshop baseline. A [mobile capture](docs/assets/sparecycle-mobile.jpg) is also included. These captures do not verify the expanded company-workspace flows.
+Actual browser capture of the public website. The interactive synthetic example recalculates with the real allocator. See the [mobile website](docs/assets/sparecycle-landing-mobile.jpg), [company workspace](docs/assets/sparecycle-company-desktop.jpg), and [company mobile capture](docs/assets/sparecycle-company-mobile.jpg).
 
 ## The workshop workflow
+
+The public website includes [how it works](https://sparecycle-topaz.vercel.app/how-it-works), a [company pilot guide](https://sparecycle-topaz.vercel.app/for-teams), and [data provenance](https://sparecycle-topaz.vercel.app/data). Companies can download the [pilot kit](https://sparecycle-topaz.vercel.app/samples/sparecycle-pilot-kit.zip) with CSV templates and public documentation. The [searchable roadmap](https://sparecycle-topaz.vercel.app/roadmap.html) separates shipped story flags from planned work and differentiation hypotheses.
 
 1. Create a browser-local company profile through three-step setup: workshop details, default planning limits, and the first batch. The prototype supports up to eight profiles and 20 saved batches per profile.
 2. Open the clearly labeled synthetic batch, or import workshop records using the Devices and Parts CSV templates or the JSON batch template. Name and save separate batches; changes to a selected saved batch autosave locally.
@@ -57,7 +60,7 @@ Company profiles and saved batches remain in one browser. They organize records 
 
 The model catalog contains **291 historical laptop listing variants across 14 brands**, derived from a Kaggle dataset whose uploader declares **CC0-1.0**. Its last update was February 2023. The importer excluded incomplete or malformed rows and retained source-row references. Specifications remain unverified retailer claims; historical INR prices are not current offers or the planner's USD repair costs. Catalog matches never approve a replacement part, diagnosis, condition, or release. See [data sources and reproducible filtering](docs/DATA-SOURCES.md).
 
-The [interactive roadmap](https://sparecycle-topaz.vercel.app/roadmap.html) is built from `public/roadmap.html` and the [feature catalog](docs/FEATURES.md). The current catalog contains **520 workflow stories**, including **216 MVP candidates**; **29 stories are currently marked shipped and 491 planned**. These are product-planning records, not a count of distinct implemented screens or buttons. Company capabilities awaiting catalog acceptance remain planned. The roadmap is not a promise that the full product exists, and its updated deployment is part of the current release checks.
+The [interactive roadmap](https://sparecycle-topaz.vercel.app/roadmap.html) is built from `public/roadmap.html` and the [feature catalog](docs/FEATURES.md). The current catalog contains **520 workflow stories**, including **216 MVP candidates**; **29 stories are currently marked shipped and 491 planned**. These are product-planning records, not a count of distinct implemented screens or buttons. Company capabilities awaiting catalog acceptance remain planned. The roadmap is not a promise that the full product exists. Local browser checks confirmed the 216-candidate filter and exact story-ID search.
 
 ## Run locally
 
@@ -138,9 +141,11 @@ For the fixed synthetic fixture with a $25 purchase budget and 180 technician mi
 
 Making part-t480-ram-donor unavailable reduces the allocator's result to six projected candidates. These are reproducible modeled outcomes, not physical repairs or measured customer gains.
 
-The earlier baseline passed its automated suite and production build. Browser checks on that baseline confirmed the default seven-candidate plan, the six-candidate donor-failure result, identity-hold inspection, invalid-import rejection, and a valid one-device JSON import followed by restoring the demo. New company/workspace, CSV, catalog and recovery checks extend that scope; their final test totals and browser/deployment evidence belong in [VALIDATION.md](docs/VALIDATION.md), not in an assumed carry-forward result.
+The company release passed **56 tests: 24 API, 11 domain, 3 export, 7 CSV and 11 workspace tests**. Production builds passed in the working project, delivery copy and Vercel deployment, and [GitHub CI passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38020705745). The source secret check reported no findings across 73 checked files. Earlier browser checks confirmed the seven-candidate fixture, the six-candidate donor-failure result, identity hold and valid/invalid JSON imports.
 
-At 390-pixel mobile width, no horizontal overflow was observed. Closed navigation is hidden from the accessibility tree; opening it focuses Recovery planner, Escape restores the navigation toggle, and page selection moves focus to the main content. Anonymous HTML access returned HTTP 200 and the manual planner loaded. A complete live batch-agent review executed list_inventory and compute_recovery_plan and returned seven projected candidates, a five-candidate baseline, $25 cost, and 150 technician minutes. These are individual smoke checks; details and remaining coverage are in [VALIDATION.md](docs/VALIDATION.md).
+Local browser checks on the company release covered three-step setup, independent named-batch limits, reload persistence, CSV import with one proposed and one held device, company switching that clears reviews/checklists, rejection of an invalid backup, and restoration without overwriting two existing profiles. Catalog search returned two ThinkPad references and handled no-match results. At an actual 355-CSS-pixel viewport, no horizontal overflow was observed and navigation focus was checked. These checks do not constitute a comprehensive accessibility audit.
+
+The published company interface loaded and its setup dialog opened. A fresh live batch-agent review executed `list_inventory` and `compute_recovery_plan`, returning seven projected candidates, a five-candidate baseline, $25 cost and 150 technician minutes in 4.1 seconds. These are individual smoke checks, not latency or customer-outcome benchmarks; details are in [VALIDATION.md](docs/VALIDATION.md).
 
 ## Planning and evidence rules
 
@@ -154,7 +159,7 @@ At 390-pixel mobile width, no horizontal overflow was observed. Closed navigatio
 
 ## Deployment and verification
 
-The earlier baseline is deployed at [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app). Real intake and complete batch-agent requests succeeded using NVIDIA nvidia/Nemotron-3_5-Lightning through Nebius. LangSmith intake, successful plan, and tool records were delivered and inspected with empty inputs/outputs. The company-workspace expansion requires its own final publication, deployment and browser verification; those earlier observations do not establish that the new flows have passed.
+The company-workspace runtime `0a28d2b` is deployed at [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app), with [this versioned deployment](https://sparecycle-8rh0xw9ax-basuoikantik-7538s-projects.vercel.app). The fresh live review used `nvidia/Nemotron-3_5-Lightning` through Nebius and returned trace ID `fcdf679d-8ea7-44fc-9582-a8fcfccf0915`. Earlier LangSmith intake, successful plan and tool records were inspected with empty inputs/outputs; the new trace's contents have not been reinspected. The delivery copy is at `E:/LOCAL helper/sparecycle`.
 
 The current release uses manual Vercel deployments. Automatic deployment from GitHub is not connected: Vercel's Git connection requires a GitHub Login Connection on the account. Public source and the manual production deployment work independently. For another deployment, apply server environment variables and verify anonymous access, tool execution, errors, imports, and exports.
 

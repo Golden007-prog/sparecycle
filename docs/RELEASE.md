@@ -1,65 +1,44 @@
-# SpareCycle: release-readiness checklist
+# SpareCycle release record
 
-Release progress recorded on 10 October 2026. Public source is pushed, the app is deployed, real intake and complete batch-agent review succeeded, and delivered intake/planner-tool trace records were inspected. The public video and Devpost submission remain unfinished. See [VALIDATION.md](VALIDATION.md) for the evidence ledger.
+Recorded 10 October 2026. SpareCycle is a working browser-local pilot prototype. It is not a shared enterprise service, and the 520-story roadmap is not a claim that all features are implemented.
 
-## Local application
+## Verified company prototype release
 
-- [x] Run the complete current test suite and production build: 38 tests passed (24 API, 11 domain, 3 export); build passed. Final source commit remains to record.
-- [ ] Complete the workshop flow on desktop and a narrow mobile viewport, including keyboard navigation and dialog focus.
-- [x] Verify the 390-pixel mobile layout without horizontal overflow and mobile-navigation focus/visibility behavior.
-- [x] Import a valid one-device JSON batch, observe one projected candidate, restore the seven-candidate demo, and reject an invalid batch.
-- [ ] Import valid JSON and reject invalid references, quantities, limits, and oversized inputs with understandable errors.
-- [x] Verify the synthetic default: $25 and 180 minutes produce seven projected candidates versus five for the intake-order baseline; disabling the donor RAM produces six. Browser confirmation recorded.
-- [ ] Check zero budget, zero time, unavailable stock, unknown compatibility, tied results, and bounded-search wording.
-- [ ] Confirm a changed input invalidates the previous review and explanation.
-- [ ] Inspect exact allocations in device dialogs and CSV work orders; the main bench is a schematic overview.
-- [ ] Open CSV and JSON exports and verify amounts, proposal status, outstanding checks, and synthetic labeling. CSV imports are not supported.
-
-## Provider and tracing
-
-- [x] Configure server-only Nebius credentials and record the successful model: nvidia/Nemotron-3_5-Lightning.
-- [x] Make a successful real intake request; observed latency 9.35 seconds.
-- [ ] Complete a systematic field-quality evaluation of intake drafts and missing-information handling.
-- [x] Complete a real batch review: 2.8 seconds, list_inventory and compute_recovery_plan completed; returned plan 7 candidates, baseline 5, $25, 150 minutes.
-- [ ] Verify explicit provider-error behavior without a simulated AI fallback.
-- [x] Inspect the successful delivered LangSmith plan root and list_inventory/compute_recovery_plan children with empty inputs/outputs. Intake-root records were also inspected; this is verified delivery rather than reliance on a returned trace ID.
-- [ ] Record actual latency and usage for platform feedback. Keep account keys and private records out of evidence.
-
-## Public release
-
-- [x] Publish source on main at https://github.com/Golden007-prog/sparecycle; runtime commit 69c964f.
-- [ ] Finish the final remote documentation/license and secret-exclusion check against the release commit.
-- [x] Deploy to Vercel with production server configuration: https://sparecycle-topaz.vercel.app.
-- [x] Confirm anonymous HTML HTTP 200 and a loaded manual planner.
-- [ ] Check the production alias anonymously, including the interface, health route, and a real AI request.
-- [ ] Verify public judge access, imports, planning, failure replay, and exports against the deployed version.
-- [x] Replace live/source/model-verification placeholders with observed results; retain video and submission tasks as incomplete.
-- [ ] Record deployment URL, commit, date, browser checks, known limitations, and provider-test results.
-
-## Submission
-
-- [ ] Record and publish the working demonstration as a public YouTube video of at most three minutes.
-- [ ] Reconcile submission claims with the shipped interface: JSON import; CSV/JSON exports; schematic overview; exact allocations in inspection; synthetic outcomes.
-- [ ] Complete genuine platform feedback and the eligibility checklist in DEVPOST.md.
-- [ ] Submit through Devpost and record submission confirmation. Deployment alone is not submission.
-- [ ] Keep the demo accessible to judges for the required period.
-
-## Release record
-
-| Evidence | Result |
+| Evidence | Observation |
 | --- | --- |
-| Public repository | [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle); source pushed to main |
-| Production URL | https://sparecycle-topaz.vercel.app |
-| Runtime commit / deployment date | 69c964f; deployment observed 10 October 2026 |
-| Full tests / build | 38 tests passed; production build passed |
-| Anonymous browser verification | HTML HTTP 200 and manual planner loaded; default 7 → donor failure 6, identity hold, invalid import checked |
-| Actual Nebius model and successful tool run | Lightning intake 9.35 seconds; complete agent review 2.8 seconds with inventory and planning tools |
-| Inspected LangSmith trace | Successful plan root and tool children had empty inputs/outputs; server trace 2.49 seconds |
-| Public YouTube video | Pending |
-| Devpost submission confirmation | Pending |
+| Public source | [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle) |
+| Company runtime commit | `0a28d2b` |
+| Live site | [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app) |
+| Company deployment | `dpl_9nirUUvw9qafyiXsCnXdoQaJFH7P` |
+| Automated verification | 56 tests passed; TypeScript and production build passed locally, in the delivery folder and on Vercel |
+| GitHub verification | [Successful run](https://github.com/Golden007-prog/sparecycle/actions/runs/38020705745) on the runtime commit |
+| Credential exclusion | Source/build scan found no private credential values or forbidden tracked paths |
+| Company browser flow | Three-step setup, named batch copies, independent limits, reload persistence, CSV import, cross-company review clearing and non-overwriting backup restoration verified locally |
+| Public browser smoke | Updated UI and setup dialog opened; CSV template import returned one proposal and one held device |
+| Live AI provider | NVIDIA `nvidia/Nemotron-3_5-Lightning` through **Nebius Token Factory** |
+| New company-release model result | 4.1 seconds; inventory and planning tools completed; seven proposals vs five baseline, $25, 150 minutes |
+| Observability | LangSmith metadata tracing; prior delivered root/tool records inspected with empty inputs and outputs. The latest returned correlation ID alone is not a new trace-content inspection. |
+| Kaggle reference | 291 retained historical listing variants; source hash, quality exclusions and reproduction check recorded |
+| Capability roadmap | 520 stories; 216 differentiation candidates; 29 shipped-story flags and 491 planned flags; generated public catalog matches source |
+| Requested local delivery | `E:\LOCAL helper\sparecycle`; existing user batch template and private settings preserved |
 
-Current test and browser evidence is documented in VALIDATION.md. It validates the recorded prototype behavior; it does not establish completed physical repairs, customers, or production readiness.
+See [VALIDATION.md](VALIDATION.md) for the evidence, narrow-screen measurements and exact boundaries of the browser checks.
 
-## Deployment integration limitation
+## Pilot use
 
-The production release uses manual Vercel deployment. Git connection returned HTTP 400 because the Vercel account requires a GitHub Login Connection. The public repository and live manual deployment work independently; automatic deployment on push is not configured. No account connection change is required to use the current release.
+Start with the [company quickstart](COMPANY-QUICKSTART.md): create a company workspace, import reviewed device/part CSV files, then inspect the proposal and export draft work orders. Use one coordinator, one active editing tab, and a small non-sensitive batch. Keep workspace exports as backups. Restoring a backup creates separate company copies rather than overwriting existing valid records.
+
+A declared hold is incompatible with eligibility. The allocator excludes unverified parts and never infers exact part approval from the Kaggle catalog. Technician inspection, repairs, sanitization evidence and final QA remain separate physical responsibilities.
+
+## Remaining production and submission work
+
+- Authenticated company accounts, server-enforced tenant separation, concurrent stock reservations, durable audit records and shared quotas are planned.
+- Browser storage is not a server backup. Simultaneous editing across tabs is not coordinated.
+- Broad load/security/accessibility audits and customer acceptance testing remain future work. Reported synthetic outcomes are not customer gains.
+- Browser file-picker automation was blocked by the extension's file-URL permission. Pasted CSV and backup flows were verified; file-picker behavior is not claimed as an observed test.
+- The public YouTube demo and Devpost submission remain unfinished. Deployment and source publication are not submission.
+- Keep the demo available to judges for the required period after entering.
+
+## Deployment integration
+
+Vercel production deployment is manual. Automatic GitHub-to-Vercel deployment is not connected because the account requires a GitHub Login Connection. GitHub verification runs on pushes; it does not deploy the site. No paid account upgrade or credit purchase was made.

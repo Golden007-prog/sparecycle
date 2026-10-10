@@ -4,6 +4,8 @@ Build a browser-local company and batch planning prototype for the Nebius x NVID
 
 The workflow is: three-step company setup → CSV/JSON batch import and declared evidence → coordinator review → batch constraints → feasible allocations → baseline comparison → donor-failure replay → work orders, report and workspace backup.
 
+The public entry points are a landing page, a workflow guide, a company pilot page, and a data-provenance page. The workshop lives at `/app`; `/app?setup=1` opens company setup and `/app?view=catalog` opens the model reference. A downloadable pilot kit bundles the templates, quickstart, provenance, roadmap and license. The website's interactive synthetic example uses the same deterministic allocator as the workshop and makes no AI request.
+
 ## Scope
 
 The user is a refurbishment coordinator. Inputs are diagnosed laptop needs, tested spare or approved donor components, exact-SKU compatibility with provenance, availability, estimated labor and part costs, and release requirements.
@@ -55,21 +57,23 @@ The model structures supplied information and invokes allowlisted tools. It cann
 - QA, wipe evidence, and support-policy checks remain distinct from a modeled repair.
 - Keyboard use, narrow screens, visible focus, and reduced motion are reviewed.
 
-These are requirements, not blanket completed-check claims. The earlier baseline passed its test suite and production build. Expanded company, CSV, catalog, storage-recovery and restore checks are being integrated; final results and browser/deployment observations belong in [VALIDATION.md](VALIDATION.md).
+These are requirements, not blanket completed-check claims. Company runtime `0a28d2b` passed 56 tests and production builds, and is published on GitHub and Vercel. The scope of local workflow checks, deployed smoke checks and remaining submission work is recorded in [VALIDATION.md](VALIDATION.md).
 
 ## Recorded release evidence and remaining submission work
 
 | Evidence | Status |
 | --- | --- |
-| Public repository | [Earlier baseline published on main](https://github.com/Golden007-prog/sparecycle); expanded company release awaiting final publication |
-| Live Vercel URL and anonymous access | [Live manual planner](https://sparecycle-topaz.vercel.app); earlier baseline anonymous HTML HTTP 200 and browser load verified; expanded release requires fresh checks |
-| Actual NVIDIA model ID and successful calls | nvidia/Nemotron-3_5-Lightning; intake succeeded in 9.35 seconds; complete batch review succeeded in 2.8 seconds |
-| Executed tool names and metadata-only trace inspection | list_inventory and compute_recovery_plan completed; successful plan root and children inspected with empty inputs/outputs |
+| Public repository | [Company runtime `0a28d2b` published on main](https://github.com/Golden007-prog/sparecycle); [GitHub CI passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38020705745) |
+| Live Vercel URL | [Company application](https://sparecycle-topaz.vercel.app); new interface loaded and setup dialog opened; deployment `dpl_9nirUUvw9qafyiXsCnXdoQaJFH7P` |
+| Actual NVIDIA model ID and successful calls | nvidia/Nemotron-3_5-Lightning; fresh company-release review succeeded in 4.1 seconds; earlier intake 9.35 seconds and review 2.8 seconds |
+| Executed tools and trace scope | Fresh review completed list_inventory and compute_recovery_plan; returned trace `fcdf679d-8ea7-44fc-9582-a8fcfccf0915`. Earlier successful root/children were inspected with empty inputs/outputs; new trace contents have not been reinspected |
 | Domain allocation suite | Passed on 10 October 2026; includes 24 oracle fixtures |
-| Full test/build result | Earlier baseline passed; record the final expanded-release result in VALIDATION.md |
-| Browser observations | Earlier baseline: default 7 → donor-failure 6; identity hold; invalid JSON import rejection; valid one-device import/restoration; 390-pixel mobile and navigation focus checks |
+| Full test/build result | 56 passing tests: 24 API, 11 domain, 3 export, 7 CSV, 11 workspace; working-project, delivery-copy and Vercel production builds passed |
+| Source secret check | No findings across 73 checked files |
+| Browser observations | Earlier baseline: default 7 → donor-failure 6, identity hold and JSON import checks. Current local company workflow: setup, independent batch budgets, reload persistence, CSV proposed/held results, review reset, invalid-backup rejection and restore without overwrite; mobile 355 CSS pixels without overflow and navigation focus checked |
 | Kaggle catalog | Official CC0 dataset downloaded and profiled; 291 variants retained; reproducible importer check passed |
-| Expanded company/CSV/restore/catalog interface | Final integration, browser and deployed verification pending |
+| Catalog and roadmap interface | Local ThinkPad search returned two records; no-match state checked; roadmap 216-candidate and exact SC-0520 filters checked |
+| Delivery copy | `E:/LOCAL helper/sparecycle` |
 | Synthetic fixture | $25/180 minutes: baseline 5, allocator 7; unavailable donor RAM: 6 |
 | Public YouTube video, at most three minutes | Remaining submission task |
 | Devpost submission | Entrant action after final review |

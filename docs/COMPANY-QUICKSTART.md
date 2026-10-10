@@ -2,6 +2,8 @@
 
 The current application is a browser-local prototype. Use one coordinator and a small, non-sensitive pilot batch. Company profiles and saved batches are isolated in this browser; they are not authenticated shared company accounts.
 
+Open [company setup](https://sparecycle-topaz.vercel.app/app?setup=1) to begin, or [explore the workshop](https://sparecycle-topaz.vercel.app/app) first. The public [team guide](https://sparecycle-topaz.vercel.app/for-teams) explains the pilot boundaries.
+
 ## Three steps
 
 1. **Create your company workspace.** Enter a company or workshop name, site, workflow type, and default cash and technician-time limits. Start with the synthetic demo to learn the interface.

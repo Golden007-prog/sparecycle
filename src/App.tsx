@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import './styles.css';
 import { ArrowDownToLine, ArrowRight, ArrowUpRight, Boxes, Check, CheckCheck, ChevronRight, CircleHelp, Clock3, Cpu, FileCheck2, FileJson2, FlaskConical, Import, Laptop, Layers3, LoaderCircle, Menu, Minus, PackageCheck, Play, Plus, RotateCcw, ScanLine, Search, ShieldCheck, SlidersHorizontal, Sparkles, Unplug, Wrench, X } from 'lucide-react';
 import { sampleRecoveryBatch, defaultRecoveryLimits } from '../lib/recovery-data';
 import { planRecovery } from '../lib/recovery';
@@ -52,10 +53,10 @@ export default function App() {
   const [store, setStore] = useState(initial.store), [storageError, setStorageError] = useState('');
   const [recoveryRaw, setRecoveryRaw] = useState(initial.recoveryRaw);
   const [batch, setBatch] = useState(initial.batch), [limits, setLimits] = useState(initial.limits);
-  const [page, setPage] = useState<Page>('planner'), [selected, setSelected] = useState<string | null>(null);
+  const [page, setPage] = useState<Page>(() => new URLSearchParams(window.location.search).get('view') === 'catalog' ? 'catalog' : 'planner'), [selected, setSelected] = useState<string | null>(null);
   const [mobileMenu, setMobileMenu] = useState(false), [query, setQuery] = useState('');
   const sidebarRef = useRef<HTMLElement>(null), navigationToggleRef = useRef<HTMLButtonElement>(null), mainRef = useRef<HTMLElement>(null);
-  const [modal, setModal] = useState<'import' | 'intake' | 'reset' | 'workspace' | 'setup' | 'delete-batch' | 'delete-workspace' | 'restore' | 'replace-storage' | null>(null);
+  const [modal, setModal] = useState<'import' | 'intake' | 'reset' | 'workspace' | 'setup' | 'delete-batch' | 'delete-workspace' | 'restore' | 'replace-storage' | null>(() => new URLSearchParams(window.location.search).get('setup') === '1' ? 'setup' : null);
   const [backupRaw, setBackupRaw] = useState(''), [backupPreview, setBackupPreview] = useState<WorkspaceStore | null>(null), [backupFilename, setBackupFilename] = useState('');
   const backupReadVersion = useRef(0);
   const activeRequest = useRef<{ controller: AbortController } | null>(null);
@@ -85,6 +86,7 @@ export default function App() {
   const retained = plan.summary.recovered - plan.baseline.recovered, donorRows = batch.parts.filter(p => p.source === 'donor');
   const navigation: { page: Page; icon: typeof Layers3 }[] = [{ page: 'planner', icon: Layers3 }, { page: 'inventory', icon: Boxes }, { page: 'evidence', icon: FileCheck2 }, { page: 'orders', icon: Wrench }, { page: 'replay', icon: FlaskConical }, { page: 'catalog', icon: Laptop }];
   useEffect(() => { fetch('/api/health').then(r => r.json()).then(setHealth).catch(() => setHealth(null)); }, []);
+  useEffect(() => { const url = new URL(window.location.href); if (url.searchParams.get('setup') === '1') { url.searchParams.delete('setup'); window.history.replaceState(null, '', url.pathname + url.search + url.hash); } }, []);
   useEffect(() => { setStore(current => updateActiveBatch(current, batch, limits)); }, [batch, limits]);
   useEffect(() => { try { if (persistWorkspaceRecord(localStorage, store, recoveryRaw)) setStorageError(''); } catch { setStorageError('Browser storage is full or unavailable. Your changes are only in this open tab. Export a workspace backup now.'); } }, [store, recoveryRaw]);
   useEffect(() => { if (!workspace && recoveryRaw === null) { try { localStorage.setItem('sparecycle.batch.v1', JSON.stringify({ batch, limits })); } catch { setStorageError('Browser storage is unavailable. Export this batch before closing the tab.'); } } }, [batch, limits, workspace, recoveryRaw]);
@@ -154,7 +156,7 @@ export default function App() {
       if (workspace) {
         if (workspace.batches.length >= MAX_SAVED_BATCHES) throw new Error(`This workspace has reached its ${MAX_SAVED_BATCHES}-batch limit. Export a backup and remove an old saved batch from the workspace library.`);
         applyWorkspace(saveBatchCopy(updateActiveBatch(store, batch, limits), newId('saved'), nextBatch, nextLimits));
-      } else { setBatch(nextBatch); setLimits(nextLimits); setIntake(null); setNote(''); setModal(null); go('planner'); }
+      } else { setBatch(nextBatch); setLimits(nextLimits); setAgent(null); setAgentError(''); setApproved(null); setChecks({}); setIntake(null); setNote(''); setModal(null); go('planner'); }
       setScenario('Imported batch'); setToast('Batch validated and imported. Review its evidence before use.');
     } catch (error) { setError(error instanceof Error ? error.message : 'Invalid batch.'); }
   };
@@ -184,7 +186,7 @@ export default function App() {
       <button className="brand" onClick={() => go('planner')} aria-label="SpareCycle home"><span className="brand-mark"><Layers3 size={23}/></span><span>SpareCycle<span className="brand-dot">.</span></span></button>
       <button className="workshop-switch" disabled={!!busy} onClick={() => { setError(''); setCopyName(`${batch.name} copy`); setMobileMenu(false); setModal(workspace ? 'workspace' : 'setup'); setEditingCompany(false); }} aria-label={workspace ? `Manage ${workspace.profile.name} workspace and batches` : 'Set up your company workspace'}><span className="workshop-avatar">{workspace?.profile.name.slice(0, 1).toUpperCase() || 'S'}</span><span className="workshop-identity"><strong>{workspace?.profile.name || 'Your company workspace'}</strong><small>{workspace?.profile.site || (workspace ? companyTypes[workspace.profile.type] : 'Set up in three steps')}</small></span><ChevronRight size={15}/></button>
       <nav aria-label="Main navigation">{navigation.map(({page:p,icon:Icon})=><button key={p} className={page===p?'nav-item active':'nav-item'} onClick={()=>go(p)} aria-current={page===p?'page':undefined}><Icon size={19}/><span>{names[p]}</span>{p==='orders'&&<span className="nav-count">{plan.summary.recovered}</span>}</button>)}</nav>
-      <div className="sidebar-bottom"><div className="second-life"><div className="tiny-loop"><Laptop size={26}/><span><RotateCcw size={15}/></span></div><strong>More devices.<br/>Another beginning.</strong><p>Make the most of the parts already on your bench.</p><button onClick={()=>go('about')}>The idea behind SpareCycle <ArrowUpRight size={15}/></button></div><button className={`nav-item ${page==='about'?'active':''}`} onClick={()=>go('about')}><CircleHelp size={19}/><span>About this project</span></button><div className="sidebar-foot">Built with NVIDIA Nemotron<br/><span>on Nebius Token Factory</span></div></div>
+      <div className="sidebar-bottom"><div className="second-life"><div className="tiny-loop"><Laptop size={26}/><span><RotateCcw size={15}/></span></div><strong>More devices.<br/>Another beginning.</strong><p>Make the most of the parts already on your bench.</p><button onClick={()=>go('about')}>The idea behind SpareCycle <ArrowUpRight size={15}/></button></div><button className={`nav-item ${page==='about'?'active':''}`} onClick={()=>go('about')}><CircleHelp size={19}/><span>About this project</span></button><div className="sidebar-foot">Built with NVIDIA Nemotron<br/><span>on Nebius Token Factory</span><br/><a href="/">SpareCycle website ↗</a></div></div>
     </aside>
     <div className="workspace"><header className="topbar"><div className="breadcrumb"><button ref={navigationToggleRef} className="icon-button mobile-toggle" aria-label={mobileMenu?'Close navigation':'Open navigation'} aria-expanded={mobileMenu} aria-controls="workshop-navigation" onClick={()=>mobileMenu?closeNavigation():setMobileMenu(true)}><Menu size={21}/></button><span>Workshop</span><ChevronRight size={14}/><strong>{names[page]}</strong></div><div className="topbar-right"><span className={`connection ${health?.aiConfigured?'connected':''}`}><i/>{health?.aiConfigured?'Nebius configured':'Manual planning available'}</span><span className="user-avatar">CW</span></div></header>
     <main id="main-content" ref={mainRef} tabIndex={-1}>

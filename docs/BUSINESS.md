@@ -51,7 +51,7 @@ A useful pilot should measure time to an approved work queue, stock conflicts, p
 
 ## Product stages and costs
 
-The current scope is a single workshop prototype with browser-local state. It does not need Supabase. A paid team service would require authenticated shared records, permissions, component reservation, concurrent-edit handling, audit history, backups, deletion controls, and durable usage quotas.
+The current scope is a company pilot prototype with browser-local profiles and saved batches. It includes setup, CSV/JSON import, backup restoration, and a reference catalog; it does not need Supabase for this local scope. A paid team service would require authenticated shared records, permissions, component reservation, concurrent-edit handling, audit history, server backups, deletion controls, and durable usage quotas.
 
 Costs include inference, hosting, shared storage, operational support, data onboarding, and maintaining reliable import formats. Compatibility curation may cost more than inference. The available provider credit is a testing allowance, not a validated cost-of-goods estimate.
 

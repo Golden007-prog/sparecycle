@@ -1,6 +1,6 @@
 # SpareCycle: Devpost submission draft
 
-Editorial draft including the current company-workspace expansion. Reconcile every feature with the final deployed app and release evidence before submitting. The earlier baseline is public; the new company, CSV, catalog and backup flows still require final publication and deployed verification. The video and Devpost entry remain unsubmitted.
+Editorial draft for the published company-workspace runtime `0a28d2b`. The release has passed its automated suite, production builds and local workflow checks; the deployed company interface and a fresh live agent review also succeeded. Keep claims aligned with the detailed release evidence. The video and Devpost entry remain unsubmitted.
 
 ## Submission fields
 
@@ -8,7 +8,7 @@ Editorial draft including the current company-workspace expansion. Reconcile eve
 - **Tagline:** Turn a pile of repairable laptops into a plan for the whole workshop.
 - **Track:** Best Apps and Agents
 - **Live application:** https://sparecycle-topaz.vercel.app
-- **Public source:** https://github.com/Golden007-prog/sparecycle — earlier baseline published on main; expanded release awaiting final publication.
+- **Public source:** https://github.com/Golden007-prog/sparecycle — company-workspace runtime `0a28d2b` published on main.
 - **Public YouTube video:** remaining submission task
 - **Built with:** React, Vite, TypeScript, Vercel, NVIDIA Nemotron, Nebius Token Factory, optional LangSmith
 
@@ -52,9 +52,9 @@ We also distinguish modeled repair completion from release readiness. A solver c
 
 ## Accomplishments we are proud of
 
-The implementation combines company setup and batch preparation with evidence review, constrained allocation, baseline comparison, failure replay, and reviewable work orders. The expanded release still needs its final browser and deployment checks.
+The implementation combines company setup and batch preparation with evidence review, constrained allocation, baseline comparison, failure replay, and reviewable work orders. Company setup, saved-batch isolation, CSV import, catalog search and safe backup restoration were exercised in local browser checks; the published company interface loaded successfully.
 
-The earlier baseline passed its automated tests and production build. Domain tests include an independent brute-force oracle over 24 small fixtures; CSV and workspace tests extend the current suite. Record the final release test results in [VALIDATION.md](VALIDATION.md) after integration. In the fixed synthetic demonstration, a $25 purchase budget and 180-minute shift allow seven projected complete repairs versus five for the intake-order baseline. Removing one donor-RAM component changes the plan to six, also confirmed in the earlier browser checks. These results describe the supplied synthetic records; they are not actual devices repaired or evidence of customer improvement.
+The company release passed 56 automated tests: 24 API, 11 domain, 3 export, 7 CSV and 11 workspace tests. Domain checks include an independent brute-force oracle over 24 small fixtures. Production builds and [GitHub CI](https://github.com/Golden007-prog/sparecycle/actions/runs/38020705745) passed. In the fixed synthetic demonstration, a $25 purchase budget and 180-minute shift allow seven projected complete repairs versus five for the intake-order baseline. Removing one donor-RAM component changes the plan to six, also confirmed in the earlier browser checks. These results describe the supplied synthetic records; they are not actual devices repaired or evidence of customer improvement.
 
 The central technical claim is testable: allocations must satisfy the supplied rules. The AI has useful bounded tools, while deterministic code owns resource decisions and unresolved facts remain visible.
 
@@ -76,11 +76,11 @@ The [interactive roadmap](https://sparecycle-topaz.vercel.app/roadmap.html) and 
 
 - Exact successful deployed NVIDIA model ID: **nvidia/Nemotron-3_5-Lightning**.
 - Real deployed intake: **succeeded in 9.35 seconds**.
-- Full batch-agent completion: **succeeded in 2.8 seconds** with list_inventory and compute_recovery_plan completed. The returned plan had seven projected candidates versus a five-candidate baseline, $25 cost, and 150 technician minutes.
-- LangSmith: **successful plan root and list_inventory/compute_recovery_plan children inspected with empty inputs/outputs** in the sparecycle project. The plan trace records 2.49 seconds of server execution; the 2.8-second API observation includes trace flushing.
-- Earlier baseline tests/build: **automated suite and production build passed**. Browser checks confirmed default planning, donor failure, identity-hold inspection, and invalid-import rejection. Expanded company, import, catalog and restore verification remains a separate release task.
-- Public application: **anonymous HTML HTTP 200 and manual planner loaded** at https://sparecycle-topaz.vercel.app.
-- Public source: **earlier baseline published on main** at https://github.com/Golden007-prog/sparecycle. Record the expanded release's final commit and deployment in the validation log.
+- Fresh company-release batch-agent completion: **succeeded in 4.1 seconds**, executing list_inventory and compute_recovery_plan. The returned plan had seven projected candidates versus a five-candidate baseline, $25 cost and 150 technician minutes. An earlier baseline review succeeded in 2.8 seconds.
+- LangSmith: an **earlier successful plan root and inventory/planning children were inspected with empty inputs/outputs** in the sparecycle project. That trace records 2.49 seconds of server execution. The fresh request returned `fcdf679d-8ea7-44fc-9582-a8fcfccf0915`; its trace contents have not been reinspected.
+- Tests/build: **56 tests passed; production builds and GitHub CI passed**. Local browser checks covered setup, saved-batch isolation, persistence, CSV holds, review reset, safe backup restore, catalog and roadmap filters, and mobile navigation at 355 CSS pixels without horizontal overflow.
+- Public application: the **published company interface loaded and setup opened** at https://sparecycle-topaz.vercel.app. The full company workflow checks above were local; the new deployed smoke check also included the successful live agent request.
+- Public source: company runtime **`0a28d2b` published on main** at https://github.com/Golden007-prog/sparecycle; Vercel deployment `dpl_9nirUUvw9qafyiXsCnXdoQaJFH7P`.
 - Public YouTube recording: **remaining submission task**.
 
 Detailed observations and remaining checks are in [VALIDATION.md](VALIDATION.md). The public YouTube video and final entrant submission review remain before treating the entry as submission-ready. Deployment and source publication do not themselves submit the project to Devpost.
@@ -92,6 +92,8 @@ Do not claim use of Nebius AI Cloud, Serverless Jobs, Tavily, Supabase, local NV
 ## Platform feedback
 
 On 10 October 2026, a production intake request to nvidia/Nemotron-3_5-Lightning through Nebius succeeded in 9.35 seconds. A complete batch-agent review succeeded in 2.8 seconds and executed both inventory and planning tools. Its delivered LangSmith root and tool records were inspected with empty inputs/outputs. The final completion reported 356 completion tokens, zero reasoning tokens, and a stop finish reason. Integration testing showed that reasoning settings and bounded tool-loop termination matter for concise structured responses. These are individual smoke observations, not a latency, cost, or reliability benchmark. The deterministic plan remains authoritative when reviewing generated explanations.
+
+After publishing the company-workspace runtime, another deployed review succeeded in 4.1 seconds and reproduced the seven-versus-five plan using actual inventory and planning tools. This confirms a fresh successful integration request, not a general performance guarantee; its newly returned trace ID has not had a second privacy-content inspection.
 
 ## Eligibility and submission checklist
 
