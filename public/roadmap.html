@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Explore SpareCycle's 520 capability roadmap with explicit shipped and planned status, acceptance criteria, and differentiation hypotheses.">
+  <title>Capability roadmap · SpareCycle</title>
+  <link rel="stylesheet" href="/roadmap.css">
+  <script src="/roadmap.js" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="/">SpareCycle<span>WORKSHOP INTELLIGENCE</span></a><a href="/">Open the prototype ↗</a></header>
+  <main>
+    <div class="eyebrow">PRODUCT DIRECTION / OCTOBER 2026</div>
+    <h1>A better repair workflow.<br><em>A roadmap you can inspect.</em></h1>
+    <p class="intro">520 defined capabilities across the journey from intake to reuse. Explore the priorities, intended users, and acceptance criteria behind each one.</p>
+    <div class="boundary"><strong>A catalog of possibilities, with clear delivery status.</strong> “Shipped” describes a capability in this browser-local prototype. “Planned” is not implemented. Differentiation candidates are product hypotheses, not proof of market exclusivity. Shared accounts and enterprise operations remain future work.</div>
+    <div id="metrics" class="metrics" aria-label="Catalog totals"></div>
+    <section class="controls" aria-label="Filter roadmap">
+      <label class="search">Find a capability<input id="search" type="search" placeholder="Search titles, roles, or acceptance criteria…"></label>
+      <label>Module<select id="module"><option value="">All modules</option></select></label>
+      <label>Delivery<select id="status"><option value="">All statuses</option><option value="shipped">Shipped</option><option value="planned">Planned</option></select></label>
+      <label>Priority<select id="priority"><option value="">All priorities</option><option>P0</option><option>P1</option><option>P2</option><option>P3</option></select></label>
+      <label class="check"><input id="candidate" type="checkbox">Differentiation candidates</label>
+      <button id="clear" type="button">Clear filters</button>
+    </section>
+    <div class="results-head"><p id="count" role="status" aria-live="polite">Loading catalog…</p><a href="https://github.com/Golden007-prog/sparecycle/blob/main/docs/FEATURES.md" target="_blank" rel="noreferrer">Read the research ↗</a></div>
+    <section id="results" class="results" aria-label="Feature results"></section>
+    <div class="pagination"><button id="previous" type="button" disabled>← Previous</button><span id="page"></span><button id="next" type="button" disabled>Next →</button></div>
+  </main>
+  <footer><span>Built for thoughtful, evidence-led repair planning.</span><a href="/">Return to SpareCycle ↗</a></footer>
+</body>
+</html>

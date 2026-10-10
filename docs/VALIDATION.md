@@ -18,7 +18,7 @@ Recorded 10 October 2026. This ledger separates observed prototype behavior from
 
 | Check | Result | Interpretation |
 | --- | --- | --- |
-| Complete current test suite | 38 passed | 24 API, 11 domain, and 3 export tests |
+| Complete current test suite | 56 passed | 24 API, 11 domain, 3 export, 7 CSV-import, and 11 workspace tests |
 | Production build | Passed locally and remotely | TypeScript check and Vite production build completed |
 | Allocation oracle | Included in domain tests | Independent brute-force comparison across 24 varied small fixtures |
 | Search-cap behavior | Included in domain tests | Feasible output retains an explicit incomplete-search status |
@@ -70,11 +70,32 @@ Still to record explicitly: manual CSV/JSON export inspection, reviewed-state in
 | Inspected trace content | Successful plan root and tool children had empty inputs and outputs; intake root was also inspected |
 | Public error behavior | Earlier integration failures were explicit and were not counted as successful requests; the final recorded plan request completed successfully |
 
-The final successful request used the corrected module paths, bounded tool loop, and constrained-response reasoning settings. The currently recorded suite has 38 passing tests and passing local/remote production builds. Timings and token counts are individual request observations, not a performance, reliability, or cost benchmark.
+The final successful baseline request used the corrected module paths, bounded tool loop, and constrained-response reasoning settings. The expanded suite has 56 passing tests and a passing local production build. Timings and token counts are individual request observations, not a performance, reliability, or cost benchmark.
 
 The first successful generated explanation described six reused units as donors, although the deterministic reusedParts field includes both existing stock and donor components. The source prompt now explicitly defines that aggregate. Use the deterministic allocations for source attribution; generated explanations still require review. A follow-up wording check after the prompt redeployment is not recorded here.
 
 Configuration flags, a correlation ID, and offline mocks are not substitutes for these observations. Do not include credentials, private inventory, or account secrets in this ledger.
+
+## Company prototype verification — 10 October 2026
+
+The expanded local interface was checked in Brave through normal browser controls:
+
+- Three-step setup created a named company, its planning defaults, and the synthetic first batch.
+- Saving a copy and setting its budget to zero produced six proposals. Reload preserved the copied batch and its zero budget; the original retained its $25 budget.
+- The two supplied CSV templates imported as a new saved batch with two devices: one proposed and one on hold.
+- A second company imported the same template. The first company's review mark and physical checklist did not carry over.
+- Invalid pasted backup JSON was rejected. A valid synthetic backup previewed one company/one batch, restored with a `(restored)` name, and left both existing companies in the switcher.
+- Catalog search found two ThinkPad listing variants; a nonexistent search displayed an empty result. The source, CC0 declaration and reference-only warning were visible.
+- Roadmap filters returned 216 candidates, four shipped candidate stories in the batch-optimization module, and one exact SC-0520 search result.
+- At a 390-pixel viewport override with the browser's current zoom, the measured CSS viewport was 355 pixels and content width 341 pixels. The page and CSV dialog had no horizontal overflow after a narrow-grid fix. Mobile navigation focused its first item on opening and restored focus to the toggle on Escape.
+
+The file-chooser upload path could not be automated because the browser extension lacked file-URL permission. Pasted CSV and pasted backup flows were verified instead; file reading is not claimed as an observed browser result. Invalid-storage preservation and restore capacity/identity validation have automated regression coverage.
+
+Kaggle import reproduction matched 920 source rows, 613 excluded rows, 16 duplicate accepted rows, and 291 published variants. The catalog validator verified 520 distinct story IDs, titles and user stories, 26 modules of 20 stories, 216 differentiation flags, 29 shipped-story flags and 491 planned flags. It also checks that the public roadmap payload matches the CSV.
+
+A fresh request on the prior public deployment completed in 2.2 seconds, reporting `nvidia/Nemotron-3_5-Lightning through Nebius Token Factory`, with `list_inventory` and `compute_recovery_plan` completed. Trace correlation: `bc20c59a-eca6-4359-8bcf-43bd1155d57c`. Its browser result confirms the provider path; separate trace delivery for this particular repeat request was not re-inspected.
+
+Company profiles remain local browser records, not authenticated tenants. Use one active editing tab. The generated bundle is approximately 533 KB before gzip (136 KB gzip); Vite's size warning is recorded, not suppressed. A broad accessibility, load, security, and customer acceptance audit remains future work.
 
 ## Deployment integration limitation
 

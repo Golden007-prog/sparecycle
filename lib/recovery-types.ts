@@ -25,6 +25,7 @@ export const recoveryDeviceSchema = z.object({
   qaRequired: z.boolean(),
 }).strict().superRefine((device, context) => {
   if (!device.eligible && !device.holdReason) context.addIssue({ code: 'custom', path: ['holdReason'], message: 'An ineligible device needs a hold reason.' });
+  if (device.eligible && device.holdReason) context.addIssue({ code: 'custom', path: ['eligible'], message: 'A device with an unresolved hold cannot be eligible. Resolve and clear the hold, or set eligible to false.' });
 });
 
 export const recoveryPartSchema = z.object({

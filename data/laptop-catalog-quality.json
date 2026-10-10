@@ -1,0 +1,4117 @@
+{
+  "datasetRef": "anas123siddiqui/laptops",
+  "sourceSha256": "545a946bde1135f69d818ac53557f41811bdc423ca9a36e42016f255324428f9",
+  "profiledAt": "2026-10-10",
+  "sourceRows": 920,
+  "acceptedRows": 291,
+  "duplicateRows": 16,
+  "excludedRows": 613,
+  "sourceColumns": [
+    "",
+    "title",
+    "price",
+    "discount",
+    "Processor",
+    "RAM",
+    "OS",
+    "SSD",
+    "Display",
+    "In_build_sw",
+    "warranty"
+  ],
+  "sourceUniqueTitles": 846,
+  "sourceMissingValues": {
+    "": 0,
+    "title": 0,
+    "price": 0,
+    "discount": 89,
+    "Processor": 0,
+    "RAM": 0,
+    "OS": 0,
+    "SSD": 0,
+    "Display": 0,
+    "In_build_sw": 543,
+    "warranty": 14
+  },
+  "excludedReasonCounts": {
+    "nonstandard_cpu_column": 69,
+    "nonstandard_or_inconsistent_display": 91,
+    "nonstandard_os_column": 70,
+    "nonstandard_ram_column": 69,
+    "nonstandard_storage_column": 84,
+    "truncated_listing_title": 586
+  },
+  "reasonCountsMayOverlap": true,
+  "acceptedManufacturerCounts": {
+    "ASUS": 33,
+    "Acer": 20,
+    "Apple": 44,
+    "Avita": 3,
+    "Dell": 62,
+    "HP": 65,
+    "Infinix": 8,
+    "LG": 2,
+    "Lenovo": 41,
+    "MSI": 6,
+    "RedmiBook": 2,
+    "Samsung": 3,
+    "Ultimus": 1,
+    "realme": 1
+  },
+  "deduplication": "Same normalized manufacturer, full listing title and all retained specs; retain first source occurrence, not cheapest price.",
+  "sourceRowDefinition": "One-based CSV data-record number, excluding the header.",
+  "excluded": [
+    {
+      "sourceRow": 1,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 5,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 6,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 7,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 8,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 11,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 12,
+      "reasons": [
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 16,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 17,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 18,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 20,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 21,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 23,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 25,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 26,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_os_column"
+      ]
+    },
+    {
+      "sourceRow": 28,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 31,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 33,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 34,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 35,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 36,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 37,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 38,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 39,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 40,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 41,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 43,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 45,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 47,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 48,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 49,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 50,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 52,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 54,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 56,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 57,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 58,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 60,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 61,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 63,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 64,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 65,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 66,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 68,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 69,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 70,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 71,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 73,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 75,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 76,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 78,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 81,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 84,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 85,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 86,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 87,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 88,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 89,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 90,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 92,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 93,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 94,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 95,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 97,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 100,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 102,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 103,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 104,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 105,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 107,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 108,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 109,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 110,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 112,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 113,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 114,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 115,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 116,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 117,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 118,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 119,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 120,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 122,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 123,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 125,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 126,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 127,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 128,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 129,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 130,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 131,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 132,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 133,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 136,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 137,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 141,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 143,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 144,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 146,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 147,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 149,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 150,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 152,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 155,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 156,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 158,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 159,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 160,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 161,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 162,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 163,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 164,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 165,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 168,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 170,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 172,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 173,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 174,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 175,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 176,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 177,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 178,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 179,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 181,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 182,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 183,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 184,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 186,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 187,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 188,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 190,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 191,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 192,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 193,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 194,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 196,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 197,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 198,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 199,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 200,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 201,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 202,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 204,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 205,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 206,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 208,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 209,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 210,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 211,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 212,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 213,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 214,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 216,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 217,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 219,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 220,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 221,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 222,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 223,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 225,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 226,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 227,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 229,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 232,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 234,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 236,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 239,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 244,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 246,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 247,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 248,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 249,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 251,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 252,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 253,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 254,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 255,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 256,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 257,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 259,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 260,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 261,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 262,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 264,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 265,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 267,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 268,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 269,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 271,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 272,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 273,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 274,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 275,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 276,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 277,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 279,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 281,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 282,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 283,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 287,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 288,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 289,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 290,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 292,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 293,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 294,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 296,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 297,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 298,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 299,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 300,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 301,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 302,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 303,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 304,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 306,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 307,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 308,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 309,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 313,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 314,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 315,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 316,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 317,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 318,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 319,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 321,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 322,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 323,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 324,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 327,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 328,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 329,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 330,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 332,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 334,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 335,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 336,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 338,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 339,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 340,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 341,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 342,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 343,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 345,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 347,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 348,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 349,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 350,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 352,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 353,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 358,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 359,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 362,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 363,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 364,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 366,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 368,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 369,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 370,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 371,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 372,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 373,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 375,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 376,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 377,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 382,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 383,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 384,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 385,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 386,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 387,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 389,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 391,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 392,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 393,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 394,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 395,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 397,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 398,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 399,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 400,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 402,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 403,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 404,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 405,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 406,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 408,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 410,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 411,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 412,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 413,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 414,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 415,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 417,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 418,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 419,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 420,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 421,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 422,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 423,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 424,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 428,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 429,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 433,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 435,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 436,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 437,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 442,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 443,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 447,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 448,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 449,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 452,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 453,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 455,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 456,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 457,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 458,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 459,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 461,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 462,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 463,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 464,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 465,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 466,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 468,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 469,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 471,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 472,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 473,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 474,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 475,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 476,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 477,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 478,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 479,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 480,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 481,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 482,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 485,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 486,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 487,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 488,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 489,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 490,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 491,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 495,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 496,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 497,
+      "reasons": [
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 501,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 502,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 503,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 504,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 505,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 506,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 507,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 508,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 510,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 511,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 513,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 514,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 516,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 518,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 519,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 520,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 522,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 524,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 528,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 529,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 531,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 532,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 534,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 536,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 538,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 540,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 542,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 543,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 544,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 545,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 550,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 551,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 552,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 553,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 554,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 555,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 556,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 557,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 558,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 559,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 561,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 563,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 564,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 567,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 569,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 570,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 571,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 573,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 575,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 578,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 579,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 580,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 581,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 582,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 583,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 584,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 586,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 587,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 588,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 589,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 590,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 591,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 592,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 594,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 595,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 597,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 598,
+      "reasons": [
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 599,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 602,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 603,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 604,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 606,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 607,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 608,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 609,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 615,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 616,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 618,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 619,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 620,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 621,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 622,
+      "reasons": [
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 623,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 624,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 627,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 628,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 629,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 630,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 632,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 633,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 634,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 635,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 636,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 637,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 638,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 641,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 642,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 643,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 644,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 645,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 646,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 649,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 651,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 652,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 655,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 657,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 658,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 659,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 660,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 661,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 662,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 663,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 664,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 665,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 666,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 669,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 670,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 672,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 675,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 677,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 679,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 681,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 684,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 685,
+      "reasons": [
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 687,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 688,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 691,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 692,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 693,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 694,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 695,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 696,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 699,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 701,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 702,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 703,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 704,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 705,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 708,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 710,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 712,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 715,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 717,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 718,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 719,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 720,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 721,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 722,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 723,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 725,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 727,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 729,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 730,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 731,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 735,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 736,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 737,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 741,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 742,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 743,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 746,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 751,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 753,
+      "reasons": [
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 754,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 755,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 756,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 757,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 758,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 760,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 762,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 764,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 765,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 766,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 767,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 771,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 773,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 774,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 775,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 776,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 777,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 778,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 779,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 780,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 781,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 782,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 783,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 784,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 786,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 787,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 789,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 790,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 791,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 792,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 793,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 795,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 796,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 798,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 799,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 803,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 805,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 808,
+      "reasons": [
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 809,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 811,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 812,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 814,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 816,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 817,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 818,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 820,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 821,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 822,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 823,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 825,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 828,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 829,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 830,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 831,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 834,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 835,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 837,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 838,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 839,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 842,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 843,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 844,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 845,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 846,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 847,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 852,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 853,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 854,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 856,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 861,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 863,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 865,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 867,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 870,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 871,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 873,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 874,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 875,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 876,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 884,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 888,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 889,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 891,
+      "reasons": [
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 892,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 893,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 894,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 895,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 897,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 898,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 901,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 902,
+      "reasons": [
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 904,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 905,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 907,
+      "reasons": [
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 908,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 909,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 912,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 913,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    },
+    {
+      "sourceRow": 917,
+      "reasons": [
+        "truncated_listing_title",
+        "nonstandard_cpu_column",
+        "nonstandard_ram_column",
+        "nonstandard_os_column",
+        "nonstandard_storage_column",
+        "nonstandard_or_inconsistent_display"
+      ]
+    },
+    {
+      "sourceRow": 918,
+      "reasons": [
+        "truncated_listing_title"
+      ]
+    }
+  ],
+  "duplicateSourceRows": [
+    241,
+    320,
+    431,
+    444,
+    509,
+    526,
+    539,
+    576,
+    585,
+    617,
+    680,
+    690,
+    697,
+    728,
+    761,
+    887
+  ]
+}

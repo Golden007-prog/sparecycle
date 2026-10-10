@@ -1,6 +1,6 @@
 # SpareCycle: Devpost submission draft
 
-Editorial draft for the completed implementation. Reconcile every feature with the final app and replace verification placeholders before submitting. Publishing source or deploying the app does not submit a Devpost entry.
+Editorial draft including the current company-workspace expansion. Reconcile every feature with the final deployed app and release evidence before submitting. The earlier baseline is public; the new company, CSV, catalog and backup flows still require final publication and deployed verification. The video and Devpost entry remain unsubmitted.
 
 ## Submission fields
 
@@ -8,7 +8,7 @@ Editorial draft for the completed implementation. Reconcile every feature with t
 - **Tagline:** Turn a pile of repairable laptops into a plan for the whole workshop.
 - **Track:** Best Apps and Agents
 - **Live application:** https://sparecycle-topaz.vercel.app
-- **Public source:** https://github.com/Golden007-prog/sparecycle — published on main.
+- **Public source:** https://github.com/Golden007-prog/sparecycle — earlier baseline published on main; expanded release awaiting final publication.
 - **Public YouTube video:** remaining submission task
 - **Built with:** React, Vite, TypeScript, Vercel, NVIDIA Nemotron, Nebius Token Factory, optional LangSmith
 
@@ -22,13 +22,17 @@ SpareCycle makes that trade-off visible and reviewable. It is designed for coord
 
 ## What it does
 
-A coordinator imports a JSON batch or opens the synthetic example, reviews diagnosed needs and declared compatibility, then sets time and budget limits.
+A coordinator completes three-step setup for a local company profile, then imports Devices and Parts CSV files, imports a JSON batch, or opens the synthetic example. Each browser can hold up to eight company profiles with 20 saved batches per profile. Named batches keep their own limits and autosave locally. The coordinator reviews diagnosed needs and declared compatibility before planning.
 
 SpareCycle allocates eligible parts across complete repair candidates. Its workshop schematic shows component sources and device outcomes, while device inspection provides the exact allocations and evidence. The coordinator can compare a transparent baseline with the optimized plan, inspect rejected assignments, and see what remains blocked.
 
 When a donor component fails, one change triggers a new plan. JSON evidence packets and CSV work orders carry allocations and outstanding checks forward.
 
-All demonstration records and outcome counts are synthetic. A planned repair is not a computer already fixed or delivered. Final QA, data-wipe evidence, supported-software policy, and technician review remain separate release requirements.
+A model catalog adds 291 historical laptop listing variants from a Kaggle dataset whose uploader declares CC0-1.0. It helps staff compare source names and specifications. These are third-party retailer claims with historical INR prices, not manufacturer-approved compatibility records or current resale values. The [source and quality report](DATA-SOURCES.md) records exclusions, provenance and limitations.
+
+Workspace backups can be validated and restored as separate company profiles with new identifiers, preserving existing local records. The company profiles organize one browser's work; they are not authenticated, shared company accounts.
+
+The demonstration's diagnostic records, compatibility declarations, costs and outcome counts are synthetic. A planned repair is not a computer already fixed or delivered. Final QA, data-wipe evidence, supported-software policy, and technician review remain separate release requirements.
 
 ## How we built it
 
@@ -36,7 +40,7 @@ React, Vite, and TypeScript provide the workshop interface. A deterministic allo
 
 NVIDIA Nemotron is integrated through Nebius Token Factory. It structures supplied notes into drafts for review and explains calculated results. Its bounded tools are list_inventory, inspect_device, and compute_recovery_plan. The model reads known records and invokes the planner; it cannot invent compatibility, diagnose hardware, or override an allocation constraint.
 
-Vercel hosts the frontend and server routes. The single-workshop prototype uses local browser state. Optional LangSmith tracing records operational metadata while hiding inventory text and generated content. Supabase is unnecessary for this scope; shared team persistence remains future work.
+Vercel hosts the frontend and server routes. Company profiles, saved batches, CSV/JSON imports and backup restoration use validated local browser state. Optional LangSmith tracing records operational metadata while hiding inventory text and generated content. Supabase is not used; authenticated shared persistence remains future work.
 
 ## Challenges
 
@@ -48,9 +52,9 @@ We also distinguish modeled repair completion from release readiness. A solver c
 
 ## Accomplishments we are proud of
 
-The intended completed entry combines one coherent workflow: evidence review, constrained allocation, baseline comparison, failure replay, and reviewable work orders.
+The implementation combines company setup and batch preparation with evidence review, constrained allocation, baseline comparison, failure replay, and reviewable work orders. The expanded release still needs its final browser and deployment checks.
 
-The complete current suite passes 38 tests: 24 API, 11 domain, and 3 export tests. Domain tests include an independent brute-force oracle over 24 small fixtures, and the production build passes. In the fixed synthetic demonstration, a $25 purchase budget and 180-minute shift allow seven projected complete repairs versus five for the intake-order baseline. Removing one donor-RAM component changes the plan to six, also confirmed in the browser. These results describe the supplied synthetic records; they are not actual devices repaired or evidence of customer improvement.
+The earlier baseline passed its automated tests and production build. Domain tests include an independent brute-force oracle over 24 small fixtures; CSV and workspace tests extend the current suite. Record the final release test results in [VALIDATION.md](VALIDATION.md) after integration. In the fixed synthetic demonstration, a $25 purchase budget and 180-minute shift allow seven projected complete repairs versus five for the intake-order baseline. Removing one donor-RAM component changes the plan to six, also confirmed in the earlier browser checks. These results describe the supplied synthetic records; they are not actual devices repaired or evidence of customer improvement.
 
 The central technical claim is testable: allocations must satisfy the supplied rules. The AI has useful bounded tools, while deterministic code owns resource decisions and unresolved facts remain visible.
 
@@ -66,15 +70,17 @@ We want to evaluate de-identified batches with coordinators and technicians. The
 
 A team version would need shared inventory, authenticated roles, reservation handling, audit history, reliable imports, and durable usage quotas. Regional refurbishers and managed school-IT providers are buyer hypotheses. No customers, revenue, measured operational improvement, or competitive exclusivity are claimed.
 
+The [interactive roadmap](https://sparecycle-topaz.vercel.app/roadmap.html) and [feature catalog](FEATURES.md) organize 520 workflow stories, including 216 MVP candidates. The catalog currently marks 29 stories shipped and 491 planned; these are story classifications, not counts of distinct UI controls. Company features awaiting acceptance remain planned. The [company quickstart](COMPANY-QUICKSTART.md) and [adoption guide](COMPANY-ADOPTION.md) define a small coordinator-led pilot, rather than claiming the full roadmap is implemented.
+
 ## Integration and release evidence
 
 - Exact successful deployed NVIDIA model ID: **nvidia/Nemotron-3_5-Lightning**.
 - Real deployed intake: **succeeded in 9.35 seconds**.
 - Full batch-agent completion: **succeeded in 2.8 seconds** with list_inventory and compute_recovery_plan completed. The returned plan had seven projected candidates versus a five-candidate baseline, $25 cost, and 150 technician minutes.
 - LangSmith: **successful plan root and list_inventory/compute_recovery_plan children inspected with empty inputs/outputs** in the sparecycle project. The plan trace records 2.49 seconds of server execution; the 2.8-second API observation includes trace flushing.
-- Tests/build: **38 tests passed; production build passed**. Browser checks confirmed default planning, donor failure, identity-hold inspection, and invalid-import rejection.
+- Earlier baseline tests/build: **automated suite and production build passed**. Browser checks confirmed default planning, donor failure, identity-hold inspection, and invalid-import rejection. Expanded company, import, catalog and restore verification remains a separate release task.
 - Public application: **anonymous HTML HTTP 200 and manual planner loaded** at https://sparecycle-topaz.vercel.app.
-- Public source: **published on main** at https://github.com/Golden007-prog/sparecycle; verified runtime source commit 69c964f.
+- Public source: **earlier baseline published on main** at https://github.com/Golden007-prog/sparecycle. Record the expanded release's final commit and deployment in the validation log.
 - Public YouTube recording: **remaining submission task**.
 
 Detailed observations and remaining checks are in [VALIDATION.md](VALIDATION.md). The public YouTube video and final entrant submission review remain before treating the entry as submission-ready. Deployment and source publication do not themselves submit the project to Devpost.
