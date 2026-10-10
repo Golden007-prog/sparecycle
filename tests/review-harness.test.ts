@@ -77,6 +77,18 @@ test('patch proposals cannot edit tests or perform process control', async () =>
     await assert.rejects(proposePatch({ title: 'Battery parser', evidence, snapshot }, { env, provider: async () => completion({ ...patch, rationale: 'Test bypass', risk: 'None' }) }));
   }
 });
+
+test('Nebius patch instructions require real exports and reject an entire module hidden in a line comment', async () => {
+  const { snapshot, candidate } = fixture(); let calls = 0;
+  const provider: ReviewCompletionProvider = async request => {
+    calls += 1;
+    assert.match(String(request.messages[0].content), /NO comments and NO Markdown/);
+    assert.match(String(request.messages[0].content), /Preserve exactly all original named and default exports/);
+    return completion({ path: candidate.path, content: '// Preserve battery API. export function battery(n) { return n / 100; }', rationale: 'Fix conversion.', risk: 'Narrow change.' });
+  };
+  await assert.rejects(proposePatch({ title: 'Battery parser', evidence, snapshot }, { env, provider }), code('UNSAFE_PATCH'));
+  assert.equal(calls, 1);
+});
 test('LangSmith receives metadata only even when private model output is malformed', async () => {
   const bodies: string[] = [];
   const traceFetch: typeof fetch = async (request, init) => {

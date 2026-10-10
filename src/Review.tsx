@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'rea
 import type { Session, SupabaseClient } from '@supabase/supabase-js';
 import { Activity, ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Building2, Check, ChevronRight, CircleHelp, ClipboardCheck, Clock3, Copy, Cpu, FileCode2, FileText, FlaskConical, GitBranch, GitPullRequest, Github, Laptop, LayoutDashboard, LoaderCircle, LockKeyhole, LogOut, Menu, Plus, Recycle, RefreshCw, Search, Settings2, ShieldCheck, Sparkles, Users, Wrench, X } from 'lucide-react';
 import type { ChangeStatus, JobStage, LaptopPassport, ModelTier, RecoveryChange, ReviewAction, ReviewConfig, ReviewJob, ReviewOrganization, ReviewOverview, ReviewRole } from '../lib/review/types';
-import { createReviewAuth, loadReviewConfig, publicGitHubUrl, reviewRequest, ReviewRequestError } from './review-client';
+import { createReviewAuth, loadReviewConfig, publicGitHubUrl, requestReviewAccountEmail, reviewAuthLinkError, reviewRequest, ReviewRequestError, updateReviewPassword, watchReviewSession } from './review-client';
 import { demoOverview } from './review-demo';
 import './review.css';
 
@@ -41,7 +41,7 @@ export default function Review() {
   const [organizations, setOrganizations] = useState<ReviewOrganization[]>([]), [organizationId, setOrganizationId] = useState(''), [overview, setOverview] = useState<ReviewOverview | null>(null);
   const [demo, setDemo] = useState(true), [view, setView] = useState<View>('overview'), [selectedChangeId, setSelectedChangeId] = useState<string | null>(null), [selectedLaptopId, setSelectedLaptopId] = useState<string | null>(null);
   const [modal, setModal] = useState<ModalType>(null), [notice, setNotice] = useState<Notice>(null), [modalNotice, setModalNotice] = useState<Notice>(null), [busy, setBusy] = useState(''), [loading, setLoading] = useState(false), [menuOpen, setMenuOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin'), [search, setSearch] = useState(''), [filter, setFilter] = useState('all'), [invite, setInvite] = useState<{ token: string; expiresAt: string } | null>(null);
+  const [authMode, setAuthMode] = useState<'signin' | 'signup' | 'forgot' | 'resend' | 'update'>('signin'), [recoverySession, setRecoverySession] = useState(false), [emailWaitUntil, setEmailWaitUntil] = useState(0), [search, setSearch] = useState(''), [filter, setFilter] = useState('all'), [invite, setInvite] = useState<{ token: string; expiresAt: string } | null>(null);
   const data = demo ? demoOverview : overview;
   const selectedChange = data?.changes.find(change => change.id === selectedChangeId) ?? null;
   const selectedLaptop = data?.laptops.find(laptop => laptop.id === selectedLaptopId) ?? null;
@@ -64,24 +64,26 @@ export default function Review() {
   useEffect(() => {
     let disposed = false;
     let unsubscribe: (() => void) | undefined;
-    loadReviewConfig().then(async next => {
+    const linkError = reviewAuthLinkError(window.location.hash);
+    if (linkError) {
+      setAuthMode('signin'); setModal('auth'); setModalNotice({ type: 'error', text: linkError });
+      window.history.replaceState(window.history.state, '', `${window.location.pathname}${window.location.search}`);
+    }
+    loadReviewConfig().then(next => {
       if (disposed) return;
       setConfig(next);
       const client = createReviewAuth(next);
       setAuth(client);
       if (!client) return;
-      const { data: authData, error } = await client.auth.getSession();
-      if (disposed) return;
-      if (error) setNotice({ type: 'error', text: 'Your previous session could not be restored. Sign in again.' });
-      setSession(authData.session);
-      if (authData.session) setDemo(false);
-      const subscription = client.auth.onAuthStateChange((_event, nextSession) => {
+      unsubscribe = watchReviewSession(client, (nextSession, event) => {
         if (disposed) return;
         setSession(nextSession);
         if (nextSession) setDemo(false);
-        else { setOverview(null); setOrganizations([]); setOrganizationId(''); setDemo(true); }
-      });
-      unsubscribe = () => subscription.data.subscription.unsubscribe();
+        else { setOverview(null); setOrganizations([]); setOrganizationId(''); setDemo(true); setRecoverySession(false); }
+        if (event === 'PASSWORD_RECOVERY' && nextSession) {
+          setRecoverySession(true); setAuthMode('update'); setModalNotice(null); setModal('auth');
+        }
+      }, () => { if (!disposed) setNotice({ type: 'error', text: 'Your previous session could not be restored. Sign in again or request a fresh recovery link.' }); });
     }).catch(error => { if (!disposed) setNotice({ type: 'error', text: error instanceof Error ? error.message : 'Configuration is unavailable.' }); });
     return () => { disposed = true; unsubscribe?.(); };
   }, []);
@@ -180,7 +182,47 @@ export default function Review() {
   function modalContent() {
     const message = modalNotice && <div className={`rv-banner ${modalNotice.type}`} role={modalNotice.type === 'error' ? 'alert' : 'status'}><CircleHelp size={16}/><p>{modalNotice.text}</p></div>;
     const close = () => { if (!isBusy) { setModal(null); setModalNotice(null); setInvite(null); } };
-    if (modal === 'auth') return <Modal title="Your team’s review workspace" description="Sign in to keep laptop evidence and project changes with your organization." onClose={close}>{message}{!config?.authConfigured || !auth ? <><div className="rv-banner info"><LockKeyhole size={17}/><p>Organization sign-in is waiting for the new Supabase connection. The synthetic workspace remains available while setup is completed.</p></div><Button className="full" onClick={() => { setDemo(true); setModal(null); }}>Continue exploring the sample</Button></> : <><div className="rv-auth-tabs" role="group" aria-label="Account access"><button type="button" aria-pressed={authMode === 'signin'} onClick={() => { setAuthMode('signin'); setModalNotice(null); }}>Sign in</button><button type="button" aria-pressed={authMode === 'signup'} onClick={() => { setAuthMode('signup'); setModalNotice(null); }}>Create account</button></div><form className="rv-form" onSubmit={submit(async values => { const email = field(values, 'email'), password = String(values.get('password') ?? ''); if (authMode === 'signin') { const result = await auth.auth.signInWithPassword({ email, password }); if (result.error) throw result.error; setDemo(false); setModal(null); setNotice({ type: 'success', text: 'Signed in. Choose or create your organization.' }); } else { const result = await auth.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/review` } }); if (result.error) throw result.error; if (result.data.session) { setDemo(false); setModal(null); } else setModalNotice({ type: 'info', text: 'Check your email for a confirmation link, then sign in. If no email arrives, ask your deployment administrator to check the email provider configuration.' }); } }, 'auth')}><Field label="Work email"><input type="email" name="email" required autoComplete="email" placeholder="you@company.com" maxLength={254}/></Field><Field label="Password" help={authMode === 'signup' ? 'Use at least 12 characters and a unique password.' : undefined}><input type="password" name="password" required minLength={authMode === 'signup' ? 12 : 1} maxLength={128} autoComplete={authMode === 'signup' ? 'new-password' : 'current-password'}/></Field><Button type="submit" kind="primary" className="full" disabled={isBusy}>{isBusy ? <LoaderCircle size={15} className="rv-spin"/> : <LockKeyhole size={15}/>} {authMode === 'signin' ? 'Sign in' : 'Create account'}</Button></form><p className="rv-small-print">Your account only sees organizations you belong to. The public sample never becomes part of your live workspace automatically.</p></>}</Modal>;
+    if (modal === 'auth') {
+      const emailOnly = authMode === 'forgot' || authMode === 'resend';
+      const updating = authMode === 'update';
+      const authTitle = updating ? 'Choose a new password' : authMode === 'forgot' ? 'Recover your account' : authMode === 'resend' ? 'Confirm your email' : 'Your team’s review workspace';
+      const authDescription = updating ? 'Use a unique password to finish recovering your account.' : authMode === 'forgot' ? 'Request a recovery link for the email connected to your account.' : authMode === 'resend' ? 'Request another confirmation link for an account you already created.' : 'Sign in to keep laptop evidence and project changes with your organization.';
+      const changeAuthMode = (mode: typeof authMode) => { setAuthMode(mode); setModalNotice(null); };
+      return <Modal title={authTitle} description={authDescription} onClose={close}>{message}{!config?.authConfigured || !auth ? <><div className="rv-banner info"><LockKeyhole size={17}/><p>Organization sign-in is waiting for the new Supabase connection. The synthetic workspace remains available while setup is completed.</p></div><Button className="full" onClick={() => { setDemo(true); setModal(null); }}>Continue exploring the sample</Button></> : <>
+        {!emailOnly && !updating && <div className="rv-auth-tabs" role="group" aria-label="Account access"><button type="button" disabled={isBusy} aria-pressed={authMode === 'signin'} onClick={() => changeAuthMode('signin')}>Sign in</button><button type="button" disabled={isBusy} aria-pressed={authMode === 'signup'} onClick={() => changeAuthMode('signup')}>Create account</button></div>}
+        <form key={authMode} className="rv-form" onSubmit={submit(async (values, form) => {
+          const email = field(values, 'email'), password = String(values.get('password') ?? '');
+          if (updating) {
+            const confirmation = String(values.get('confirmation') ?? '');
+            form.reset();
+            await updateReviewPassword(auth, password, confirmation, recoverySession);
+            setRecoverySession(false); setAuthMode('signin'); setModal(null);
+            setNotice({ type: 'success', text: 'Your password has been updated. You can continue in your workspace and use the new password the next time you sign in.' });
+          } else if (authMode === 'forgot' || authMode === 'resend') {
+            if (Date.now() < emailWaitUntil) throw new Error('Please wait one minute before requesting another email.');
+            await requestReviewAccountEmail(auth, authMode, email, window.location.origin);
+            setEmailWaitUntil(Date.now() + 60_000);
+            setModalNotice({ type: 'info', text: authMode === 'forgot' ? 'If this address is eligible for recovery, check its inbox for a recovery link. Wait one minute before requesting another email. Delivery depends on your deployment’s email configuration.' : 'If this account is awaiting confirmation, check its inbox for a confirmation link. Wait one minute before requesting another email. Delivery depends on your deployment’s email configuration.' });
+          } else if (authMode === 'signin') {
+            const result = await auth.auth.signInWithPassword({ email, password });
+            if (result.error) throw result.error;
+            setDemo(false); setModal(null); setNotice({ type: 'success', text: 'Signed in. Choose or create your organization.' });
+          } else {
+            const result = await auth.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/review` } });
+            if (result.error) throw result.error;
+            if (result.data.session) { setDemo(false); setModal(null); }
+            else setModalNotice({ type: 'info', text: 'Check your email for a confirmation link. You can request another link below. If no email arrives, ask your deployment administrator to check the email provider configuration.' });
+          }
+        }, 'auth')}>
+          {!updating && <Field label="Work email"><input type="email" name="email" required autoFocus autoComplete="email" placeholder="you@company.com" maxLength={254}/></Field>}
+          {!emailOnly && <Field label={updating ? 'New password' : 'Password'} help={authMode === 'signup' || updating ? 'Use at least 12 characters and a unique password.' : undefined}><input type="password" name="password" required autoFocus={updating} minLength={authMode === 'signup' || updating ? 12 : 1} maxLength={128} autoComplete={authMode === 'signup' || updating ? 'new-password' : 'current-password'}/></Field>}
+          {updating && <Field label="Confirm new password"><input type="password" name="confirmation" required minLength={12} maxLength={128} autoComplete="new-password"/></Field>}
+          <Button type="submit" kind="primary" className="full" disabled={isBusy || updating && (!session || !recoverySession)}>{isBusy ? <LoaderCircle size={15} className="rv-spin"/> : <LockKeyhole size={15}/>} {({ signin: 'Sign in', signup: 'Create account', forgot: 'Send recovery link', resend: 'Resend confirmation', update: 'Update password' })[authMode]}</Button>
+        </form>
+        {emailOnly || updating ? <div className="rv-actions" style={{ marginTop: 16 }}><Button small kind="ghost" disabled={isBusy} onClick={() => changeAuthMode('signin')}><ArrowLeft size={14}/>Back to sign in</Button></div> : <div className="rv-actions" style={{ marginTop: 16 }}><Button small kind="ghost" disabled={isBusy} onClick={() => changeAuthMode('forgot')}>Forgot password?</Button><Button small kind="ghost" disabled={isBusy} onClick={() => changeAuthMode('resend')}>Resend confirmation email</Button></div>}
+        <p className="rv-small-print">{emailOnly ? 'If delivery fails, ask your deployment administrator to check the email sender and allowed redirects. Never share a recovery link or confirmation link with anyone.' : 'Your account only sees organizations you belong to. The public sample never becomes part of your live workspace automatically.'}</p>
+      </>}</Modal>;
+    }
     if (modal === 'organization') return <Modal title="Create an organization" description="A separate home for your team’s laptops, projects and review evidence." onClose={close}>{message}<form className="rv-form" onSubmit={submit(async values => { if (!auth || !session) throw new Error('Sign in first.'); const created = await reviewRequest<ReviewOrganization>(auth, { action: 'createOrganization', name: field(values, 'name') }); const list = await reviewRequest<ReviewOrganization[]>(auth, { action: 'organizations' }); setOrganizations(list); setOrganizationId(created.id); setDemo(false); setModal(null); setNotice({ type: 'success', text: `${created.name} is ready. Add the first laptop passport.` }); }, 'organization')}><Field label="Organization name"><input name="name" required minLength={2} maxLength={80} placeholder="Your company or workshop"/></Field><Button type="submit" kind="primary" disabled={!session || isBusy}><Building2 size={15}/>Create organization</Button></form></Modal>;
     if (modal === 'laptop') return <Modal title="Add a laptop passport" description="Use a friendly asset label. Keep serial numbers and personal information out of the prototype." onClose={close}>{message}<form className="rv-form" onSubmit={submit(values => mutate({ action: 'createLaptop', organizationId, assetTag: field(values, 'assetTag'), manufacturer: field(values, 'manufacturer'), model: field(values, 'model'), operatingSystem: field(values, 'operatingSystem') }, 'Laptop passport created. Add the first evidence record.'), 'laptop')}><Field label="Asset label"><input name="assetTag" required maxLength={80} placeholder="Bench 014"/></Field><div className="rv-form-row"><Field label="Manufacturer"><input name="manufacturer" required maxLength={80} placeholder="Lenovo"/></Field><Field label="Model"><input name="model" required maxLength={120} placeholder="ThinkPad T480"/></Field></div><Field label="Operating system"><input name="operatingSystem" required maxLength={100} placeholder="Ubuntu 24.04"/></Field><Button type="submit" kind="primary" disabled={!liveEdit || isBusy}><Laptop size={15}/>Create passport</Button></form></Modal>;
     if (modal === 'evidence') return <Modal title={`Add evidence${selectedLaptop ? ` for ${selectedLaptop.assetTag}` : ''}`} description="New evidence creates a revision. Existing approvals and test claims are invalidated when their evidence changes." onClose={close}>{message}<form className="rv-form" onSubmit={submit(values => mutate({ action: 'addEvidence', organizationId, laptopId: selectedLaptopId ?? '', kind: field(values, 'kind') as 'technician_note' | 'diagnostic_log' | 'test_result', content: field(values, 'content'), source: field(values, 'source') }, 'Evidence revision saved. Review any requests based on the previous revision.'), 'evidence')}><Field label="Evidence type"><select name="kind"><option value="technician_note">Technician note</option><option value="diagnostic_log">Diagnostic log excerpt</option><option value="test_result">Test result observation</option></select></Field><Field label="Source" help="Describe where the observation came from. Avoid personal identifiers."><input name="source" required maxLength={160} placeholder="Bench intake, technician observation"/></Field><Field label="Observation or redacted log" help="Record observations, not instructions for the AI. Remove passwords, tokens and personal data."><textarea name="content" required minLength={10} maxLength={8000} rows={7} placeholder="What did you observe? What conditions reproduce it?"/></Field><Button type="submit" kind="primary" disabled={!liveEdit || !selectedLaptopId || isBusy}><FileText size={15}/>Save evidence revision</Button></form></Modal>;

@@ -1,6 +1,6 @@
 import { createHash, createHmac, createSign, timingSafeEqual } from 'node:crypto';
 import { parse } from 'acorn';
-import { validatePureParser } from '../../scripts/review-parser-policy.mjs';
+import { validateParserReplacement } from '../../scripts/review-parser-policy.mjs';
 import { snapshotPreimage, candidatePreimage } from '../../scripts/review-integrity.mjs';
 
 export type EngineEnvironment = Record<string, string | undefined>;
@@ -54,8 +54,8 @@ export function validateCandidate(snapshot: RepositorySnapshot, candidate: Candi
   validateSnapshot(snapshot);
   if (candidate.path !== snapshot.targetPath || !allowedSourcePath(candidate.path) || candidate.baseSha !== snapshot.baseSha || candidate.snapshotHash !== snapshot.hash || !HASH.test(candidate.evidenceHash) || candidateHash(candidate) !== candidate.hash || !candidate.content.trim() || Buffer.byteLength(candidate.content) > 32_000 || candidate.content === snapshot.files.find(f => f.path === candidate.path)?.content) throw new ReviewEngineError('INVALID_PATCH', 'The proposed patch is empty, stale, or outside its approved file.');
   // Parse identifiers and scope instead of searching text: escaped or computed constructors must not bypass this policy.
-  try { validatePureParser(candidate.content, parse); }
-  catch { throw new ReviewEngineError('UNSAFE_PATCH', 'This verification profile accepts pure diagnostic parsers with local computation and safe literal property access only.'); }
+  try { validateParserReplacement(snapshot.files.find(f => f.path === snapshot.targetPath)!.content, candidate.content, parse); }
+  catch { throw new ReviewEngineError('UNSAFE_PATCH', 'The replacement must contain executable pure parser code, preserve all original exports, and use only local computation and safe literal property access.'); }
 }
 export function verifyWebhookSignature(rawBody: Uint8Array, signature: string | undefined, secret: string): boolean {
   if (!secret || !signature || !/^sha256=[a-f0-9]{64}$/.test(signature)) return false;

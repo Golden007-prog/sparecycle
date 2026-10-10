@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { createHash, createHmac, generateKeyPairSync } from 'node:crypto';
 import { PGlite } from '@electric-sql/pglite';
 import { snapshotPreimage, candidatePreimage } from '../scripts/review-integrity.mjs';
+import { validatePureParser, validateParserReplacement } from '../scripts/review-parser-policy.mjs';
+import { parse } from 'acorn';
 import { candidateHash, createGitHubClient, sha256, snapshotHash, validateCandidate, validatePublishInput, validateSnapshot, verifyUserRepositoryAccess, verifyWebhookSignature, type CandidatePatch, type PublishInput, type RepositorySnapshot } from '../lib/review/github.js';
 
 function fixture(): { snapshot: RepositorySnapshot; candidate: CandidatePatch; publish: PublishInput } {
@@ -190,6 +192,38 @@ export function battery(input) {
  return { capacityWh: capacity / 1000, note: 'process is plain text', samples: total };
 }`;
   const changed = { ...candidate, content }; changed.hash = candidateHash(changed); validateCandidate(snapshot, changed);
+});
+
+test('comment-only, empty and unexported model patches fail before isolated verification', () => {
+  const { snapshot, candidate } = fixture();
+  for (const content of [
+    '// Fixed zero handling. export function battery(n) { return n / 100; }',
+    '// Fixed zero handling.\\nexport function battery(n) { return n / 100; }',
+    '/* export function battery(n) { return n / 100; } */',
+    ';;;',
+    'function battery(n) { return n / 100; }',
+    'const battery = n => n / 100;',
+  ]) {
+    const changed = { ...candidate, content }; changed.hash = candidateHash(changed);
+    assert.throws(() => validatePureParser(content, parse));
+    assert.throws(() => validateCandidate(snapshot, changed), failCode('UNSAFE_PATCH'), content);
+  }
+});
+
+test('API and trusted runner enforce matching named and default exports with valid single-line code', () => {
+  const { snapshot, candidate } = fixture();
+  const before = snapshot.files[0].content;
+  for (const content of ['export function renamed(n) { return n / 100; }', 'export default function battery(n) { return n / 100; }', 'export function battery(n) { return n / 100; } export const extra = 1;']) {
+    const changed = { ...candidate, content }; changed.hash = candidateHash(changed);
+    assert.throws(() => validateParserReplacement(before, content, parse));
+    assert.throws(() => validateCandidate(snapshot, changed), failCode('UNSAFE_PATCH'));
+  }
+  const content = 'export const battery = n => n / 100;';
+  const changed = { ...candidate, content }; changed.hash = candidateHash(changed);
+  validateCandidate(snapshot, changed);
+  assert.equal(validateParserReplacement(before, content, parse), true);
+  assert.equal(validateParserReplacement('export default function battery(n) { return n * 100; }', 'export default n => n / 100;', parse), true);
+  assert.equal(validateParserReplacement('export const units = 100; export function battery(n) { return n * units; }', 'export function battery(n) { return n / units; } export const units = 100;', parse), true);
 });
 test('uncertain write outcomes are not silently retried', async () => {
   const { snapshot } = fixture(); let calls = 0;

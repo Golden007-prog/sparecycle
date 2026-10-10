@@ -21,8 +21,29 @@ const propertyKey = node => {
   if (node.key.type === 'Literal') return String(node.key.value);
   denied();
 };
+const exportedNames = ast => {
+  const names = [];
+  const collectBinding = node => {
+    if (!node) return;
+    if (node.type === 'Identifier') { names.push(node.name); return; }
+    if (node.type === 'AssignmentPattern') { collectBinding(node.left); return; }
+    if (node.type === 'RestElement') { collectBinding(node.argument); return; }
+    if (node.type === 'ArrayPattern') { for (const item of node.elements) collectBinding(item); return; }
+    if (node.type === 'ObjectPattern') { for (const item of node.properties) collectBinding(item.type === 'RestElement' ? item.argument : item.value); return; }
+    denied();
+  };
+  for (const node of ast.body) {
+    if (node.type === 'ExportDefaultDeclaration') names.push('default');
+    if (node.type !== 'ExportNamedDeclaration') continue;
+    if (node.declaration?.type === 'FunctionDeclaration') collectBinding(node.declaration.id);
+    else if (node.declaration?.type === 'VariableDeclaration') for (const item of node.declaration.declarations) collectBinding(item.id);
+    else denied();
+  }
+  if (names.length === 0) throw new Error('A parser must contain executable exported declarations, not comments or an empty module.');
+  return names.sort();
+};
 /** @param {string} source @param {(text:string, options:object)=>object} parse */
-export function validatePureParser(source, parse) {
+function inspectPureParser(source, parse) {
   if (typeof source !== 'string' || Buffer.byteLength(source, 'utf8') > 32_000) denied();
   let ast;
   try { ast = parse(source, { ecmaVersion: 2022, sourceType: 'module' }); } catch { denied(); }
@@ -132,5 +153,17 @@ export function validatePureParser(source, parse) {
     }
   };
   visit(ast, root);
+  return exportedNames(ast);
+}
+/** @param {string} source @param {(text:string, options:object)=>object} parse */
+export function validatePureParser(source, parse) {
+  inspectPureParser(source, parse);
+  return true;
+}
+/** Validate both the pure-parser language boundary and the exact module export contract. */
+export function validateParserReplacement(before, after, parse) {
+  const expected = inspectPureParser(before, parse);
+  const actual = inspectPureParser(after, parse);
+  if (expected.length !== actual.length || expected.some((name, index) => name !== actual[index])) throw new Error('The replacement must preserve every original exported name, without adding or removing exports.');
   return true;
 }

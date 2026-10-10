@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { validatePureParser } from './review-parser-policy.mjs';
+import { validateParserReplacement } from './review-parser-policy.mjs';
 import { snapshotPreimage, candidatePreimage } from './review-integrity.mjs';
 
 const parserRoot = process.env.SPARECYCLE_ACORN_ROOT;
@@ -37,7 +37,7 @@ const actualSnapshotHash = digest(snapshotPreimage(snapshot));
 if (actualSnapshotHash !== snapshot.hash || candidate.path !== snapshot.targetPath || candidate.baseSha !== snapshot.baseSha || candidate.snapshotHash !== snapshot.hash || candidate.evidenceHash !== evidenceHash || typeof candidate.content !== 'string' || Buffer.byteLength(candidate.content) > 32_000) fail('Stale candidate.');
 const actualCandidateHash = digest(candidatePreimage(candidate));
 if (actualCandidateHash !== candidate.hash) fail('Unsupported candidate.');
-validatePureParser(candidate.content, parse);
+validateParserReplacement(snapshot.files.find(file => file.path === snapshot.targetPath).content, candidate.content, parse);
 if (!/^[a-f0-9]{40}$/.test(process.env.GITHUB_SHA || '') || !/^\d+$/.test(process.env.GITHUB_RUN_ID || '')) fail('The verifier must run in a pinned GitHub Actions workflow.');
 
 function summary(stdout, exitCode) {
