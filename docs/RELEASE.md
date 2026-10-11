@@ -15,6 +15,16 @@ The synthetic private pilot completed real Nebius Nano investigation, Super patc
 
 The sections below preserve earlier release evidence and limitations as recorded at those releases.
 
+### Published verification
+
+- Runtime commit: `2714ffd0476c116e57100fe4a910800381aecae7`; [successful GitHub verification](https://github.com/Golden007-prog/sparecycle/actions/runs/38109161627).
+- Vercel production deployment: `dpl_CkvJwNruJVRoQN9jZm5m6EwprX4d`, READY; [immutable deployment](https://sparecycle-20qvcdx5g-basuoikantik-7538s-projects.vercel.app).
+- [Live demo](https://sparecycle-topaz.vercel.app/demo): 2 minutes 58.6 seconds, 1080p, selectable captions, transcript and chapters. All five published assets matched their tested local SHA-256 digests; video was served as `video/mp4` and captions as `text/vtt`.
+- Production smoke passed nine bounded read-only requests: public configuration, unauthenticated rejection, foreign-origin rejection, strict action validation, owner evidence retrieval and outsider isolation. The deployed service returned the completed private workflow with its exact base, patch and proof hashes.
+- The separate private run inspected by the integration audit had a metadata-only artifact, no exact source/candidate/known secret strings in the inspected logs or proof, and a private draft with one parser change and unchanged test content. This was a targeted audit, not a claim of a comprehensive security assessment.
+- Delivery folder `E:\LOCAL helper\sparecycle` was fast-forwarded; its existing batch file and private settings were preserved. Its production build passed.
+- Google provider and application flags are enabled. A complete external Google sign-in return still needs browser verification; unit tests and provider settings are not counted as that end-to-end test.
+
 ## Website and company pilot release
 
 Runtime commit `e17998f` adds the landing page, workflow guide, company pilot guide, data page and reproducible public pilot kit. The workshop is available at [Open workshop](https://sparecycle-topaz.vercel.app/app), with direct links for [company setup](https://sparecycle-topaz.vercel.app/app?setup=1) and the [catalog](https://sparecycle-topaz.vercel.app/app?view=catalog).
