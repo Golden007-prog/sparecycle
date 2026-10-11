@@ -1,0 +1,559 @@
+[
+  {
+    "id": "01-intro",
+    "name": "The best first use case",
+    "chapter": "SPARECYCLE REVIEW / THE DEEP DIVE",
+    "title": "From the bench.\nInto the project.\nWith proof.",
+    "eyebrow": "PRODUCT + BACKEND + NEXT STEPS",
+    "detail": "A focused workflow for refurbishment\nand IT asset recovery teams\nwith a diagnostics engineer.",
+    "image": "landing.png",
+    "crop": [
+      1000,
+      80,
+      1430,
+      1050
+    ],
+    "label": "Actual application captures · Synthetic demonstration records",
+    "captions": [
+      "SpareCycle Review's first customer hypothesis is a refurbishment team that owns its diagnostic software.",
+      "A technician observes a problem. An engineer needs a controlled fix and proof. Follow that handoff into the working backend, then the investment roadmap."
+    ]
+  },
+  {
+    "id": "02-journey",
+    "name": "A useful first workflow",
+    "layout": "board",
+    "chapter": "THE INITIAL CUSTOMER WORKFLOW",
+    "title": "One observation becomes one reviewable change.",
+    "detail": "The initial customer is a hypothesis to validate with design partners.",
+    "cards": [
+      {
+        "tag": "TECHNICIAN",
+        "title": "Record the observation",
+        "body": "Laptop passport\nSource and evidence revision"
+      },
+      {
+        "tag": "DIAGNOSTICS ENGINEER",
+        "title": "Define the software issue",
+        "body": "Selected repository\nExpected behavior"
+      },
+      {
+        "tag": "SEPARATE REVIEWER",
+        "title": "Inspect the tested fix",
+        "body": "Exact candidate and proof\nDraft PR for code review"
+      }
+    ],
+    "note": "A passing software test never marks a physical laptop repaired.",
+    "label": "Implemented workflow · Customer fit is a proposed starting point",
+    "captions": [
+      "A technician records passport evidence. An engineer defines the software issue. A separate reviewer inspects the tested candidate.",
+      "The output is a draft pull request for code review. Passing software tests never certify a physical repair."
+    ]
+  },
+  {
+    "id": "03-evidence",
+    "name": "Start with versioned evidence",
+    "chapter": "01 / PASSPORT TO CHANGE REQUEST",
+    "title": "A specific record.\nA specific question.",
+    "eyebrow": "VERSIONED LAPTOP EVIDENCE",
+    "detail": "Organization membership\nconnects people, projects\nand laptop passports.",
+    "image": "passport-evidence.png",
+    "crop": [
+      1050,
+      95,
+      1540,
+      860
+    ],
+    "label": "Actual signed-in workspace · Synthetic laptop fixture",
+    "captions": [
+      "The company workspace connects a passport, project, and change request to a particular evidence revision.",
+      "These records and accounts are synthetic. The provider calls, test executions, and resulting draft pull requests actually happened."
+    ]
+  },
+  {
+    "id": "04-problem",
+    "name": "The reproduced parser failure",
+    "chapter": "02 / A REPRODUCIBLE FAILURE",
+    "title": "Zero is a reading.\nNot missing data.",
+    "eyebrow": "SMALL SCOPE, OBSERVABLE RESULT",
+    "detail": "A 0% battery reading becomes null.\nThe existing test expects zero.\nThe fix must preserve the tests.",
+    "image": "change-investigation.png",
+    "crop": [
+      1070,
+      100,
+      1500,
+      1090
+    ],
+    "label": "Actual completed change · Controlled diagnostic-parser fixture",
+    "captions": [
+      "Here, a valid zero-percent battery reading becomes missing data. That can mislead diagnosis.",
+      "The request defines expected behavior before generation. The backend compares original and candidate code using exactly the same test cases."
+    ]
+  },
+  {
+    "id": "05-receipt",
+    "name": "What actually ran on the backend",
+    "layout": "receipt",
+    "chapter": "03 / BACKEND EXECUTION EVIDENCE",
+    "title": "The result has an execution trail.",
+    "detail": "A readable summary of completed runs, not a simulated terminal.",
+    "rows": [
+      {
+        "key": "03:26:06 UTC",
+        "value": "Nano investigation completed"
+      },
+      {
+        "key": "03:29:04 UTC",
+        "value": "Private verifier proof completed: 4 unchanged tests pass"
+      },
+      {
+        "key": "03:32:40 UTC",
+        "value": "Super independent review completed"
+      },
+      {
+        "key": "03:34:15 UTC",
+        "value": "After separate approval: GitHub App draft created"
+      }
+    ],
+    "note": "Recorded completion times include pauses between stages; they are not a latency benchmark.",
+    "label": "Private run evidence summary · 11 October 2026 · Read back from production",
+    "captions": [
+      "These saved private-run timestamps document Nano investigation, passing verification, Super review, and a draft created after separate approval.",
+      "This is recorded execution evidence. The intervals include pauses, so they are not a latency benchmark."
+    ]
+  },
+  {
+    "id": "06-provider",
+    "name": "Nebius and NVIDIA have different roles",
+    "chapter": "04 / NEBIUS + NVIDIA",
+    "title": "Nebius hosts.\nNemotron\nreasons.",
+    "eyebrow": "PROVIDER AND MODEL FAMILY",
+    "detail": "Server-side inference requests\nthrough Nebius Token Factory.\nNVIDIA Nemotron model routing.",
+    "image": "nebius-overview.png",
+    "crop": [
+      0,
+      0,
+      1460,
+      1000
+    ],
+    "label": "User-supplied Token Factory view · Account strip excluded",
+    "captions": [
+      "Nebius Token Factory hosts NVIDIA Nemotron inference. GitHub Actions runs isolated tests; Nebius Sandboxes are not the live runner.",
+      "Relevant private code goes to Nebius. Test isolation does not mean reasoning stays on the company's laptop."
+    ]
+  },
+  {
+    "id": "07-models",
+    "name": "Route by stage, measure the result",
+    "layout": "board",
+    "chapter": "05 / PURPOSEFUL MODEL ROUTING",
+    "title": "Use a model for a defined job.",
+    "detail": "Verified execution is different from a claim that every model solved the same task.",
+    "cards": [
+      {
+        "tag": "INVESTIGATE",
+        "title": "Nano / Lightning",
+        "body": "Read bounded evidence\nExplain the suspected failure"
+      },
+      {
+        "tag": "PROPOSE + REVIEW",
+        "title": "Super",
+        "body": "Generate the candidate\nReview with fresh context"
+      },
+      {
+        "tag": "SEPARATE CHECK",
+        "title": "Ultra",
+        "body": "Connectivity verified\nNo superiority claim"
+      }
+    ],
+    "note": "Choose future routing changes with evaluations of quality, latency and spend.",
+    "label": "Actual run routing + separate model checks · No four-model ensemble claim",
+    "captions": [
+      "Lightning investigated the public case; Nano investigated the private pilot. Super proposed and independently reviewed both candidates.",
+      "Ultra was separately checked, not proven better. Future routing should follow evaluations of correctness, latency, and cost."
+    ]
+  },
+  {
+    "id": "08-usage",
+    "name": "Real provider usage, with limits",
+    "layout": "wide",
+    "chapter": "PROVIDER USAGE EVIDENCE",
+    "title": "Four tiers appear in recorded usage.",
+    "detail": "Usage confirms requests. It does not establish accuracy, value or per-change economics.",
+    "image": "nebius-usage.png",
+    "crop": [
+      0,
+      0,
+      1454,
+      480
+    ],
+    "label": "User-supplied usage view · Rounded buckets · Not an exact per-change invoice",
+    "captions": [
+      "The supplied Nebius usage view records four model tiers. It confirms usage, not correctness.",
+      "Rounded cost buckets cannot establish cost per accepted fix. That requires reconciled usage across successful and rejected attempts."
+    ]
+  },
+  {
+    "id": "09-harness",
+    "name": "What the AI harness controls",
+    "layout": "diagram",
+    "chapter": "06 / THE AI EXECUTION HARNESS",
+    "title": "The model reasons. Trusted code authorizes.",
+    "detail": "Each transition has an explicit input, output and check.",
+    "label": "Implemented architecture diagram · No unrestricted agent execution",
+    "captions": [
+      "The harness bounds evidence, requires structured output, and validates changes. The model has no shell, network, or publishing tool.",
+      "Trusted server code controls testing and publication. The model proposes; the application authorizes each transition."
+    ]
+  },
+  {
+    "id": "10-limits",
+    "name": "Bound the stage before it starts",
+    "layout": "board",
+    "chapter": "07 / BOUNDED INFERENCE",
+    "title": "Time, spend and scope are checked first.",
+    "detail": "Guardrails constrain execution; they do not guarantee the model is correct.",
+    "cards": [
+      {
+        "tag": "TIME",
+        "title": "40 seconds",
+        "body": "Model-stage deadline\nBounded response"
+      },
+      {
+        "tag": "SPEND",
+        "title": "Reserve first",
+        "body": "Check stage budget\nBefore the provider call"
+      },
+      {
+        "tag": "CHANGE SCOPE",
+        "title": "Selected parser",
+        "body": "Validate structured output\nReject disallowed edits"
+      }
+    ],
+    "note": "Current proof is a constrained parser workflow, not arbitrary repository automation.",
+    "label": "Implemented controls · Wider language and project support requires new validation",
+    "captions": [
+      "A reserved stage budget, forty-second deadline, and bounded input and output constrain each call.",
+      "Current execution is a pure JavaScript diagnostic-parser change. Broader languages and dependencies need additional test profiles and evaluations."
+    ]
+  },
+  {
+    "id": "11-binding",
+    "name": "Bind the fix to exact inputs",
+    "chapter": "08 / PREVENT STALE APPROVAL",
+    "title": "This code.\nThis evidence.\nThis candidate.",
+    "eyebrow": "EXACT VERSION BINDING",
+    "detail": "Base commit and patch hash\nEvidence revision and hash\nVerification tied to that candidate",
+    "image": "change-tests.png",
+    "crop": [
+      1080,
+      350,
+      1120,
+      505
+    ],
+    "label": "Actual generated patch · Default branch unchanged",
+    "captions": [
+      "The candidate is bound to its base commit, patch hash, and evidence revision. Proof and approval refer to those inputs.",
+      "Changed code or evidence invalidates old approval. Passing proof cannot authorize a different candidate."
+    ]
+  },
+  {
+    "id": "12-tests",
+    "name": "Reproduce, then verify the same tests",
+    "chapter": "09 / REAL TEST EXECUTION",
+    "title": "First, it fails.\nThen, the same\ntests pass.",
+    "eyebrow": "ISOLATED GITHUB ACTIONS RUN",
+    "detail": "Original: 1 failed, 3 passed.\nCandidate: 4 passed, 0 failed.\nThe tests stayed unchanged.",
+    "image": "change-tests.png",
+    "crop": [
+      1080,
+      865,
+      1120,
+      320
+    ],
+    "label": "Actual test result · Network-disabled execution container",
+    "captions": [
+      "GitHub Actions executes both versions in a network-disabled container. The original has one failure and three passes.",
+      "The candidate passes all four unchanged test cases. That proves covered behavior, not every input or hardware condition."
+    ]
+  },
+  {
+    "id": "13-review",
+    "name": "Require a separate approval",
+    "chapter": "10 / INDEPENDENT REVIEW",
+    "title": "A second view.\nA different\napprover.",
+    "eyebrow": "MODEL REVIEW + ORGANIZATION APPROVAL",
+    "detail": "Fresh reviewer context\nDifferent organization member\nApproval bound to the tested candidate",
+    "image": "change-approval.png",
+    "crop": [
+      1080,
+      250,
+      1120,
+      665
+    ],
+    "label": "Actual completed approval · Separate synthetic QA accounts",
+    "captions": [
+      "The model reviewer receives fresh context. A different organization member approves the exact tested candidate.",
+      "The private pilot rejected self-approval. The QA accounts are synthetic; this demonstrates a permission boundary, not customer adoption."
+    ]
+  },
+  {
+    "id": "14-public-pr",
+    "name": "The real public draft pull request",
+    "chapter": "11 / PUBLICATION IS A SEPARATE STEP",
+    "title": "A real draft.\nReady for\ncode review.",
+    "eyebrow": "CREATED BY THE GITHUB APP",
+    "detail": "Tested patch and proof metadata\nNo automatic merge\nNo laptop-repaired claim",
+    "image": "draft-pr.png",
+    "crop": [
+      900,
+      110,
+      1320,
+      705
+    ],
+    "label": "github.com/Golden007-prog/sparecycle/pull/1",
+    "captions": [
+      "This actual App-created draft contains the tested patch and verification metadata. Technician narratives remain in the workspace.",
+      "A maintainer still reviews the code. Nothing is automatically merged or marked physically repaired."
+    ]
+  },
+  {
+    "id": "15-private",
+    "name": "The verified private-repository pilot",
+    "layout": "proof",
+    "chapter": "12 / A SEPARATE PRIVATE EXECUTION",
+    "title": "The private pilot completed the same chain.",
+    "detail": "Nano investigation · Super patch and review · Same unchanged tests",
+    "label": "Sanitized execution summary · One synthetic fixture · Private source excluded",
+    "captions": [
+      "Encrypted dispatch ran verification in the same private repository. One baseline failure became four unchanged test cases passing.",
+      "A separate approval preceded a real draft. This validates one fixture. Private setup currently requires an operator-approved verifier and repository key."
+    ]
+  },
+  {
+    "id": "16b-triage",
+    "name": "Software, hardware or missing evidence",
+    "layout": "board",
+    "chapter": "THE ASSET-SPECIFIC DECISION",
+    "title": "Not every observation needs a code change.",
+    "detail": "The implemented classification routes the next step to the appropriate workflow.",
+    "cards": [
+      {
+        "tag": "SOFTWARE",
+        "title": "Bounded patch",
+        "body": "Test a narrow candidate\nSeparate approval"
+      },
+      {
+        "tag": "HARDWARE",
+        "title": "Workshop review",
+        "body": "A physical inspection\nNo automated repair claim"
+      },
+      {
+        "tag": "NOT ENOUGH EVIDENCE",
+        "title": "Collect evidence",
+        "body": "Clarify the observation\nBefore proposing a fix"
+      }
+    ],
+    "note": "Only the software branch is demonstrated by the completed live fixture.",
+    "label": "Implemented classification diagram · Branch-specific execution proof is limited",
+    "captions": [
+      "Software can proceed to a bounded patch. Hardware goes to workshop review. Missing evidence calls for more evidence.",
+      "The classification is implemented; only the software branch is demonstrated by the completed live fixture."
+    ]
+  },
+  {
+    "id": "16c-workshop",
+    "name": "How Review fits the recovery planner",
+    "chapter": "THE LARGER RECOVERY WORKFLOW",
+    "title": "Parts. Time.\nBudget.\nA useful plan.",
+    "eyebrow": "SEPARATE WORKSHOP PLANNER",
+    "detail": "Plan around declared resources.\nBrowser-local data today.\nShared operations are future work.",
+    "image": "landing.png",
+    "crop": [
+      1010,
+      100,
+      1390,
+      1030
+    ],
+    "label": "Actual product page · Planning projections are not measured field outcomes",
+    "captions": [
+      "The Workshop planner allocates declared parts, technician time, and budget. Today it is browser-local, without automatic inventory synchronization into Review.",
+      "A shared record connecting planning, diagnosis, and verified repair outcomes is future work."
+    ]
+  },
+  {
+    "id": "16-isolation",
+    "name": "Organization access and trace privacy",
+    "layout": "board",
+    "chapter": "13 / EVIDENCE WITH ACCESS BOUNDARIES",
+    "title": "A shared workflow. Restricted visibility.",
+    "detail": "Implemented checks were exercised with synthetic integration accounts.",
+    "cards": [
+      {
+        "tag": "ORGANIZATION ACCESS",
+        "title": "Membership checks",
+        "body": "An outsider request\nwas rejected"
+      },
+      {
+        "tag": "APPROVAL",
+        "title": "Different member",
+        "body": "Self-approval rejected\nBefore draft publication"
+      },
+      {
+        "tag": "LANGSMITH",
+        "title": "Metadata only",
+        "body": "Trace inputs and outputs hidden\nNo source-code transcript"
+      }
+    ],
+    "note": "These controls are evidence of specific tests, not an enterprise security certification.",
+    "label": "Verified pilot checks + implemented tracing policy",
+    "captions": [
+      "An outsider organization request was rejected. LangSmith traces keep metadata, excluding source and diagnostic narratives from trace inputs and outputs.",
+      "These are specific controls and checks. An independent security assessment is still future work."
+    ]
+  },
+  {
+    "id": "17-pilot",
+    "name": "How a design partner should start",
+    "layout": "board",
+    "chapter": "14 / MAKE THE FIRST PILOT USEFUL",
+    "title": "Start with one repeatable failure.",
+    "detail": "A proposed onboarding approach for a supervised design-partner pilot.",
+    "cards": [
+      {
+        "tag": "SELECT",
+        "title": "One owned project",
+        "body": "Diagnostic parser\nKnown expected behavior"
+      },
+      {
+        "tag": "PREPARE",
+        "title": "Two team roles",
+        "body": "Technician / engineer\nA separate approver"
+      },
+      {
+        "tag": "REPLAY",
+        "title": "A reproducible case",
+        "body": "Versioned evidence\nUnchanged test suite"
+      }
+    ],
+    "note": "Commercial hypothesis: paid pilot → company subscription with usage caps. Pricing is unvalidated.",
+    "label": "Recommended pilot plan · Not a claim of completed customer onboarding",
+    "captions": [
+      "Start with one owned diagnostic project, one repeatable failure, versioned evidence, and a separate reviewer.",
+      "A commercial hypothesis is a supervised paid pilot, then a company subscription with explicit usage caps. Pricing and demand remain unvalidated."
+    ]
+  },
+  {
+    "id": "18-gaps",
+    "name": "Current implementation gaps",
+    "layout": "board",
+    "chapter": "15 / WHAT IS NOT COMPLETE",
+    "title": "Know the limits before expanding.",
+    "detail": "Current release gaps, not hidden assumptions about enterprise readiness.",
+    "cards": [
+      {
+        "tag": "COMPANY ACCESS",
+        "title": "Email + managed SSO",
+        "body": "Delivery, identity enforcement\nMembership deprovisioning"
+      },
+      {
+        "tag": "PROJECT COVERAGE",
+        "title": "Beyond the fixture",
+        "body": "More languages and runners\nDependency and failure cases"
+      },
+      {
+        "tag": "FIELD RESULTS",
+        "title": "Physical outcomes",
+        "body": "Real technician pilots\nRepair and recovery measurements"
+      }
+    ],
+    "note": "Today’s software proof does not establish repair rates, savings or emissions avoided.",
+    "label": "Current gaps · Future implementation requires validation",
+    "captions": [
+      "Google login works; custom company email remains deferred. Managed SSO needs identity-policy enforcement and deprovisioning, plus provider setup.",
+      "Runner coverage remains constrained. Customer repair rates and field savings need real pilots measured against recorded baselines."
+    ]
+  },
+  {
+    "id": "19-investment",
+    "name": "What investment should unlock",
+    "layout": "board",
+    "chapter": "16 / FUTURE, INVESTMENT-GATED WORK",
+    "title": "Fund milestones that can be verified.",
+    "detail": "Proposed sequencing; no committed dates, completed contracts or claimed results.",
+    "cards": [
+      {
+        "tag": "FIRST",
+        "title": "Reliable onboarding",
+        "body": "Email and membership lifecycle\nGuided private verifier setup"
+      },
+      {
+        "tag": "NEXT",
+        "title": "Recoverable jobs",
+        "body": "Durable stages and usage\nFailure / cancellation tests"
+      },
+      {
+        "tag": "THEN",
+        "title": "Enterprise integration",
+        "body": "Enforced SSO, shared records\nNew evaluated runner profiles"
+      }
+    ],
+    "note": "Run supervised design-partner pilots alongside the first reliability work.",
+    "label": "Proposed roadmap after investment · Not available today",
+    "captions": [
+      "Begin customer pilots alongside reliable onboarding. Next, fund recoverable jobs, cancellation, reconciled usage, and evaluations. Then enforced SSO, shared data, and broader tested runners.",
+      "Dedicated Nebius capacity is a future option when measured load or residency needs justify it."
+    ]
+  },
+  {
+    "id": "20-measure",
+    "name": "Measure value before scaling",
+    "layout": "board",
+    "chapter": "17 / THE BUSINESS VALIDATION PLAN",
+    "title": "Measure the value of an accepted fix.",
+    "detail": "Proposed pilot metrics, with baselines and rejected attempts included.",
+    "cards": [
+      {
+        "tag": "QUALITY",
+        "title": "Accepted fixes",
+        "body": "Correctness and regressions\nReviewer rejection rate"
+      },
+      {
+        "tag": "EFFICIENCY",
+        "title": "Time + total cost",
+        "body": "Inference, verification, support\nCost per accepted change"
+      },
+      {
+        "tag": "CUSTOMER VALUE",
+        "title": "Useful handoffs",
+        "body": "Technician effort saved\nRepeat use and willingness to pay"
+      }
+    ],
+    "note": "Repair throughput and environmental impact need separate, defensible field measurement.",
+    "label": "Future evaluation plan · Metrics are not measured results",
+    "captions": [
+      "Measure accepted fixes, regressions, review time, and total cost per accepted fix: inference, verification, and support, including rejected attempts.",
+      "Each funded stage needs an acceptance gate. Measure physical throughput separately; environmental claims require field evidence."
+    ]
+  },
+  {
+    "id": "21-close",
+    "name": "Inspect the product and the evidence",
+    "chapter": "SPARECYCLE REVIEW",
+    "title": "Real execution.\nVisible proof.\nA focused pilot.",
+    "eyebrow": "TRY IT. INSPECT IT. EVALUATE IT.",
+    "detail": "sparecycle-topaz.vercel.app/review\n\nSource, backend evidence and roadmap:\ngithub.com/Golden007-prog/sparecycle",
+    "image": "review-overview.png",
+    "crop": [
+      1080,
+      195,
+      1480,
+      335
+    ],
+    "label": "Nebius Token Factory · NVIDIA Nemotron · Supabase · GitHub · Vercel",
+    "captions": [
+      "SpareCycle Review connects asset evidence to controlled software changes, using real Nebius inference and NVIDIA Nemotron reasoning.",
+      "Inspect the product, draft, backend evidence, and roadmap. The next step is a focused pilot with measurable outcomes."
+    ]
+  }
+]

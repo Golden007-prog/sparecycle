@@ -1,9 +1,12 @@
+param([switch]$DeepDive)
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 $demoRoot = Split-Path -Parent $PSScriptRoot
 $demoOutput = Join-Path $demoRoot 'test-results/video'
+if($DeepDive){$demoOutput = Join-Path $demoOutput 'deep-dive'}
 New-Item -ItemType Directory -Path $demoOutput -Force | Out-Null
-$demoScenes = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'storyboard.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$storyboardFile = if($DeepDive){'storyboard-deep-dive.json'}else{'storyboard.json'}
+$demoScenes = Get-Content -LiteralPath (Join-Path $PSScriptRoot $storyboardFile) -Raw -Encoding UTF8 | ConvertFrom-Json
 
 function DemoBrush([string]$hex) { return [Drawing.SolidBrush]::new([Drawing.ColorTranslator]::FromHtml($hex)) }
 function DemoFont([single]$size, [bool]$bold = $false) {
@@ -45,8 +48,39 @@ foreach ($scene in $demoScenes) {
     $g.FillRectangle($blue,80,56,36,36)
     DemoText $g 'S' 25 '#FFFFFF' 86 55 30 40 $true
     DemoText $g 'SpareCycle.' 32 '#FFFFFF' 133 50 300 55 $true
-    DemoText $g 'REVIEW / PRODUCT DEMO' 20 '#ACC0CB' 1510 63 340 38
-    if($scene.layout -eq 'wide'){
+    $cutLabel = if($DeepDive){'REVIEW / BACKEND DEEP DIVE'}else{'REVIEW / PRODUCT DEMO'}
+    DemoText $g $cutLabel 19 '#ACC0CB' 1490 63 370 38
+    if($scene.layout -eq 'board'){
+        DemoText $g $scene.chapter 22 '#B6C6D0' 80 139 1740 45 $true
+        DemoText $g $scene.title 54 '#FFFFFF' 76 203 1780 82 $true
+        DemoText $g $scene.detail 25 '#D2DFE6' 80 295 1760 75
+        $columns = $scene.cards.Count
+        $gap = 24
+        $width = (1760 - ($columns - 1) * $gap) / $columns
+        for($i=0;$i -lt $columns;$i++){
+            $card=$scene.cards[$i];$x=80+$i*($width+$gap)
+            $g.FillRectangle($cream,$x,405,$width,325)
+            DemoText $g $card.tag 18 '#50685D' ($x+28) 437 ($width-56) 40 $true
+            DemoText $g $card.title 34 '#20313F' ($x+26) 497 ($width-52) 98 $true
+            DemoText $g $card.body 24 '#5E717C' ($x+28) 608 ($width-56) 108
+        }
+        $g.FillRectangle($muted,80,774,1760,94)
+        DemoText $g $scene.note 26 '#DDE7EA' 107 794 1706 65
+        DemoText $g $scene.label 20 '#CAD8DF' 80 902 1760 34
+    } elseif($scene.layout -eq 'receipt'){
+        DemoText $g $scene.chapter 22 '#B6C6D0' 80 139 1740 45 $true
+        DemoText $g $scene.title 54 '#FFFFFF' 76 203 1780 82 $true
+        DemoText $g $scene.detail 25 '#D2DFE6' 80 295 1760 60
+        $rowY = 383
+        foreach($row in $scene.rows){
+            $g.FillRectangle($cream,80,$rowY,1760,92)
+            DemoText $g $row.key 27 '#5E717C' 106 ($rowY+25) 445 54
+            DemoText $g $row.value 28 '#20313F' 585 ($rowY+24) 1215 58 $true
+            $rowY+=102
+        }
+        DemoText $g $scene.note 24 '#DDE7EA' 80 814 1760 65
+        DemoText $g $scene.label 20 '#CAD8DF' 80 902 1760 34
+    } elseif($scene.layout -eq 'wide'){
         DemoText $g $scene.chapter 22 '#B6C6D0' 80 139 1740 45 $true
         DemoText $g $scene.title 54 '#FFFFFF' 76 203 1780 82 $true
         DemoText $g $scene.detail 25 '#D2DFE6' 80 291 1760 42

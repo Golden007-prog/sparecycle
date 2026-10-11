@@ -2,6 +2,18 @@
 
 Updated 11 October 2026. The workshop remains a browser-local pilot; SpareCycle Review is a separate authenticated, tenant-isolated service with tested public and private diagnostic workflows. Neither is an audited enterprise platform, and the 520-story roadmap is not a claim that all features are implemented.
 
+## Backend and business video release — 11 October 2026
+
+The expanded narrated walkthrough is **5 minutes 38 seconds**, with 23 chapters and 46 caption cues. It explains the recorded private backend run, Nebius hosting and NVIDIA model roles, server-controlled verification and approval, the first customer hypothesis, current gaps and proposed investment gates. The underlying execution uses synthetic fixtures and previously completed real calls; this video release makes no fresh model or publication calls.
+
+- `/demo` and `/demo/deep-dive.html` present the longer walkthrough. `/demo/competition.html` preserves the original 178.56-second competition cut. Its MP4 SHA-256 remains `00deb79d080ede8e0fe67e4b5369a443a76145f8ff9f4f85e0ba93607cf9cb96`.
+- Both the captioned local video and selectable-caption web video passed full decode. The extended narration measured approximately −16.41 LUFS and −1.48 dBTP. Text bounds and the encoded scene contact sheet were inspected.
+- The production build passed. Browser checks confirmed playback advancement, no media error, the captions toggle, 23-section transcript, short-cut navigation and the corrected chapter seek at 115.30 seconds. A narrow-screen layout check found no horizontal overflow. No claim of a comprehensive accessibility audit is made.
+- [Backend evidence](BACKEND-EVIDENCE.md), [investment roadmap](INVESTMENT-ROADMAP.md) and [research notes](INVESTMENT-RESEARCH-NOTES.md) distinguish implemented controls, recorded synthetic results and future work. Customer demand, savings, repair yield and investment returns remain unvalidated.
+- Custom SMTP remains deferred; no company identity provider, cloud migration, new infrastructure purchase or Devpost submission is part of this media release.
+
+Publication verification is recorded below once the release is live.
+
 ## Private review and authentication release — 11 October 2026
 
 The synthetic private pilot completed real Nebius Nano investigation, Super patching and review, encrypted verification in the same private GitHub repository, a separate test-account approval, and draft PR publication. The unchanged four-test suite had one failing baseline test and four passing candidate tests. Self-approval and access from an unrelated account were rejected. The supported target remains a bounded JavaScript diagnostic parser, with operator-provisioned private runners; this is not arbitrary project execution or unattended repair.

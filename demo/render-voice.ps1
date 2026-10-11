@@ -1,9 +1,12 @@
+param([switch]$DeepDive)
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Speech
 $demoRoot = Split-Path -Parent $PSScriptRoot
 $demoOutput = Join-Path $demoRoot 'test-results/video'
+if($DeepDive){$demoOutput = Join-Path $demoOutput 'deep-dive'}
 New-Item -ItemType Directory -Path $demoOutput -Force | Out-Null
-$demoScenes = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'storyboard.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$storyboardFile = if($DeepDive){'storyboard-deep-dive.json'}else{'storyboard.json'}
+$demoScenes = Get-Content -LiteralPath (Join-Path $PSScriptRoot $storyboardFile) -Raw -Encoding UTF8 | ConvertFrom-Json
 $voice = [System.Speech.Synthesis.SpeechSynthesizer]::new()
 $voice.SelectVoice('Microsoft Zira Desktop')
 $voice.Rate = 2

@@ -12,6 +12,8 @@ Built for the **Best Apps and Agents** track of the Nebius x NVIDIA Global AI Ha
 - Workshop: [Open the planner](https://sparecycle-topaz.vercel.app/app) · [Start company setup](https://sparecycle-topaz.vercel.app/app?setup=1)
 - Review: [Open the review desk](https://sparecycle-topaz.vercel.app/review) · [Company setup in five steps](docs/REVIEW-COMPANY-SETUP.md)
 - Public source: [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle)
+- Videos: [Backend and business deep dive](https://sparecycle-topaz.vercel.app/demo) · [Competition cut](https://sparecycle-topaz.vercel.app/demo/competition.html)
+- Inspect the [backend execution evidence](docs/BACKEND-EVIDENCE.md) and [proposed investment roadmap](docs/INVESTMENT-ROADMAP.md), with acceptance gates and pilot metrics.
 - Public YouTube demonstration: **remaining submission task**
 - License: [MIT](LICENSE)
 - Recorded Workshop release evidence: **56 automated tests passed**, production builds passed, and [GitHub CI passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38022439465). These are earlier Workshop checks, not proof of the new Review deployment. See [VALIDATION.md](docs/VALIDATION.md) for recorded release results and their scope.
@@ -74,7 +76,8 @@ React Review interface /review
         |     `-- Organizations, passports, evidence, approvals, jobs, audit and quotas
         |-- Nebius Nemotron stage router + private continuation checkpoints
         |-- Selected-repository GitHub App + exact commit snapshots
-        |-- GitHub Actions isolated baseline/candidate tests (public-source pilot)
+        |-- GitHub Actions isolated baseline/candidate tests
+        |     `-- Public verifier or operator-configured same-repository private verifier
         `-- Independent human approval -> draft PR
 ~~~
 

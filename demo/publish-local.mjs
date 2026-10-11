@@ -9,11 +9,13 @@ const names=['Meet SpareCycle Review','The company workspace','The laptop passpo
 if(names.length!==scenes.length)throw new Error('Update chapter labels for the new storyboard.');
 const esc=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const timestamp=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(Math.floor(s%60)).padStart(2,'0')}`;
-let html=fs.readFileSync(path.join(target,'index.html'),'utf8');
-html=html.replace(/<ol id="chapter-list">[\s\S]*?<\/ol>/,`<ol id="chapter-list">\n${evidence.scenes.map((s,i)=>`        <li><button type="button" data-time="${s.start.toFixed(2)}"><span>${timestamp(s.start)}</span>${names[i]}</button></li>`).join('\n')}\n      </ol>`);
+const page=fs.existsSync(path.join(target,'competition.html'))?'competition.html':'index.html';
+let html=fs.readFileSync(path.join(target,page),'utf8');
+// The visible timestamp marks the chapter; the seek avoids its opening transition.
+html=html.replace(/<ol id="chapter-list">[\s\S]*?<\/ol>/,`<ol id="chapter-list">\n${evidence.scenes.map((s,i)=>`        <li><button type="button" data-time="${(s.start+.35).toFixed(2)}"><span>${timestamp(s.start)}</span>${names[i]}</button></li>`).join('\n')}\n      </ol>`);
 html=html.replace(/<div id="transcript-content">[\s\S]*?<\/div><\/details>/,`<div id="transcript-content">\n${scenes.map((s,i)=>`      <h3>${names[i]}</h3><p>${esc(s.captions.join(' '))}</p>`).join('\n')}\n    </div></details>`);
 html=html.replace(/\d minutes \d{2} seconds/g,`${Math.floor(evidence.duration/60)} minutes ${Math.ceil(evidence.duration%60)} seconds`);
-fs.writeFileSync(path.join(target,'index.html'),html);
+fs.writeFileSync(path.join(target,page),html);
 // The web copy has no burned-in captions so the accessible VTT track can be toggled.
 // The separate local deliverable keeps burned-in captions for upload convenience.
 fs.copyFileSync(path.join(output,'assembly.mp4'),path.join(target,'sparecycle-review-demo.mp4'));

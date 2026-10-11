@@ -2,7 +2,7 @@
 
 Private diagnostic projects use a verifier inside the **same private GitHub repository** as their source. They never use SpareCycle's shared public verification workflow. Nebius Token Factory still performs investigation, patch generation and the separate model review. A different organization member must approve the tested change before the GitHub App creates a draft PR.
 
-This profile supports one pure JavaScript parser under `src/diagnostics/*.mjs` and one to eight unchanged tests under `tests/diagnostics/*.test.mjs`. It does not yet run arbitrary application builds, install project dependencies, merge PRs or administer laptops. Private repository support is not a claim of compliance certification or general code-agent access.
+The company connection API supports one pure JavaScript parser under `src/diagnostics/*.mjs` and one to four unchanged test files under `tests/diagnostics/*.test.mjs`. Individual files may contain multiple test cases. It does not yet run arbitrary application builds, install project dependencies, merge PRs or administer laptops. Private repository support is not a claim of compliance certification or general code-agent access.
 
 ## Connect a company project
 
