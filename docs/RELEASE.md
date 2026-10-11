@@ -4,7 +4,7 @@ Updated 11 October 2026. The workshop remains a browser-local pilot; SpareCycle 
 
 ## Backend and business video release — 11 October 2026
 
-The expanded narrated walkthrough is **5 minutes 38 seconds**, with 23 chapters and 46 caption cues. It explains the recorded private backend run, Nebius hosting and NVIDIA model roles, server-controlled verification and approval, the first customer hypothesis, current gaps and proposed investment gates. The underlying execution uses synthetic fixtures and previously completed real calls; this video release makes no fresh model or publication calls.
+The expanded narrated walkthrough is **5 minutes 38 seconds**, with 23 chapters and 46 caption cues. It explains the recorded private backend run, Nebius hosting and NVIDIA model roles, server-controlled verification and approval, the first customer hypothesis, current gaps and proposed investment gates. The underlying execution uses synthetic fixtures and previously completed real calls; this video release makes no fresh AI or draft-PR calls.
 
 - `/demo` and `/demo/deep-dive.html` present the longer walkthrough. `/demo/competition.html` preserves the original 178.56-second competition cut. Its MP4 SHA-256 remains `00deb79d080ede8e0fe67e4b5369a443a76145f8ff9f4f85e0ba93607cf9cb96`.
 - Both the captioned local video and selectable-caption web video passed full decode. The extended narration measured approximately −16.41 LUFS and −1.48 dBTP. Text bounds and the encoded scene contact sheet were inspected.
@@ -12,7 +12,9 @@ The expanded narrated walkthrough is **5 minutes 38 seconds**, with 23 chapters 
 - [Backend evidence](BACKEND-EVIDENCE.md), [investment roadmap](INVESTMENT-ROADMAP.md) and [research notes](INVESTMENT-RESEARCH-NOTES.md) distinguish implemented controls, recorded synthetic results and future work. Customer demand, savings, repair yield and investment returns remain unvalidated.
 - Custom SMTP remains deferred; no company identity provider, cloud migration, new infrastructure purchase or Devpost submission is part of this media release.
 
-Publication verification is recorded below once the release is live.
+Published runtime: `73132a1d654892188b52742feaf6fe58f84a6753`. [GitHub verification passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38110837105), including automated tests, production build, roadmap/pilot-kit checks and source exclusions. Vercel deployment `dpl_8Qfu2Rc2d6MS6BYUNj867Rej8XdH` is READY at the [immutable deployment](https://sparecycle-fooa6169y-basuoikantik-7538s-projects.vercel.app), aliased to the [live demo](https://sparecycle-topaz.vercel.app/demo).
+
+All twelve checked public routes/assets returned the expected media type and matched the local SHA-256 digest; the extended MP4 also returned a valid HTTP 206 byte range for seeking. The live browser loaded its full 338.14-second duration with no media error, all 23 chapters and captions enabled. The backend-evidence chapter sought to 56.87 seconds while paused. The preserved shorter cut is available at [competition.html](https://sparecycle-topaz.vercel.app/demo/competition.html). These delivery checks do not rerun the recorded AI workflow.
 
 ## Private review and authentication release — 11 October 2026
 
