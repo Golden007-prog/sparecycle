@@ -23,7 +23,8 @@ The sections below preserve earlier release evidence and limitations as recorded
 - Production smoke passed nine bounded read-only requests: public configuration, unauthenticated rejection, foreign-origin rejection, strict action validation, owner evidence retrieval and outsider isolation. The deployed service returned the completed private workflow with its exact base, patch and proof hashes.
 - The separate private run inspected by the integration audit had a metadata-only artifact, no exact source/candidate/known secret strings in the inspected logs or proof, and a private draft with one parser change and unchanged test content. This was a targeted audit, not a claim of a comprehensive security assessment.
 - Delivery folder `E:\LOCAL helper\sparecycle` was fast-forwarded; its existing batch file and private settings were preserved. Its production build passed.
-- Google provider and application flags are enabled. A complete external Google sign-in return still needs browser verification; unit tests and provider settings are not counted as that end-to-end test.
+- Google sign-in completed on the live site through the selected business account, returned to the clean `/review` URL, and persisted after reload. The new account saw its own empty organization state and did not gain access to the synthetic test organization. This verifies ordinary Google authentication, not enforced company SSO.
+- The final live watch page loaded the full 178.56-second video without a media error. Selecting the harness chapter sought to 68.77 seconds while remaining paused, with captions enabled.
 
 ## Website and company pilot release
 
