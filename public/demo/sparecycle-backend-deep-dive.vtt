@@ -1,185 +1,153 @@
 WEBVTT
 
 1
-00:00:00.300 --> 00:00:05.678
-SpareCycle Review's first customer hypothesis is a refurbishment team that owns its diagnostic software.
+00:00:00.300 --> 00:00:10.048
+SpareCycle joins a refurbishment coordinator's planning workflow with a diagnostics engineer's code review. Follow the working product, recorded backend proof, and the investment gates.
 
 2
-00:00:05.858 --> 00:00:14.296
-A technician observes a problem. An engineer needs a controlled fix and proof. Follow that handoff into the working backend, then the investment roadmap.
+00:00:10.728 --> 00:00:20.480
+A technician records an observation. An engineer defines a supported software issue. A separate reviewer inspects the tested candidate. Every handoff keeps its evidence.
 
 3
-00:00:14.976 --> 00:00:22.505
-A technician records passport evidence. An engineer defines the software issue. A separate reviewer inspects the tested candidate.
+00:00:21.160 --> 00:00:30.513
+Pilot Operations freezes the validated plan, then records per-device progress, blockers, assignment and due dates, actual effort, costs and evidence-backed manual checks.
 
 4
-00:00:22.685 --> 00:00:28.773
-The output is a draft pull request for code review. Passing software tests never certify a physical repair.
+00:00:30.693 --> 00:00:40.926
+A local scorecard distinguishes proposed devices from technician-reported outcomes. Export a handoff or backup. These records neither consume shared stock nor certify a physical release.
 
 5
-00:00:29.453 --> 00:00:34.611
-The company workspace connects a passport, project, and change request to a particular evidence revision.
+00:00:41.606 --> 00:00:52.188
+A public model question invokes Tavily in the application backend. The server filters official documentation, assigns source IDs, and passes only bounded snippets to NVIDIA Nemotron on Nebius.
 
 6
-00:00:34.791 --> 00:00:42.234
-These records and accounts are synthetic. The provider calls, test executions, and resulting draft pull requests actually happened.
+00:00:52.368 --> 00:01:01.531
+The result shows its sources, uncertainties and next checks. A matched citation is not a hardware diagnosis: the technician must inspect the source and the actual device.
 
 7
-00:00:42.914 --> 00:00:48.538
-Here, a valid zero-percent battery reading becomes missing data. That can mislead diagnosis.
+00:01:02.211 --> 00:01:07.369
+The company workspace connects a passport, project, and change request to a particular evidence revision.
 
 8
-00:00:48.718 --> 00:00:56.141
-The request defines expected behavior before generation. The backend compares original and candidate code using exactly the same test cases.
+00:01:07.549 --> 00:01:14.992
+These records and accounts are synthetic. The provider calls, test executions, and resulting draft pull requests actually happened.
 
 9
-00:00:56.821 --> 00:01:04.059
-These saved private-run timestamps document Nano investigation, passing verification, Super review, and a draft created after separate approval.
+00:01:15.672 --> 00:01:21.296
+Here, a valid zero-percent battery reading becomes missing data. That can mislead diagnosis.
 
 10
-00:01:04.239 --> 00:01:10.292
-This is recorded execution evidence. The intervals include pauses, so they are not a latency benchmark.
+00:01:21.476 --> 00:01:28.899
+The request defines expected behavior before generation. The backend compares original and candidate code using exactly the same test cases.
 
 11
-00:01:10.972 --> 00:01:18.695
-Nebius Token Factory hosts NVIDIA Nemotron inference. GitHub Actions runs isolated tests; Nebius Sandboxes are not the live runner.
+00:01:29.579 --> 00:01:36.817
+These saved private-run timestamps document Nano investigation, passing verification, Super review, and a draft created after separate approval.
 
 12
-00:01:18.875 --> 00:01:24.928
-Relevant private code goes to Nebius. Test isolation does not mean reasoning stays on the company's laptop.
+00:01:36.997 --> 00:01:43.050
+This is recorded execution evidence. The intervals include pauses, so they are not a latency benchmark.
 
 13
-00:01:25.608 --> 00:01:33.027
-Lightning investigated the public case; Nano investigated the private pilot. Super proposed and independently reviewed both candidates.
+00:01:43.730 --> 00:01:55.727
+Nebius Token Factory hosts inference. NVIDIA supplies Nemotron. GitHub Actions executes tests; Supabase protects organization records. These are distinct services, each with a defined job.
 
 14
-00:01:33.207 --> 00:01:40.275
-Ultra was separately checked, not proven better. Future routing should follow evaluations of correctness, latency, and cost.
+00:01:56.407 --> 00:02:06.550
+Nano and Lightning can investigate. Super writes and freshly reviews non-Ultra cases. Ultra is an explicit operator-enabled escalation, not an automatic promise of better quality.
 
 15
-00:01:40.955 --> 00:01:46.874
-The supplied Nebius usage view records four model tiers. It confirms usage, not correctness.
+00:02:07.230 --> 00:02:14.928
+The supplied usage view records all four tiers. Its rounded cost buckets are provider evidence, not an exact invoice or comparative benchmark.
 
 16
-00:01:47.054 --> 00:01:54.572
-Rounded cost buckets cannot establish cost per accepted fix. That requires reconciled usage across successful and rejected attempts.
-
-17
-00:01:55.252 --> 00:02:03.149
+00:02:15.608 --> 00:02:23.506
 The harness bounds evidence, requires structured output, and validates changes. The model has no shell, network, or publishing tool.
 
-18
-00:02:03.329 --> 00:02:10.208
+17
+00:02:23.686 --> 00:02:30.564
 Trusted server code controls testing and publication. The model proposes; the application authorizes each transition.
 
+18
+00:02:31.244 --> 00:02:40.072
+A model stage has a forty-second deadline, a bounded context, strict output and reserved spend. There is no automatic paid retry after an uncertain result.
+
 19
-00:02:10.888 --> 00:02:15.911
-A reserved stage budget, forty-second deadline, and bounded input and output constrain each call.
+00:02:40.752 --> 00:02:50.230
+Evidence revision, repository commit and candidate hashes travel together. Changed inputs require fresh verification and approval; a passing test cannot bless another patch.
 
 20
-00:02:16.091 --> 00:02:24.089
-Current execution is a pure JavaScript diagnostic-parser change. Broader languages and dependencies need additional test profiles and evaluations.
-
-21
-00:02:24.769 --> 00:02:31.457
-The candidate is bound to its base commit, patch hash, and evidence revision. Proof and approval refer to those inputs.
-
-22
-00:02:31.637 --> 00:02:37.291
-Changed code or evidence invalidates old approval. Passing proof cannot authorize a different candidate.
-
-23
-00:02:37.971 --> 00:02:44.254
+00:02:50.910 --> 00:02:57.193
 GitHub Actions executes both versions in a network-disabled container. The original has one failure and three passes.
 
-24
-00:02:44.434 --> 00:02:51.382
+21
+00:02:57.373 --> 00:03:04.321
 The candidate passes all four unchanged test cases. That proves covered behavior, not every input or hardware condition.
 
-25
-00:02:52.062 --> 00:02:58.031
+22
+00:03:05.001 --> 00:03:10.970
 The model reviewer receives fresh context. A different organization member approves the exact tested candidate.
 
-26
-00:02:58.211 --> 00:03:05.859
+23
+00:03:11.150 --> 00:03:18.798
 The private pilot rejected self-approval. The QA accounts are synthetic; this demonstrates a permission boundary, not customer adoption.
 
-27
-00:03:06.539 --> 00:03:13.262
+24
+00:03:19.478 --> 00:03:26.201
 This actual App-created draft contains the tested patch and verification metadata. Technician narratives remain in the workspace.
 
-28
-00:03:13.442 --> 00:03:18.656
+25
+00:03:26.381 --> 00:03:31.595
 A maintainer still reviews the code. Nothing is automatically merged or marked physically repaired.
 
-29
-00:03:19.336 --> 00:03:26.699
-Encrypted dispatch ran verification in the same private repository. One baseline failure became four unchanged test cases passing.
+26
+00:03:32.275 --> 00:03:42.477
+The private pilot used Nano investigation and Super patching and review. Encrypted source went to a pinned verifier in the same private repository. Independent approval preceded the real draft.
 
-30
-00:03:26.879 --> 00:03:35.726
-A separate approval preceded a real draft. This validates one fixture. Private setup currently requires an operator-approved verifier and repository key.
-
-31
-00:03:36.406 --> 00:03:43.469
+27
+00:03:43.157 --> 00:03:50.220
 Software can proceed to a bounded patch. Hardware goes to workshop review. Missing evidence calls for more evidence.
 
-32
-00:03:43.649 --> 00:03:49.058
+28
+00:03:50.400 --> 00:03:55.808
 The classification is implemented; only the software branch is demonstrated by the completed live fixture.
 
-33
-00:03:49.738 --> 00:03:58.350
-The Workshop planner allocates declared parts, technician time, and budget. Today it is browser-local, without automatic inventory synchronization into Review.
+29
+00:03:56.488 --> 00:04:08.246
+The Workshop allocates declared parts, time and budget. It stays browser-local; authenticated Review has separate organization records. Their handoff is explicit, without automatic inventory synchronization.
 
-34
-00:03:58.530 --> 00:04:03.454
-A shared record connecting planning, diagnosis, and verified repair outcomes is future work.
+30
+00:04:08.926 --> 00:04:18.543
+Review insights compare loaded evidence revisions, verification references and approval bindings. Filters bring stale records, delayed jobs and cases requiring attention into one queue.
 
-35
-00:04:04.134 --> 00:04:12.547
+31
+00:04:18.723 --> 00:04:28.281
+This is read-only guidance. It does not rerun tests, validate repository head, change permissions, or execute a job. Refresh the server record before deciding.
+
+32
+00:04:28.961 --> 00:04:37.374
 An outsider organization request was rejected. LangSmith traces keep metadata, excluding source and diagnostic narratives from trace inputs and outputs.
 
-36
-00:04:12.727 --> 00:04:18.175
+33
+00:04:37.554 --> 00:04:43.002
 These are specific controls and checks. An independent security assessment is still future work.
 
+34
+00:04:43.682 --> 00:04:53.829
+Start with one owned diagnostics project, one reproducible failure and a separate reviewer. A supervised pilot and usage-capped subscription are commercial hypotheses that still need buyer validation.
+
+35
+00:04:54.509 --> 00:05:05.536
+Google sign-in works. Company email is deferred; managed SSO requires enforcement and deprovisioning. Broader runners and physical repair outcomes need additional implementation and real field measurement.
+
+36
+00:05:06.216 --> 00:05:18.504
+Fund reliable onboarding and supervised pilots first. Then failure recovery, usage reconciliation and evaluations. Enforced SSO, shared stock and broader runner profiles follow only after their acceptance gates.
+
 37
-00:04:18.855 --> 00:04:24.383
-Start with one owned diagnostic project, one repeatable failure, versioned evidence, and a separate reviewer.
+00:05:19.184 --> 00:05:31.196
+Measure accepted fixes, regressions, review time and total cost, including rejected attempts. The selected two hundred roadmap capabilities are planned work with acceptance criteria, not two hundred shipped features.
 
 38
-00:04:24.563 --> 00:04:32.611
-A commercial hypothesis is a supervised paid pilot, then a company subscription with explicit usage caps. Pricing and demand remain unvalidated.
-
-39
-00:04:33.291 --> 00:04:42.009
-Google login works; custom company email remains deferred. Managed SSO needs identity-policy enforcement and deprovisioning, plus provider setup.
-
-40
-00:04:42.189 --> 00:04:49.047
-Runner coverage remains constrained. Customer repair rates and field savings need real pilots measured against recorded baselines.
-
-41
-00:04:49.727 --> 00:05:01.609
-Begin customer pilots alongside reliable onboarding. Next, fund recoverable jobs, cancellation, reconciled usage, and evaluations. Then enforced SSO, shared data, and broader tested runners.
-
-42
-00:05:01.789 --> 00:05:06.523
-Dedicated Nebius capacity is a future option when measured load or residency needs justify it.
-
-43
-00:05:07.203 --> 00:05:16.425
-Measure accepted fixes, regressions, review time, and total cost per accepted fix: inference, verification, and support, including rejected attempts.
-
-44
-00:05:16.605 --> 00:05:23.559
-Each funded stage needs an acceptance gate. Measure physical throughput separately; environmental claims require field evidence.
-
-45
-00:05:24.239 --> 00:05:30.911
-SpareCycle Review connects asset evidence to controlled software changes, using real Nebius inference and NVIDIA Nemotron reasoning.
-
-46
-00:05:31.091 --> 00:05:37.685
-Inspect the product, draft, backend evidence, and roadmap. The next step is a focused pilot with measurable outcomes.
+00:05:31.876 --> 00:05:41.388
+Inspect the live application, public draft, backend ledger, project dossier and roadmap. SpareCycle uses actual Nebius and NVIDIA inference to make the next action reviewable.

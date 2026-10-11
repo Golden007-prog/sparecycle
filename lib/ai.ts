@@ -7,6 +7,8 @@ import { z } from 'zod';
 import { recoveryBatchSchema, recoveryLimitsSchema } from './recovery-types.js';
 import type { RecoveryPlan } from './recovery-types.js';
 import { planRecovery } from './recovery.js';
+import { ResearchError, RESEARCH_INSTRUCTIONS, researchRequestSchema, researchSynthesisSchema, searchOfficialSources, validResearchSynthesis } from './research.js';
+import type { ResearchResult } from './research.js';
 
 export const DEFAULT_MODEL = 'nvidia/Nemotron-3_5-Lightning';
 export const MAX_BODY_BYTES = 24_000;
@@ -45,9 +47,10 @@ export const analysisRequestSchema = z.unknown().refine(value => boundedJson(val
     z.object({ action: z.literal('intake'), text: z.string().trim().min(10).max(6_000) }).strict(),
     z.object({ action: z.literal('plan'), ...planningFields }).strict(),
     z.object({ action: z.literal('explain'), ...planningFields }).strict(),
+    researchRequestSchema,
   ]),
 ).superRefine((input, context) => {
-  if (input.action === 'intake') return;
+  if (input.action === 'intake' || input.action === 'research') return;
   if (!boundedJson({ batch: input.batch, limits: input.limits }, MAX_CONTEXT_BYTES)) {
     context.addIssue({ code: 'custom', message: 'Inventory context exceeds 16 KB.' });
   }
@@ -78,10 +81,11 @@ export const explanationSchema = z.object({
 export type AnalysisInput = z.infer<typeof analysisRequestSchema>;
 export type IntakeResult = z.infer<typeof intakeSchema>;
 export type ExplanationResult = z.infer<typeof explanationSchema>;
-export type ToolName = 'list_inventory' | 'inspect_device' | 'compute_recovery_plan';
+type PlanningToolName = 'list_inventory' | 'inspect_device' | 'compute_recovery_plan';
+export type ToolName = PlanningToolName | 'tavily_search';
 export interface ToolEvent { name: ToolName; status: 'completed' | 'rejected'; resultCount: number }
 export interface AnalysisResponse {
-  data: IntakeResult | ExplanationResult;
+  data: IntakeResult | ExplanationResult | ResearchResult;
   plan?: RecoveryPlan;
   meta: { provider: 'Nebius Token Factory'; model: string; latencyMs: number; traceId?: string; tools: ToolEvent[] };
 }
@@ -105,7 +109,7 @@ export type CompletionProvider = (request: CompletionRequest) => Promise<{
   usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number; completion_tokens_details?: { reasoning_tokens?: number } | null };
 }>;
 interface CompletionDiagnostic {
-  stage: 'intake' | 'tools' | 'explanation';
+  stage: 'intake' | 'tools' | 'explanation' | 'research';
   finishReason?: 'stop' | 'length' | 'tool_calls' | 'function_call' | 'content_filter' | 'unknown';
   promptTokens?: number;
   completionTokens?: number;
@@ -121,6 +125,8 @@ export interface RunOptions {
   now?: () => number;
   /** Injectable telemetry transport for token-free, network-free privacy tests. */
   traceFetch?: typeof fetch;
+  /** Injectable search transport; never receives inventory or repository context. */
+  researchFetch?: typeof fetch;
   /** Test hook; the public endpoint cannot change these budgets. */
   timeoutMs?: number;
 }
@@ -141,7 +147,7 @@ const unavailable = () => new AnalysisError(502, 'AI_UNAVAILABLE', 'Live AI is t
 export async function runAnalysis(candidate: AnalysisInput, options: RunOptions = {}): Promise<AnalysisResponse> {
   // Also validate direct callers, not only the HTTP route.
   const parsed = analysisRequestSchema.safeParse(candidate);
-  if (!parsed.success) throw new AnalysisError(400, 'INVALID_INPUT', 'Provide a valid intake message or a bounded recovery batch and limits.');
+  if (!parsed.success) throw new AnalysisError(400, 'INVALID_INPUT', 'Provide a valid intake message, recovery batch, or public research question.');
   const input = parsed.data;
   const env = options.env ?? process.env;
   if (!env.NEBIUS_API_KEY?.trim()) throw new AnalysisError(503, 'AI_NOT_CONFIGURED', 'Live AI is not configured. You can continue with the local recovery planner.');
@@ -170,7 +176,7 @@ export async function runAnalysis(candidate: AnalysisInput, options: RunOptions 
   const complete = async (request: CompletionRequest) => {
     const remaining = Math.min(PROVIDER_TIMEOUT_MS, deadline - Date.now());
     if (remaining <= 0) throw unavailable();
-    const diagnostic: CompletionDiagnostic = { stage: request.tools ? 'tools' : input.action === 'intake' ? 'intake' : 'explanation' };
+    const diagnostic: CompletionDiagnostic = { stage: request.tools ? 'tools' : input.action === 'intake' ? 'intake' : input.action === 'research' ? 'research' : 'explanation' };
     completionDiagnostics.push(diagnostic);
     let timer: ReturnType<typeof setTimeout> | undefined;
     try {
@@ -207,12 +213,12 @@ export async function runAnalysis(candidate: AnalysisInput, options: RunOptions 
     } finally { if (timer) clearTimeout(timer); recordDiagnostics(); }
   };
 
-  const operation = async (name: ToolName, rawArgs: string): Promise<unknown> => {
+  const operation = async (name: PlanningToolName, rawArgs: string): Promise<unknown> => {
     const execute = async () => {
       let count = 0;
       let status: ToolEvent['status'] = 'rejected';
       try {
-        if (input.action === 'intake' || rawArgs.length > 1_000) throw invalidResponse();
+        if (input.action === 'intake' || input.action === 'research' || rawArgs.length > 1_000) throw invalidResponse();
         const args: unknown = JSON.parse(rawArgs);
         if (!boundedJson(args, 1_000)) throw invalidResponse();
         let output: unknown;
@@ -253,7 +259,50 @@ export async function runAnalysis(candidate: AnalysisInput, options: RunOptions 
     })() : execute();
   };
 
-  const invoke = async (): Promise<IntakeResult | ExplanationResult> => {
+  const invoke = async (): Promise<IntakeResult | ExplanationResult | ResearchResult> => {
+    if (input.action === 'research') {
+      const search = async () => {
+        let count = 0;
+        let status: ToolEvent['status'] = 'rejected';
+        try {
+          const found = await searchOfficialSources(input, { env, fetch: options.researchFetch, now, timeoutMs: deadline - Date.now() });
+          count = found.sources.length;
+          status = 'completed';
+          return found;
+        } catch (error) {
+          if (error instanceof ResearchError) throw new AnalysisError(error.status, error.code, error.message);
+          throw new AnalysisError(502, 'RESEARCH_UNAVAILABLE', 'Official-source research is temporarily unavailable. Please try again later.');
+        } finally {
+          events.push({ name: 'tavily_search', status, resultCount: count });
+          if (client) {
+            const run = getCurrentRunTree();
+            run.metadata = { ...run.metadata, tool: 'tavily_search', status, resultCount: count, privacy: 'metadata-only' };
+          }
+        }
+      };
+      const found = client ? await traceable(search, {
+        name: 'tavily_search', run_type: 'tool', client, tracingEnabled: true, project_name: env.LANGSMITH_PROJECT || 'sparecycle',
+        processInputs: () => ({}), processOutputs: () => ({}), metadata: { tool: 'tavily_search', privacy: 'metadata-only' },
+      })() : await search();
+      if (!found.sources.length) return {
+        kind: 'research', model: input.model, question: input.question, ...found,
+        summary: 'No usable official sources matching the supplied model identifiers were found. No AI answer was generated.', findings: [],
+        uncertainties: ['The available search results do not establish a model-specific reference. A generic product family or year alone is insufficient.'],
+        nextChecks: ['Check the exact model number and revision, then consult the manufacturer support documentation.'],
+      };
+      const message = await complete({
+        model, messages: [{ role: 'system', content: RESEARCH_INSTRUCTIONS }, { role: 'user', content: JSON.stringify({
+          model: input.model, question: input.question,
+          untrustedSourceSnippets: found.sources.map(({ id, title, url, excerpt }) => ({ id, title, url, excerpt })),
+        }) }],
+        response_format: zodResponseFormat(researchSynthesisSchema, 'official_source_research'),
+        temperature: 0.1, max_completion_tokens: 2_000, stream: false,
+      });
+      if (!message.content || message.tool_calls?.length || message.content.length > 12_000) throw invalidResponse();
+      const synthesis = validResearchSynthesis(JSON.parse(message.content), found.sources);
+      if (!synthesis) throw invalidResponse();
+      return { kind: 'research', model: input.model, question: input.question, ...synthesis, ...found };
+    }
     if (input.action === 'intake') {
       const message = await complete({
         model, messages: [{ role: 'system', content: INTAKE_INSTRUCTIONS }, { role: 'user', content: input.text }],
@@ -290,7 +339,7 @@ export async function runAnalysis(candidate: AnalysisInput, options: RunOptions 
         messages.push({ role: 'assistant', content: message.content || null, tool_calls: calls });
         for (const call of calls) {
           if (call.type !== 'function') throw invalidResponse();
-          const output = await operation(call.function.name as ToolName, call.function.arguments);
+          const output = await operation(call.function.name as PlanningToolName, call.function.arguments);
           messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(output) });
         }
         // The verified plan is sufficient for the final explanation. Avoid an
@@ -324,7 +373,7 @@ export async function runAnalysis(candidate: AnalysisInput, options: RunOptions 
       throw invalidResponse();
     }
   };
-  let data: IntakeResult | ExplanationResult;
+  let data: IntakeResult | ExplanationResult | ResearchResult;
   try {
     if (tracingConfigured(env)) {
       traceId = randomUUID();

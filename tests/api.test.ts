@@ -211,11 +211,33 @@ test('health endpoint exposes only configuration flags, not credentials', () => 
   const capture = response();
   health(request(undefined, {}, 'GET'), capture.res);
   assert.equal(capture.state.status, 200);
-  assert.deepEqual(Object.keys(capture.state.body as object).sort(), ['aiConfigured', 'model', 'service', 'tracingConfigured']);
+  assert.deepEqual(Object.keys(capture.state.body as object).sort(), ['aiConfigured', 'model', 'service', 'tavilyConfigured', 'tavilyMode', 'tracingConfigured']);
   assert.equal(typeof (capture.state.body as { aiConfigured: unknown }).aiConfigured, 'boolean');
+  assert.equal(typeof (capture.state.body as { tavilyConfigured: unknown }).tavilyConfigured, 'boolean');
+  assert(['keyless', 'api-key', 'unconfigured'].includes((capture.state.body as { tavilyMode: string }).tavilyMode));
   const wrongMethod = response();
   health(request(), wrongMethod.res);
   assert.equal(wrongMethod.state.status, 405);
+});
+
+test('research uses the existing public endpoint guards and request quota without accepting inventory context', async () => {
+  let calls = 0;
+  const body = { action: 'research', model: 'ThinkPad T480', question: 'Where is the official service manual?' };
+  const handler = createAnalyzeHandler({ env, invoke: async candidate => {
+    calls++; assert.deepEqual(candidate, body); return result;
+  } });
+  const foreign = response();
+  await handler(request(body, { origin: 'https://attacker.example' }), foreign.res);
+  assert.equal(foreign.state.status, 403);
+  const privateContext = response();
+  await handler(request({ ...body, batch: sampleRecoveryBatch }), privateContext.res);
+  assert.equal(privateContext.state.status, 400);
+  for (let i = 0; i < 6; i++) {
+    const capture = response();
+    await handler(request(body, { origin: 'http://localhost:3000' }), capture.res);
+    assert.equal(capture.state.status, i < 5 ? 200 : 429);
+  }
+  assert.equal(calls, 5);
 });
 
 

@@ -1,109 +1,65 @@
 WEBVTT
 
 1
-00:00:00.300 --> 00:00:04.269
-A laptop can be held back by broken software as well as broken hardware.
+00:00:00.300 --> 00:00:09.418
+SpareCycle helps teams use the laptops they already have, and fix the diagnostic software behind them. This is a working prototype using synthetic demonstration records.
 
 2
-00:00:04.449 --> 00:00:08.897
-SpareCycle Review connects what a team observes on the bench to a tested change in its project.
+00:00:10.098 --> 00:00:22.890
+Workshop allocates declared parts, time and budget. Pilot Operations freezes a plan, records bench progress, actual effort and evidence checks, then exports a local handoff. Physical release still needs technician judgment.
 
 3
-00:00:09.577 --> 00:00:14.696
-The company workspace brings laptop passports, project connections, and change requests together.
+00:00:23.570 --> 00:00:35.392
+The Research desk calls Tavily for official documentation at runtime. NVIDIA Nemotron on Nebius summarizes bounded sources with checked citation IDs, uncertainties and next checks. Search does not approve a repair.
 
 4
-00:00:14.876 --> 00:00:19.834
-Access follows organization membership, so a different company cannot read this team's records.
+00:00:36.072 --> 00:00:44.685
+Organization access protects the Review workspace. This laptop's evidence records a concrete bug: a valid zero-percent battery reading is discarded as missing data.
 
 5
-00:00:20.514 --> 00:00:25.008
-This passport contains an observed parser failure, with its source and evidence revision.
+00:00:45.365 --> 00:00:53.407
+Nebius Token Factory supplies actual NVIDIA inference. The server sends bounded requests, without exposing provider credentials to the browser.
 
 6
-00:00:25.188 --> 00:00:31.676
-The records are synthetic. The failure, model calls, isolated tests, and published draft are real.
+00:00:54.087 --> 00:01:01.396
+Lightning investigated this public case; Super wrote and freshly reviewed the patch. Nano and opt-in Ultra were separately exercised.
 
 7
-00:00:32.356 --> 00:00:36.735
-Here, a valid zero-percent battery reading is incorrectly discarded as missing data.
+00:01:02.076 --> 00:01:08.494
+Recorded Nebius usage shows four tiers. These rounded cost buckets are not a per-change invoice or a quality benchmark.
 
 8
-00:00:36.915 --> 00:00:41.988
-The request defines the expected behavior and preserves the existing tests before any code is proposed.
+00:01:09.174 --> 00:01:20.801
+The harness enforces structured output, a forty-second model deadline and reserved spend. Models have no shell or publishing tools. Code and evidence hashes bind tests and approval; LangSmith records metadata.
 
 9
-00:00:42.668 --> 00:00:48.462
-Nebius Token Factory is the cloud inference provider. NVIDIA Nemotron supplies the reasoning models.
+00:01:21.481 --> 00:01:28.864
+The proposed change targets one pure JavaScript diagnostic parser. Existing tests and the repository version are pinned before execution.
 
 10
-00:00:49.142 --> 00:00:56.475
-In this completed change, Lightning investigated the evidence. Super generated the patch and independently reviewed it with fresh context.
+00:01:29.544 --> 00:01:39.407
+Real GitHub Actions verification first reproduces the defect: three tests pass, one fails. The exact candidate then passes all four unchanged tests in an isolated container.
 
 11
-00:00:57.155 --> 00:01:01.668
-The supplied Nebius usage screenshot records Nano, Lightning, Super, and Ultra.
+00:01:40.087 --> 00:01:48.500
+A fresh model review examines the result. A different organization member approves the exact candidate. Changed evidence or code requires a new approval.
 
 12
-00:01:01.848 --> 00:01:08.387
-That confirms use across four model tiers, not that every tier wrote this patch. The displayed cost buckets are rounded.
+00:01:49.180 --> 00:01:56.893
+The GitHub App creates this actual draft PR with its verification record. No automatic merge, deployment or physical-repair claim follows.
 
 13
-00:01:09.067 --> 00:01:16.830
-Trusted code controls every transition. Structured output, a forty-second model deadline, and reserved spend constrain each stage.
+00:01:57.573 --> 00:02:04.876
+A separate private pilot also completed, using encrypted transport and a pinned verifier in its own repository, with separate human approval.
 
 14
-00:01:17.010 --> 00:01:26.393
-Exact code and evidence hashes, unchanged tests, stale-evidence rejection, and a separate approver protect publication. LangSmith traces contain metadata only.
+00:02:05.556 --> 00:02:14.038
+Review insights surface stale evidence, delayed jobs and work needing attention. They compare loaded record references; the server still decides which actions are allowed.
 
 15
-00:01:27.073 --> 00:01:31.911
-The proposed patch is restricted to the selected diagnostic parser and checked against the harness rules.
+00:02:14.718 --> 00:02:24.781
+Google sign-in works. Company email, enforced SSO, shared inventory and broader language support remain investment gates. The two-hundred-capability map is planned work.
 
 16
-00:01:32.091 --> 00:01:37.944
-It is bound to an exact repository version and evidence revision. Generating a patch does not make it approved.
-
-17
-00:01:38.624 --> 00:01:43.903
-An isolated GitHub Actions container first reproduces the failure: one test fails and three pass.
-
-18
-00:01:44.083 --> 00:01:50.331
-With the candidate, all four unchanged tests pass. Hashes bind this result to the exact code and evidence.
-
-19
-00:01:51.011 --> 00:01:55.915
-The independent review receives the original problem and evidence, without the writer's conversation.
-
-20
-00:01:56.095 --> 00:02:01.953
-A different organization member must approve the tested change. New evidence or code invalidates that approval.
-
-21
-00:02:02.633 --> 00:02:08.011
-The SpareCycle GitHub App created this actual draft pull request with the tested patch and verification metadata.
-
-22
-00:02:08.191 --> 00:02:15.249
-Technician narratives stay in the workspace. Repository review is still required, and publishing does not mark a laptop repaired.
-
-23
-00:02:15.929 --> 00:02:28.417
-A separate private-repository pilot also completed: encrypted dispatch, one baseline failure, four unchanged tests passing, independent approval, and a real draft pull request. Synthetic QA accounts were used.
-
-24
-00:02:29.097 --> 00:02:36.035
-Review complements the recovery planner, connecting declared parts, workshop time, and repair budgets with a traceable software handoff.
-
-25
-00:02:36.715 --> 00:02:47.137
-This controlled parser demonstration does not certify physical repairs. Enterprise email, private repository execution, and single sign-on each require separate verified configuration.
-
-26
-00:02:47.817 --> 00:02:52.506
-SpareCycle Review brings Nebius-powered reasoning into a workflow a team can inspect and control.
-
-27
-00:02:52.686 --> 00:02:58.094
-Open the live app, inspect the source and draft pull request, and see the evidence behind the change.
+00:02:25.461 --> 00:02:33.244
+Try the live app, inspect the draft and backend evidence, and download the project dossier. SpareCycle makes each next action reviewable.

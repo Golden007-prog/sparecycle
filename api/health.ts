@@ -1,5 +1,6 @@
 import type { HttpRequest, HttpResponse } from '../lib/http.js';
 import { configuredModel, tracingConfigured } from '../lib/ai.js';
+import { tavilyMode } from '../lib/research.js';
 
 export default function health(req: HttpRequest, res: HttpResponse) {
   res.setHeader('Cache-Control', 'no-store');
@@ -10,6 +11,8 @@ export default function health(req: HttpRequest, res: HttpResponse) {
   return res.status(200).json({
     aiConfigured: Boolean(process.env.NEBIUS_API_KEY?.trim()),
     tracingConfigured: tracingConfigured(),
+    tavilyConfigured: tavilyMode() !== 'unconfigured',
+    tavilyMode: tavilyMode(),
     model: configuredModel(),
     service: 'SpareCycle',
   });

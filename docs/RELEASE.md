@@ -2,7 +2,22 @@
 
 Updated 11 October 2026. The workshop remains a browser-local pilot; SpareCycle Review is a separate authenticated, tenant-isolated service with tested public and private diagnostic workflows. Neither is an audited enterprise platform, and the 520-story roadmap is not a claim that all features are implemented.
 
+## Balanced expansion — release candidate, 11 October 2026
+
+Implemented the Research desk, Pilot operations desk and developer-review insights described in [BALANCED-RELEASE.md](BALANCED-RELEASE.md). The [200-capability plan](EXPANSION-PLAN.md) is future scope, not 200 newly completed features.
+
+- **249 automated tests passed**, with no failures; TypeScript and the production build passed. Regression checks cover exact-model source rejection, bounded provider errors, stale QA, full-history backup recovery and redacted review exports.
+- The local application made a real Tavily Search request followed by Nebius `nvidia/Nemotron-3_5-Lightning` synthesis. Request `2efd1898-a7cb-4866-add3-f85136c8dfcb` returned five model-matched official sources and reported one Tavily credit; the overall observed latency was 6,354 ms. A separate browser request also rendered matching sources and a copyable brief. These observations are not a performance benchmark.
+- Pilot browser QA covered assignments, due dates, work records, blocking/rework, three evidence checks, reload persistence, stale-plan detection, archive controls and explicit foreign-workspace recovery with QA reset. Physical completion is still a user declaration.
+- Review queue search/filtering, detail checks and redacted export previews were exercised with synthetic records. The export can be copied if browser file saving is unavailable; a save request is not claimed as a completed download.
+- The replacement [competition video and deep dive](VIDEO-RELEASE-20261011.md) passed full decode, caption bounds, audio checks and visual inspection. The competition cut is 153.700 seconds; the deep dive is 341.873 seconds. Both include actual research/Pilot/Review captures and distinguish recorded evidence from planned expansion.
+- A designed 14-page PDF dossier covers the product, model harness, runtime evidence, setup, business hypothesis and investment gaps. Pending production checks remain labeled until verified below.
+
+Deployment and new YouTube URLs will be recorded after their external checks complete. The earlier sections below are historical snapshots, including superseded media links.
+
 ## Backend and business video release — 11 October 2026
+
+Both videos are now published publicly on YouTube: [the primary competition demonstration](https://www.youtube.com/watch?v=i21ilQRw4go), displayed as **2:59**, and [the supporting backend deep dive](https://www.youtube.com/watch?v=pdLFzA9sT6A), displayed as **5:39**. The local deep-dive file is 338.136 seconds; the YouTube duration label is rounded. No video regeneration was needed to add these links. The watch-page generators support `--pages-only` for link/HTML updates without copying media. Devpost is still a draft pending eligibility confirmation and verified judge access; publishing the videos does not submit the project.
 
 The expanded narrated walkthrough is **5 minutes 38 seconds**, with 23 chapters and 46 caption cues. It explains the recorded private backend run, Nebius hosting and NVIDIA model roles, server-controlled verification and approval, the first customer hypothesis, current gaps and proposed investment gates. The underlying execution uses synthetic fixtures and previously completed real calls; this video release makes no fresh AI or draft-PR calls.
 

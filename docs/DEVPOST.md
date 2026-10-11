@@ -1,4 +1,6 @@
-# SpareCycle Review: Devpost submission draft
+# SpareCycle Review: historical Devpost submission draft
+
+> **Superseded draft, retained as a 10 October 2026 record.** Use the current [submission pack](SUBMISSION-PACK.md), [backend evidence](BACKEND-EVIDENCE.md) and [release record](RELEASE.md). Both videos are now published: [primary competition cut](https://www.youtube.com/watch?v=i21ilQRw4go) and [supporting deep dive](https://www.youtube.com/watch?v=pdLFzA9sT6A). Devpost remains a draft; the last reported progress was 3 of 5 sections, pending eligibility confirmation and verified judge access. The older test counts, public-only scope and unuploaded-video notes below describe the earlier release, not current status.
 
 Editorial draft updated 10 October 2026 for published runtime `97d81a166e2ed3ad9b41ce3795a48eeb9877d9fe`. Its 166 automated tests, production build and [GitHub CI](https://github.com/Golden007-prog/sparecycle/actions/runs/38028508283) passed. Vercel production is READY; live access, tenant isolation and desktop/mobile screens were checked. A fresh Nano investigation succeeded through the deployed app. Real hosted Auth/persistence, four Nebius model tiers, isolated tests and an App-authored draft PR have been exercised. The requested local delivery also built successfully. [VALIDATION.md](VALIDATION.md) distinguishes these observations. The YouTube video and Devpost entry remain unsubmitted.
 

@@ -1,5 +1,7 @@
 # SpareCycle capability catalog
 
+**Catalog baseline:** the story statuses and counts below describe the original workshop catalog. Later Review, research and pilot-operation releases are documented separately in [BALANCED-RELEASE.md](BALANCED-RELEASE.md), the [Review roadmap](REVIEW-ENTERPRISE-ROADMAP.md) and [release evidence](RELEASE.md). Do not add overlapping story counts together or present planned capabilities as shipped.
+
 This catalog contains **520 actionable user stories across 26 modules**: **29 shipped capabilities in the bounded prototype** and **491 planned capabilities**. **216 stories are differentiation candidates** for research and customer testing. That flag does not mean an idea is exclusive, patented, absent from competitors, or validated by a buyer.
 
 The catalog is a product backlog, not a claim that 520 features have been built. The 29 shipped entries describe individual behaviors within the current prototype, not 29 complete enterprise modules. Shared company operations require substantial additional work.

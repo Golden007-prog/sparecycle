@@ -27,6 +27,17 @@ const wrap = text => {
   if(line)lines.push(line);return lines.join('\\N');
 };
 let offset=0; const subtitles=[]; const clips=[]; const ledger=[];
+const measured = scenes.map(scene => {
+  const waves = scene.captions.map((_, i) => path.join(output, `${scene.id}-${i}.wav`));
+  const durations = waves.map(seconds);
+  return { id: scene.id, duration: .30 + durations.reduce((a,b) => a+b, 0) + .18 * (waves.length-1) + .38 };
+});
+const plannedDuration = measured.reduce((total, item) => total + item.duration, 0);
+if (!deepDive && plannedDuration >= 179.5) throw new Error(`Competition cut exceeds time gate: ${plannedDuration.toFixed(3)} seconds.`);
+if (process.argv.includes('--measure-only')) {
+  console.log(JSON.stringify({ deepDive, duration: plannedDuration, scenes: measured }, null, 2));
+  process.exit(0);
+}
 for (const scene of scenes) {
   const wave=scene.captions.map((_,i)=>path.join(output,`${scene.id}-${i}.wav`));
   const durations=wave.map(seconds); const lead=.30; const between=.18; const tail=.38;

@@ -1,109 +1,88 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#20313f">
-<meta name="description" content="Inspect SpareCycle’s recorded Nebius and NVIDIA Nemotron backend execution, its AI harness, the best initial workflow and an explicitly future investment roadmap.">
-  <title>Backend &amp; business deep dive · SpareCycle</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="stylesheet" href="/demo/demo.css">
-  <script src="/demo/demo.js" defer></script>
-</head>
-<body>
+<html lang="en"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#20313f">
+  <meta name="description" content="See SpareCycle's Tavily research, Nebius NVIDIA Nemotron harness, local Pilot Operations and tested draft PR workflow. Recorded synthetic proof and future investment gates stay explicit.">
+  <title>Backend & business deep dive · SpareCycle</title><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="stylesheet" href="/demo/demo.css"><script src="/demo/demo.js" defer></script>
+</head><body>
   <a class="skip-link" href="#watch">Skip to video</a>
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="SpareCycle home"><img src="/favicon.svg" width="32" height="32" alt=""><span>SpareCycle.</span></a>
-    <nav aria-label="Demo navigation"><a href="https://github.com/Golden007-prog/sparecycle">View source</a><a class="button button-small" href="/review">Open Review <span aria-hidden="true">↗</span></a></nav>
-  </header>
+  <header class="site-header"><a class="brand" href="/" aria-label="SpareCycle home"><img src="/favicon.svg" width="32" height="32" alt=""><span>SpareCycle.</span></a><nav aria-label="Demo navigation"><a href="https://github.com/Golden007-prog/sparecycle">View source</a><a class="button button-small" href="/review">Open Review <span aria-hidden="true">↗</span></a></nav></header>
   <main>
-    <section class="introduction" aria-labelledby="page-title">
-      <div><p class="intro-label"><span aria-hidden="true"></span>SpareCycle Review, behind the workflow</p><h1 id="page-title">The backend.<br>The next step.</h1></div>
-      <div class="intro-copy"><p>See what really runs, how the AI harness controls it, and what a focused investment should unlock.</p><div class="runtime"><span aria-hidden="true">▶</span> 5 minutes 38 seconds <span class="runtime-format">Narrated in English</span></div></div>
-    </section>
-
+    <section class="introduction" aria-labelledby="page-title"><div><p class="intro-label"><span aria-hidden="true"></span>SpareCycle, behind the workflow</p><h1 id="page-title">The backend.<br>The next step.</h1></div><div class="intro-copy"><p>Inspect real provider execution, the AI harness, the expanded workflows and the investment gates.</p><div class="runtime"><span aria-hidden="true">▶</span> 5 minutes 42 seconds <span class="runtime-format">Narrated in English</span></div></div></section>
     <nav class="cut-selector" aria-label="Choose a video">
-      <a href="/demo/deep-dive.html" aria-current="page"><span class="cut-type">Backend &amp; business deep dive</span><strong>05:38</strong><span>Recorded execution, AI harness, best use and the proposed roadmap.</span></a>
-      <a href="/demo/competition.html"><span class="cut-type">Competition cut</span><strong>2:59</strong><span>The original product demonstration, preserved under three minutes.</span></a>
+      <a href="/demo/deep-dive.html" aria-current="page"><span class="cut-type">Backend &amp; business deep dive</span><strong>05:41</strong><span>Research, operations, recorded execution, harness and the proposed roadmap.</span></a>
+      <a href="/demo/competition.html"><span class="cut-type">Competition cut</span><strong>02:33</strong><span>The expanded product demonstration, under three minutes.</span></a>
     </nav>
-    <section id="watch" class="watch" aria-label="SpareCycle Review demonstration">
-      <div class="player-topline"><span><span class="status-dot" aria-hidden="true"></span>Recorded execution + explained architecture</span><span>Synthetic demonstration records</span></div>
-      <video id="demo-video" controls playsinline preload="metadata" poster="/demo/deep-dive-poster.png" aria-label="SpareCycle Review: recorded backend execution, controls and future roadmap" aria-describedby="video-context">
-        <source src="/demo/sparecycle-backend-deep-dive.mp4" type="video/mp4">
-        <track id="english-captions" kind="captions" src="/demo/sparecycle-backend-deep-dive.vtt" srclang="en" label="English" default>
-        Your browser does not support this video. <a href="/demo/sparecycle-backend-deep-dive.mp4">Download the MP4</a> or read the transcript below.
-      </video>
+    
+    <section id="watch" class="watch" aria-label="SpareCycle demonstration">
+      <div class="player-topline"><span><span class="status-dot" aria-hidden="true"></span>Actual captures + explained architecture</span><span>Synthetic demonstration records</span></div>
+      <video id="demo-video" controls playsinline preload="metadata" poster="/demo/deep-dive-poster.png" aria-label="SpareCycle: Backend & business deep dive" aria-describedby="video-context"><source src="/demo/sparecycle-backend-deep-dive.mp4" type="video/mp4"><track id="english-captions" kind="captions" src="/demo/sparecycle-backend-deep-dive.vtt" srclang="en" label="English" default>Your browser does not support this video. <a href="/demo/sparecycle-backend-deep-dive.mp4">Download the MP4</a> or read the transcript below.</video>
       <div class="player-toolbar"><div><button id="captions-toggle" class="caption-control" type="button" aria-pressed="true" hidden><span class="cc-icon" aria-hidden="true">CC</span><span id="captions-label">Captions on</span></button><span id="chapter-status" class="chapter-status" aria-live="polite">The best first use case</span></div><a href="/demo/sparecycle-backend-deep-dive.mp4" download="sparecycle-backend-deep-dive.mp4">Download video <span aria-hidden="true">↓</span></a></div>
     </section>
-
     <section class="tour-details" aria-label="Explore the demonstration">
-      <div class="chapters"><h2>Explore the backend and next steps</h2><p class="section-note">Choose a chapter to move through the video.</p><ol id="chapter-list">
-        <li><button type="button" data-time="0.35"><span>00:00</span>The best first use case</button></li>
-        <li><button type="button" data-time="15.03"><span>00:14</span>A useful first workflow</button></li>
-        <li><button type="button" data-time="29.50"><span>00:29</span>Start with versioned evidence</button></li>
-        <li><button type="button" data-time="42.96"><span>00:42</span>The reproduced parser failure</button></li>
-        <li><button type="button" data-time="56.87"><span>00:56</span>What actually ran on the backend</button></li>
-        <li><button type="button" data-time="71.02"><span>01:10</span>Nebius and NVIDIA have different roles</button></li>
-        <li><button type="button" data-time="85.66"><span>01:25</span>Route by stage, measure the result</button></li>
-        <li><button type="button" data-time="101.00"><span>01:40</span>Real provider usage, with limits</button></li>
-        <li><button type="button" data-time="115.30"><span>01:54</span>What the AI harness controls</button></li>
-        <li><button type="button" data-time="130.94"><span>02:10</span>Bound the stage before it starts</button></li>
-        <li><button type="button" data-time="144.82"><span>02:24</span>Bind the fix to exact inputs</button></li>
-        <li><button type="button" data-time="158.02"><span>02:37</span>Reproduce, then verify the same tests</button></li>
-        <li><button type="button" data-time="172.11"><span>02:51</span>Require a separate approval</button></li>
-        <li><button type="button" data-time="186.59"><span>03:06</span>The real public draft pull request</button></li>
-        <li><button type="button" data-time="199.39"><span>03:19</span>The verified private-repository pilot</button></li>
-        <li><button type="button" data-time="216.46"><span>03:36</span>Software, hardware or missing evidence</button></li>
-        <li><button type="button" data-time="229.79"><span>03:49</span>How Review fits the recovery planner</button></li>
-        <li><button type="button" data-time="244.18"><span>04:03</span>Organization access and trace privacy</button></li>
-        <li><button type="button" data-time="258.90"><span>04:18</span>How a design partner should start</button></li>
-        <li><button type="button" data-time="273.34"><span>04:32</span>Current implementation gaps</button></li>
-        <li><button type="button" data-time="289.78"><span>04:49</span>What investment should unlock</button></li>
-        <li><button type="button" data-time="307.25"><span>05:06</span>Measure value before scaling</button></li>
-        <li><button type="button" data-time="324.29"><span>05:23</span>Inspect the product and the evidence</button></li>
-      </ol><noscript><p>Use the video controls to seek to these times. Chapter buttons require JavaScript.</p></noscript></div>
-
-      <div class="evidence-notes">
-      <p class="small-label">Evidence first, roadmap second</p><h2>What works.<br>What comes next.</h2>
-      <p id="video-context">The walkthrough combines actual application captures with labeled architecture diagrams and summaries of recorded backend execution. Synthetic fixtures are explicit. The Nebius calls, unchanged test cases and draft pull requests were completed; replaying this video does not issue fresh requests.</p>
-      <div class="result-comparison" aria-label="Test results"><div><span>Original code</span><strong>1 failed</strong><small>3 test cases passed</small></div><span class="comparison-arrow" aria-hidden="true">→</span><div><span>Proposed fix</span><strong>4 passed</strong><small>Same test cases</small></div></div>
-      <a class="evidence-link" href="https://github.com/Golden007-prog/sparecycle/pull/1">Inspect the public draft PR <span aria-hidden="true">↗</span></a>
-      <p>Nebius Token Factory hosts NVIDIA Nemotron inference. GitHub Actions runs the tests. The private pilot exercised an operator-configured verifier in its own repository; relevant code is sent to Nebius for inference.</p>
-      <div class="reference-links"><a href="https://github.com/Golden007-prog/sparecycle/blob/main/docs/BACKEND-EVIDENCE.md"><strong>Read the backend evidence</strong><span>Architecture, recorded execution and exact scope.</span></a><a href="https://github.com/Golden007-prog/sparecycle/blob/main/docs/INVESTMENT-ROADMAP.md"><strong>Read the investment roadmap</strong><span>Proposed milestones, acceptance gates and pilot metrics.</span></a></div>
-      <p class="scope-note">Google sign-in works. Custom company email remains deferred. Managed SSO needs identity enforcement and deprovisioning, as well as provider setup. Workshop and Review do not yet share operational records. A software test does not certify a physical repair.</p>
-      <p class="scope-note">Roadmap items, paid pilots, subscription pricing and customer outcomes are future hypotheses, not shipped functionality or measured returns. This longer video is separate from the preserved competition cut.</p>
-      <a class="text-link" href="https://github.com/Golden007-prog/sparecycle/blob/main/docs/REVIEW-COMPANY-SETUP.md">Read the current company setup guide</a>
-    </div>
+      <div class="chapters"><h2>Explore the backend</h2><p class="section-note">Choose a chapter to move through the video.</p><ol id="chapter-list"><li><button type="button" data-time="0.35"><span>00:00</span>The best first use case</button></li>
+<li><button type="button" data-time="10.78"><span>00:10</span>A useful first workflow</button></li>
+<li><button type="button" data-time="21.21"><span>00:20</span>Pilot Operations records the handoff</button></li>
+<li><button type="button" data-time="41.66"><span>00:41</span>A real Tavily search, summarized on Nebius</button></li>
+<li><button type="button" data-time="62.26"><span>01:01</span>Start with versioned evidence</button></li>
+<li><button type="button" data-time="75.72"><span>01:15</span>The reproduced parser failure</button></li>
+<li><button type="button" data-time="89.63"><span>01:29</span>What actually ran on the backend</button></li>
+<li><button type="button" data-time="103.78"><span>01:43</span>Nebius and NVIDIA have different roles</button></li>
+<li><button type="button" data-time="116.46"><span>01:56</span>Route by stage, measure the result</button></li>
+<li><button type="button" data-time="127.28"><span>02:06</span>Real provider usage, with limits</button></li>
+<li><button type="button" data-time="135.66"><span>02:15</span>What the AI harness controls</button></li>
+<li><button type="button" data-time="151.29"><span>02:30</span>Bound the stage before it starts</button></li>
+<li><button type="button" data-time="160.80"><span>02:40</span>Bind the fix to exact inputs</button></li>
+<li><button type="button" data-time="170.96"><span>02:50</span>Reproduce, then verify the same tests</button></li>
+<li><button type="button" data-time="185.05"><span>03:04</span>Require a separate approval</button></li>
+<li><button type="button" data-time="199.53"><span>03:19</span>The real public draft pull request</button></li>
+<li><button type="button" data-time="212.32"><span>03:31</span>The verified private-repository pilot</button></li>
+<li><button type="button" data-time="223.21"><span>03:42</span>Software, hardware or missing evidence</button></li>
+<li><button type="button" data-time="236.54"><span>03:56</span>How Review fits the recovery planner</button></li>
+<li><button type="button" data-time="248.98"><span>04:08</span>The reviewer attention queue</button></li>
+<li><button type="button" data-time="269.01"><span>04:28</span>Organization access and trace privacy</button></li>
+<li><button type="button" data-time="283.73"><span>04:43</span>How a design partner should start</button></li>
+<li><button type="button" data-time="294.56"><span>04:54</span>Current implementation gaps</button></li>
+<li><button type="button" data-time="306.27"><span>05:05</span>What investment should unlock</button></li>
+<li><button type="button" data-time="319.23"><span>05:18</span>Measure value before scaling</button></li>
+<li><button type="button" data-time="331.93"><span>05:31</span>Inspect the product and the evidence</button></li></ol><noscript><p>Use the video controls to seek to these times. Chapter buttons require JavaScript.</p></noscript></div>
+      <div class="evidence-notes"><p class="small-label">Evidence first, roadmap second</p><h2>What works.<br>What comes next.</h2>
+        <p id="video-context">This edited tour combines genuine application captures with labeled diagrams and summaries of recorded execution. The demonstration records are synthetic. Nebius calls, unchanged test cases and draft pull requests were completed; replaying the video does not issue fresh requests.</p>
+        <div class="result-comparison" aria-label="Recorded test results"><div><span>Original code</span><strong>1 failed</strong><small>3 test cases passed</small></div><span class="comparison-arrow" aria-hidden="true">→</span><div><span>Proposed fix</span><strong>4 passed</strong><small>The same unchanged tests</small></div></div>
+        <a class="evidence-link" href="https://github.com/Golden007-prog/sparecycle/pull/1">Inspect the actual public draft PR <span aria-hidden="true">↗</span></a>
+        <p>Tavily retrieves public reference sources; NVIDIA Nemotron on Nebius synthesizes the bounded evidence. Pilot Operations records local bench work. Review insights compare loaded record references without rerunning tests or granting approval.</p>
+        <p>Nebius provides inference. GitHub Actions runs verification. The private pilot used an operator-configured verifier in its own repository; relevant code is sent to Nebius for inference.</p>
+        <div class="reference-links"><a href="/sparecycle-project-dossier.pdf"><strong>Download the project dossier</strong><span>Product, backend proof, onboarding and investment gates.</span></a><a href="https://github.com/Golden007-prog/sparecycle/blob/main/docs/BACKEND-EVIDENCE.md"><strong>Read the backend evidence</strong><span>Recorded execution and exact scope.</span></a><a href="https://github.com/Golden007-prog/sparecycle/blob/main/docs/EXPANSION-PLAN.md"><strong>Read the 200-capability plan</strong><span>Planned work with explicit acceptance criteria.</span></a></div>
+        <p class="scope-note">Workshop and Pilot Operations are browser-local and separate from authenticated Review. Manual checks do not certify physical repairs. Google login works; company email and enforced SSO remain rollout gates. Private verification supports a bounded diagnostics profile.</p>
+        <p class="scope-note">The roadmap is planned work, not 200 shipped features. Pricing, paid pilots and customer outcomes remain hypotheses. The supporting deep dive is separate from the competition cut.</p>
+      </div>
     </section>
-
-    <details class="transcript"><summary>Read the full transcript</summary><div id="transcript-content">
-      <h3>The best first use case</h3><p>SpareCycle Review's first customer hypothesis is a refurbishment team that owns its diagnostic software. A technician observes a problem. An engineer needs a controlled fix and proof. Follow that handoff into the working backend, then the investment roadmap.</p>
-      <h3>A useful first workflow</h3><p>A technician records passport evidence. An engineer defines the software issue. A separate reviewer inspects the tested candidate. The output is a draft pull request for code review. Passing software tests never certify a physical repair.</p>
-      <h3>Start with versioned evidence</h3><p>The company workspace connects a passport, project, and change request to a particular evidence revision. These records and accounts are synthetic. The provider calls, test executions, and resulting draft pull requests actually happened.</p>
-      <h3>The reproduced parser failure</h3><p>Here, a valid zero-percent battery reading becomes missing data. That can mislead diagnosis. The request defines expected behavior before generation. The backend compares original and candidate code using exactly the same test cases.</p>
-      <h3>What actually ran on the backend</h3><p>These saved private-run timestamps document Nano investigation, passing verification, Super review, and a draft created after separate approval. This is recorded execution evidence. The intervals include pauses, so they are not a latency benchmark.</p>
-      <h3>Nebius and NVIDIA have different roles</h3><p>Nebius Token Factory hosts NVIDIA Nemotron inference. GitHub Actions runs isolated tests; Nebius Sandboxes are not the live runner. Relevant private code goes to Nebius. Test isolation does not mean reasoning stays on the company's laptop.</p>
-      <h3>Route by stage, measure the result</h3><p>Lightning investigated the public case; Nano investigated the private pilot. Super proposed and independently reviewed both candidates. Ultra was separately checked, not proven better. Future routing should follow evaluations of correctness, latency, and cost.</p>
-      <h3>Real provider usage, with limits</h3><p>The supplied Nebius usage view records four model tiers. It confirms usage, not correctness. Rounded cost buckets cannot establish cost per accepted fix. That requires reconciled usage across successful and rejected attempts.</p>
-      <h3>What the AI harness controls</h3><p>The harness bounds evidence, requires structured output, and validates changes. The model has no shell, network, or publishing tool. Trusted server code controls testing and publication. The model proposes; the application authorizes each transition.</p>
-      <h3>Bound the stage before it starts</h3><p>A reserved stage budget, forty-second deadline, and bounded input and output constrain each call. Current execution is a pure JavaScript diagnostic-parser change. Broader languages and dependencies need additional test profiles and evaluations.</p>
-      <h3>Bind the fix to exact inputs</h3><p>The candidate is bound to its base commit, patch hash, and evidence revision. Proof and approval refer to those inputs. Changed code or evidence invalidates old approval. Passing proof cannot authorize a different candidate.</p>
-      <h3>Reproduce, then verify the same tests</h3><p>GitHub Actions executes both versions in a network-disabled container. The original has one failure and three passes. The candidate passes all four unchanged test cases. That proves covered behavior, not every input or hardware condition.</p>
-      <h3>Require a separate approval</h3><p>The model reviewer receives fresh context. A different organization member approves the exact tested candidate. The private pilot rejected self-approval. The QA accounts are synthetic; this demonstrates a permission boundary, not customer adoption.</p>
-      <h3>The real public draft pull request</h3><p>This actual App-created draft contains the tested patch and verification metadata. Technician narratives remain in the workspace. A maintainer still reviews the code. Nothing is automatically merged or marked physically repaired.</p>
-      <h3>The verified private-repository pilot</h3><p>Encrypted dispatch ran verification in the same private repository. One baseline failure became four unchanged test cases passing. A separate approval preceded a real draft. This validates one fixture. Private setup currently requires an operator-approved verifier and repository key.</p>
-      <h3>Software, hardware or missing evidence</h3><p>Software can proceed to a bounded patch. Hardware goes to workshop review. Missing evidence calls for more evidence. The classification is implemented; only the software branch is demonstrated by the completed live fixture.</p>
-      <h3>How Review fits the recovery planner</h3><p>The Workshop planner allocates declared parts, technician time, and budget. Today it is browser-local, without automatic inventory synchronization into Review. A shared record connecting planning, diagnosis, and verified repair outcomes is future work.</p>
-      <h3>Organization access and trace privacy</h3><p>An outsider organization request was rejected. LangSmith traces keep metadata, excluding source and diagnostic narratives from trace inputs and outputs. These are specific controls and checks. An independent security assessment is still future work.</p>
-      <h3>How a design partner should start</h3><p>Start with one owned diagnostic project, one repeatable failure, versioned evidence, and a separate reviewer. A commercial hypothesis is a supervised paid pilot, then a company subscription with explicit usage caps. Pricing and demand remain unvalidated.</p>
-      <h3>Current implementation gaps</h3><p>Google login works; custom company email remains deferred. Managed SSO needs identity-policy enforcement and deprovisioning, plus provider setup. Runner coverage remains constrained. Customer repair rates and field savings need real pilots measured against recorded baselines.</p>
-      <h3>What investment should unlock</h3><p>Begin customer pilots alongside reliable onboarding. Next, fund recoverable jobs, cancellation, reconciled usage, and evaluations. Then enforced SSO, shared data, and broader tested runners. Dedicated Nebius capacity is a future option when measured load or residency needs justify it.</p>
-      <h3>Measure value before scaling</h3><p>Measure accepted fixes, regressions, review time, and total cost per accepted fix: inference, verification, and support, including rejected attempts. Each funded stage needs an acceptance gate. Measure physical throughput separately; environmental claims require field evidence.</p>
-      <h3>Inspect the product and the evidence</h3><p>SpareCycle Review connects asset evidence to controlled software changes, using real Nebius inference and NVIDIA Nemotron reasoning. Inspect the product, draft, backend evidence, and roadmap. The next step is a focused pilot with measurable outcomes.</p>
-    </div></details>
-
-    <section class="closing"><div><h2>Bring your next observation.</h2><p>Explore the workspace and see what a considered change looks like.</p></div><a class="button" href="/review">Open SpareCycle Review <span aria-hidden="true">↗</span></a></section>
+    <details class="transcript"><summary>Read the full transcript</summary><div id="transcript-content"><h3>The best first use case</h3><p>SpareCycle joins a refurbishment coordinator's planning workflow with a diagnostics engineer's code review. Follow the working product, recorded backend proof, and the investment gates.</p>
+<h3>A useful first workflow</h3><p>A technician records an observation. An engineer defines a supported software issue. A separate reviewer inspects the tested candidate. Every handoff keeps its evidence.</p>
+<h3>Pilot Operations records the handoff</h3><p>Pilot Operations freezes the validated plan, then records per-device progress, blockers, assignment and due dates, actual effort, costs and evidence-backed manual checks. A local scorecard distinguishes proposed devices from technician-reported outcomes. Export a handoff or backup. These records neither consume shared stock nor certify a physical release.</p>
+<h3>A real Tavily search, summarized on Nebius</h3><p>A public model question invokes Tavily in the application backend. The server filters official documentation, assigns source IDs, and passes only bounded snippets to NVIDIA Nemotron on Nebius. The result shows its sources, uncertainties and next checks. A matched citation is not a hardware diagnosis: the technician must inspect the source and the actual device.</p>
+<h3>Start with versioned evidence</h3><p>The company workspace connects a passport, project, and change request to a particular evidence revision. These records and accounts are synthetic. The provider calls, test executions, and resulting draft pull requests actually happened.</p>
+<h3>The reproduced parser failure</h3><p>Here, a valid zero-percent battery reading becomes missing data. That can mislead diagnosis. The request defines expected behavior before generation. The backend compares original and candidate code using exactly the same test cases.</p>
+<h3>What actually ran on the backend</h3><p>These saved private-run timestamps document Nano investigation, passing verification, Super review, and a draft created after separate approval. This is recorded execution evidence. The intervals include pauses, so they are not a latency benchmark.</p>
+<h3>Nebius and NVIDIA have different roles</h3><p>Nebius Token Factory hosts inference. NVIDIA supplies Nemotron. GitHub Actions executes tests; Supabase protects organization records. These are distinct services, each with a defined job.</p>
+<h3>Route by stage, measure the result</h3><p>Nano and Lightning can investigate. Super writes and freshly reviews non-Ultra cases. Ultra is an explicit operator-enabled escalation, not an automatic promise of better quality.</p>
+<h3>Real provider usage, with limits</h3><p>The supplied usage view records all four tiers. Its rounded cost buckets are provider evidence, not an exact invoice or comparative benchmark.</p>
+<h3>What the AI harness controls</h3><p>The harness bounds evidence, requires structured output, and validates changes. The model has no shell, network, or publishing tool. Trusted server code controls testing and publication. The model proposes; the application authorizes each transition.</p>
+<h3>Bound the stage before it starts</h3><p>A model stage has a forty-second deadline, a bounded context, strict output and reserved spend. There is no automatic paid retry after an uncertain result.</p>
+<h3>Bind the fix to exact inputs</h3><p>Evidence revision, repository commit and candidate hashes travel together. Changed inputs require fresh verification and approval; a passing test cannot bless another patch.</p>
+<h3>Reproduce, then verify the same tests</h3><p>GitHub Actions executes both versions in a network-disabled container. The original has one failure and three passes. The candidate passes all four unchanged test cases. That proves covered behavior, not every input or hardware condition.</p>
+<h3>Require a separate approval</h3><p>The model reviewer receives fresh context. A different organization member approves the exact tested candidate. The private pilot rejected self-approval. The QA accounts are synthetic; this demonstrates a permission boundary, not customer adoption.</p>
+<h3>The real public draft pull request</h3><p>This actual App-created draft contains the tested patch and verification metadata. Technician narratives remain in the workspace. A maintainer still reviews the code. Nothing is automatically merged or marked physically repaired.</p>
+<h3>The verified private-repository pilot</h3><p>The private pilot used Nano investigation and Super patching and review. Encrypted source went to a pinned verifier in the same private repository. Independent approval preceded the real draft.</p>
+<h3>Software, hardware or missing evidence</h3><p>Software can proceed to a bounded patch. Hardware goes to workshop review. Missing evidence calls for more evidence. The classification is implemented; only the software branch is demonstrated by the completed live fixture.</p>
+<h3>How Review fits the recovery planner</h3><p>The Workshop allocates declared parts, time and budget. It stays browser-local; authenticated Review has separate organization records. Their handoff is explicit, without automatic inventory synchronization.</p>
+<h3>The reviewer attention queue</h3><p>Review insights compare loaded evidence revisions, verification references and approval bindings. Filters bring stale records, delayed jobs and cases requiring attention into one queue. This is read-only guidance. It does not rerun tests, validate repository head, change permissions, or execute a job. Refresh the server record before deciding.</p>
+<h3>Organization access and trace privacy</h3><p>An outsider organization request was rejected. LangSmith traces keep metadata, excluding source and diagnostic narratives from trace inputs and outputs. These are specific controls and checks. An independent security assessment is still future work.</p>
+<h3>How a design partner should start</h3><p>Start with one owned diagnostics project, one reproducible failure and a separate reviewer. A supervised pilot and usage-capped subscription are commercial hypotheses that still need buyer validation.</p>
+<h3>Current implementation gaps</h3><p>Google sign-in works. Company email is deferred; managed SSO requires enforcement and deprovisioning. Broader runners and physical repair outcomes need additional implementation and real field measurement.</p>
+<h3>What investment should unlock</h3><p>Fund reliable onboarding and supervised pilots first. Then failure recovery, usage reconciliation and evaluations. Enforced SSO, shared stock and broader runner profiles follow only after their acceptance gates.</p>
+<h3>Measure value before scaling</h3><p>Measure accepted fixes, regressions, review time and total cost, including rejected attempts. The selected two hundred roadmap capabilities are planned work with acceptance criteria, not two hundred shipped features.</p>
+<h3>Inspect the product and the evidence</h3><p>Inspect the live application, public draft, backend ledger, project dossier and roadmap. SpareCycle uses actual Nebius and NVIDIA inference to make the next action reviewable.</p></div></details>
+    <section class="closing"><div><h2>Bring your next observation.</h2><p>Research a public model, explore a pilot and inspect the evidence behind a draft.</p></div><a class="button" href="/app?view=research">Open the Research desk <span aria-hidden="true">↗</span></a></section>
   </main>
-  <footer><span>SpareCycle · A thoughtful next step for the computers already in our hands.</span><div><a href="/demo/sparecycle-backend-deep-dive.vtt" download="sparecycle-backend-deep-dive.vtt">English captions</a><a href="/">Back to home</a></div></footer>
-</body>
-</html>
+  <footer><span>SpareCycle · A considered next step for the computers already in our hands.</span><div><a href="/demo/sparecycle-backend-deep-dive.vtt" download="sparecycle-backend-deep-dive.vtt">English captions</a><a href="/">Back to home</a></div></footer>
+</body></html>

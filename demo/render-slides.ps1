@@ -1,4 +1,4 @@
-param([switch]$DeepDive)
+﻿param([switch]$DeepDive)
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 $demoRoot = Split-Path -Parent $PSScriptRoot
@@ -25,7 +25,7 @@ function DemoText($graphics, [string]$text, [single]$size, [string]$color, [sing
 }
 function DemoPicture($graphics,$scene,[single]$x,[single]$y,[single]$w,[single]$h) {
     $img=[Drawing.Image]::FromFile((Join-Path $PSScriptRoot ('assets/'+$scene.image)))
-    $crop=$scene.crop
+    $crop=if($scene.crop){$scene.crop}else{@(0,0,$img.Width,$img.Height)}
     if($crop[0]+$crop[2] -gt $img.Width -or $crop[1]+$crop[3] -gt $img.Height){throw "Crop exceeds source for $($scene.id)"}
     $scale=[Math]::Min($w/$crop[2],$h/$crop[3])
     $dw=[single]($crop[2]*$scale);$dh=[single]($crop[3]*$scale)

@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "SpareCycle API",
-    "version": "1.0.0",
-    "description": "Review-only intake and bounded tool-calling recovery planning. Server computes allocations. No inventory persistence or mutation. See API.md for validation refinements, 24KB body and 16KB batch limits, privacy and in-memory throttling limitations."
+    "version": "1.1.0",
+    "description": "Review-only intake, bounded recovery planning, and official-source reference research. Server computes allocations; research never approves inventory. See API.md and TAVILY-INTEGRATION.md for request validation, privacy and process-local throttle limitations."
   },
   "paths": {
     "/api/health": {
@@ -29,13 +29,26 @@
                     },
                     "service": {
                       "const": "SpareCycle"
+                    },
+                    "tavilyConfigured": {
+                      "type": "boolean"
+                    },
+                    "tavilyMode": {
+                      "type": "string",
+                      "enum": [
+                        "keyless",
+                        "api-key",
+                        "unconfigured"
+                      ]
                     }
                   },
                   "required": [
                     "aiConfigured",
                     "tracingConfigured",
                     "model",
-                    "service"
+                    "service",
+                    "tavilyConfigured",
+                    "tavilyMode"
                   ],
                   "additionalProperties": false
                 }
@@ -48,7 +61,7 @@
     "/api/analyze": {
       "post": {
         "operationId": "analyze",
-        "summary": "Draft intake, run the recovery agent, or explain a server plan",
+        "summary": "Draft intake, plan recovery, explain allocations, or research official support references",
         "requestBody": {
           "required": true,
           "content": {
@@ -61,7 +74,7 @@
         },
         "responses": {
           "200": {
-            "description": "Validated model text and, for plan/explain, authoritative deterministic plan",
+            "description": "Validated model text, deterministic plan for plan/explain, or cited research including explicit empty-source abstention",
             "content": {
               "application/json": {
                 "schema": {
@@ -111,7 +124,7 @@
             }
           },
           "502": {
-            "description": "Model response, tool call or provider failure",
+            "description": "Invalid model/search output, tool failure, provider error or deadline exceeded; provider content is not returned",
             "content": {
               "application/json": {
                 "schema": {
@@ -121,7 +134,7 @@
             }
           },
           "503": {
-            "description": "Nebius key is not configured",
+            "description": "Nebius or requested research provider is not configured",
             "content": {
               "application/json": {
                 "schema": {
@@ -656,6 +669,32 @@
               "limits"
             ],
             "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "const": "research"
+              },
+              "model": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 100
+              },
+              "question": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 280
+              }
+            },
+            "required": [
+              "action",
+              "model",
+              "question"
+            ],
+            "additionalProperties": false,
+            "description": "Explicit public hardware model and question only; combined query at most 400 characters. Plain text without control characters or HTML. No inventory, passport, or repository context is accepted."
           }
         ]
       },
@@ -930,6 +969,9 @@
               },
               {
                 "$ref": "#/components/schemas/Explanation"
+              },
+              {
+                "$ref": "#/components/schemas/ResearchResult"
               }
             ]
           },
@@ -960,7 +1002,8 @@
                       "enum": [
                         "list_inventory",
                         "inspect_device",
-                        "compute_recovery_plan"
+                        "compute_recovery_plan",
+                        "tavily_search"
                       ]
                     },
                     "status": {
@@ -1010,6 +1053,165 @@
         "required": [
           "error",
           "code"
+        ],
+        "additionalProperties": false
+      },
+      "ResearchResult": {
+        "type": "object",
+        "description": "Reference-only official-source research. Findings cite existing source IDs. Empty sources return an abstention without a Nebius completion. Source links originate only from allowlisted HTTPS Tavily results.",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "research"
+          },
+          "model": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          },
+          "question": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 280
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1200
+          },
+          "findings": {
+            "maxItems": 6,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "sourceIds": {
+                  "minItems": 1,
+                  "maxItems": 5,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^S[1-5]$"
+                  }
+                }
+              },
+              "required": [
+                "text",
+                "sourceIds"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "uncertainties": {
+            "maxItems": 6,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 400
+            }
+          },
+          "nextChecks": {
+            "maxItems": 6,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 400
+            }
+          },
+          "sources": {
+            "type": "array",
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^S[1-5]$"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 180
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri",
+                  "maxLength": 2048
+                },
+                "excerpt": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1200
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "url",
+                "excerpt"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "fetchedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "search": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string",
+                "const": "Tavily"
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "keyless",
+                  "api-key"
+                ]
+              },
+              "requestId": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9_-]{1,128}$"
+              },
+              "resultCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "credits": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "provider",
+              "mode",
+              "resultCount"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "kind",
+          "model",
+          "question",
+          "summary",
+          "findings",
+          "uncertainties",
+          "nextChecks",
+          "sources",
+          "fetchedAt",
+          "search"
         ],
         "additionalProperties": false
       }

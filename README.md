@@ -11,10 +11,13 @@ Built for the **Best Apps and Agents** track of the Nebius x NVIDIA Global AI Ha
 - Live application: [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app)
 - Workshop: [Open the planner](https://sparecycle-topaz.vercel.app/app) · [Start company setup](https://sparecycle-topaz.vercel.app/app?setup=1)
 - Review: [Open the review desk](https://sparecycle-topaz.vercel.app/review) · [Company setup in five steps](docs/REVIEW-COMPANY-SETUP.md)
+- Research: [Find official model references](https://sparecycle-topaz.vercel.app/app?view=research) with a runtime Tavily search and citation-checked Nebius Nemotron synthesis.
+- Operations: [Open the pilot desk](https://sparecycle-topaz.vercel.app/app?view=pilot) to freeze a plan, assign work, record actual effort and complete manual release checks.
+- Project PDF: [Product, architecture, evidence and investment dossier](https://sparecycle-topaz.vercel.app/sparecycle-project-dossier.pdf).
 - Public source: [Golden007-prog/sparecycle](https://github.com/Golden007-prog/sparecycle)
 - Videos: [Backend and business deep dive](https://sparecycle-topaz.vercel.app/demo) · [Competition cut](https://sparecycle-topaz.vercel.app/demo/competition.html)
 - Inspect the [backend execution evidence](docs/BACKEND-EVIDENCE.md) and [proposed investment roadmap](docs/INVESTMENT-ROADMAP.md), with acceptance gates and pilot metrics.
-- Public YouTube demonstration: **remaining submission task**
+- Public YouTube videos: [Competition demonstration · 2:59](https://www.youtube.com/watch?v=i21ilQRw4go) · [Supporting backend deep dive · 5:39](https://www.youtube.com/watch?v=pdLFzA9sT6A). The short cut is the primary competition video; Devpost remains a draft pending eligibility confirmation and verified judge access.
 - License: [MIT](LICENSE)
 - Recorded Workshop release evidence: **56 automated tests passed**, production builds passed, and [GitHub CI passed](https://github.com/Golden007-prog/sparecycle/actions/runs/38022439465). These are earlier Workshop checks, not proof of the new Review deployment. See [VALIDATION.md](docs/VALIDATION.md) for recorded release results and their scope.
 - An earlier deployed NVIDIA batch-agent review succeeded in **4.1 seconds**, executing inventory and planning tools. Earlier live intake succeeded in 9.35 seconds and a batch review in 2.8 seconds. These single-request observations are not performance benchmarks for the new Review harness.
@@ -38,6 +41,16 @@ A real synthetic private-repository flow completed on **11 October 2026**: Nebiu
 Nebius Token Factory supplies all AI inference. The router offers Nano for economical investigation, Lightning for investigation, Super for patch generation and an independent review with fresh context, and an explicitly enabled Ultra escalation. LangSmith records operational metadata. The current verification option is **GitHub Actions isolated container** because Nebius Sandboxes beta access has not been activated; the proof names the actual execution provider. No missing integration is replaced by a simulated pass. See the [harness and model routing](docs/review-harness.md).
 
 ## The workshop workflow
+
+### Balanced expansion
+
+This release adds three working areas: official-source research, browser-local pilot operations, and organization review insights. The [release capability record](docs/BALANCED-RELEASE.md) lists what was implemented and its boundaries. The [200-capability expansion plan](docs/EXPANSION-PLAN.md) is future delivery scope; it is **not a claim of 200 newly shipped features**. Existing catalog story counts describe an earlier baseline and are not a current total of implemented product behaviors.
+
+Research accepts a public hardware model and a public reference question. Tavily searches approved manufacturer domains at runtime; the backend filters exact model identifiers and safe URLs, then asks Nemotron Lightning on Nebius for a bounded synthesis. Findings must cite returned sources. Inconclusive searches abstain, and lexical model matching does not establish compatibility. No inventory, private code or passport evidence is sent to Tavily. See the [API and runtime details](docs/TAVILY-INTEGRATION.md).
+
+Pilot operations freezes the plan and records assignment, due dates, work time, parts spending, block reasons, rework and three manual checks. New work or rework invalidates old QA. Backups can be explicitly copied into a different local workspace with QA reset and original history retained. These records are local declarations, not shared company records, physical measurements, sanitization certificates or a tamper-proof audit.
+
+Review adds scoped search and filters, attention signals for stale evidence or mismatched proof, current loaded-record scorecards, and previewable JSON/CSV exports that omit code, evidence, repository names and identifiers. These insights do not grant approval or bypass the existing server-side test and permission gates.
 
 The public website includes [how it works](https://sparecycle-topaz.vercel.app/how-it-works), a [company pilot guide](https://sparecycle-topaz.vercel.app/for-teams), and [data provenance](https://sparecycle-topaz.vercel.app/data). Companies can download the [pilot kit](https://sparecycle-topaz.vercel.app/samples/sparecycle-pilot-kit.zip) with CSV templates and public documentation. The [searchable roadmap](https://sparecycle-topaz.vercel.app/roadmap.html) separates shipped story flags from planned work and differentiation hypotheses.
 

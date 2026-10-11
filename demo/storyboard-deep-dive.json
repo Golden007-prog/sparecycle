@@ -15,8 +15,7 @@
     ],
     "label": "Actual application captures · Synthetic demonstration records",
     "captions": [
-      "SpareCycle Review's first customer hypothesis is a refurbishment team that owns its diagnostic software.",
-      "A technician observes a problem. An engineer needs a controlled fix and proof. Follow that handoff into the working backend, then the investment roadmap."
+      "SpareCycle joins a refurbishment coordinator's planning workflow with a diagnostics engineer's code review. Follow the working product, recorded backend proof, and the investment gates."
     ]
   },
   {
@@ -46,8 +45,47 @@
     "note": "A passing software test never marks a physical laptop repaired.",
     "label": "Implemented workflow · Customer fit is a proposed starting point",
     "captions": [
-      "A technician records passport evidence. An engineer defines the software issue. A separate reviewer inspects the tested candidate.",
-      "The output is a draft pull request for code review. Passing software tests never certify a physical repair."
+      "A technician records an observation. An engineer defines a supported software issue. A separate reviewer inspects the tested candidate. Every handoff keeps its evidence."
+    ]
+  },
+  {
+    "id": "02a-operations",
+    "name": "Pilot Operations records the handoff",
+    "chapter": "WORKSHOP + PILOT OPERATIONS",
+    "title": "From a plan.\nTo bench notes.\nTo a handoff.",
+    "eyebrow": "BROWSER-LOCAL PILOT RECORDS",
+    "detail": "Freeze a proposal. Record effort.\nKeep blockers and evidence.\nExport the next handoff.",
+    "image": "pilot-release.jpg",
+    "crop": [
+      990,
+      440,
+      1660,
+      715
+    ],
+    "label": "Actual app capture · Synthetic local pilot · No physical certification",
+    "captions": [
+      "Pilot Operations freezes the validated plan, then records per-device progress, blockers, assignment and due dates, actual effort, costs and evidence-backed manual checks.",
+      "A local scorecard distinguishes proposed devices from technician-reported outcomes. Export a handoff or backup. These records neither consume shared stock nor certify a physical release."
+    ]
+  },
+  {
+    "id": "02b-research",
+    "name": "A real Tavily search, summarized on Nebius",
+    "chapter": "PUBLIC REFERENCE RESEARCH",
+    "title": "Find the source.\nKeep the caveats.",
+    "eyebrow": "TAVILY SEARCH + NEBIUS NEMOTRON",
+    "detail": "Official documentation sources.\nChecked citation references.\nUncertainty stays visible.",
+    "image": "research-release.jpg",
+    "crop": [
+      1355,
+      315,
+      1295,
+      710
+    ],
+    "label": "Actual local runtime result · Tavily + Nebius · Reference only",
+    "captions": [
+      "A public model question invokes Tavily in the application backend. The server filters official documentation, assigns source IDs, and passes only bounded snippets to NVIDIA Nemotron on Nebius.",
+      "The result shows its sources, uncertainties and next checks. A matched citation is not a hardware diagnosis: the technician must inspect the source and the actual device."
     ]
   },
   {
@@ -138,8 +176,7 @@
     ],
     "label": "User-supplied Token Factory view · Account strip excluded",
     "captions": [
-      "Nebius Token Factory hosts NVIDIA Nemotron inference. GitHub Actions runs isolated tests; Nebius Sandboxes are not the live runner.",
-      "Relevant private code goes to Nebius. Test isolation does not mean reasoning stays on the company's laptop."
+      "Nebius Token Factory hosts inference. NVIDIA supplies Nemotron. GitHub Actions executes tests; Supabase protects organization records. These are distinct services, each with a defined job."
     ]
   },
   {
@@ -169,8 +206,7 @@
     "note": "Choose future routing changes with evaluations of quality, latency and spend.",
     "label": "Actual run routing + separate model checks · No four-model ensemble claim",
     "captions": [
-      "Lightning investigated the public case; Nano investigated the private pilot. Super proposed and independently reviewed both candidates.",
-      "Ultra was separately checked, not proven better. Future routing should follow evaluations of correctness, latency, and cost."
+      "Nano and Lightning can investigate. Super writes and freshly reviews non-Ultra cases. Ultra is an explicit operator-enabled escalation, not an automatic promise of better quality."
     ]
   },
   {
@@ -189,8 +225,7 @@
     ],
     "label": "User-supplied usage view · Rounded buckets · Not an exact per-change invoice",
     "captions": [
-      "The supplied Nebius usage view records four model tiers. It confirms usage, not correctness.",
-      "Rounded cost buckets cannot establish cost per accepted fix. That requires reconciled usage across successful and rejected attempts."
+      "The supplied usage view records all four tiers. Its rounded cost buckets are provider evidence, not an exact invoice or comparative benchmark."
     ]
   },
   {
@@ -233,8 +268,7 @@
     "note": "Current proof is a constrained parser workflow, not arbitrary repository automation.",
     "label": "Implemented controls · Wider language and project support requires new validation",
     "captions": [
-      "A reserved stage budget, forty-second deadline, and bounded input and output constrain each call.",
-      "Current execution is a pure JavaScript diagnostic-parser change. Broader languages and dependencies need additional test profiles and evaluations."
+      "A model stage has a forty-second deadline, a bounded context, strict output and reserved spend. There is no automatic paid retry after an uncertain result."
     ]
   },
   {
@@ -253,8 +287,7 @@
     ],
     "label": "Actual generated patch · Default branch unchanged",
     "captions": [
-      "The candidate is bound to its base commit, patch hash, and evidence revision. Proof and approval refer to those inputs.",
-      "Changed code or evidence invalidates old approval. Passing proof cannot authorize a different candidate."
+      "Evidence revision, repository commit and candidate hashes travel together. Changed inputs require fresh verification and approval; a passing test cannot bless another patch."
     ]
   },
   {
@@ -326,8 +359,7 @@
     "detail": "Nano investigation · Super patch and review · Same unchanged tests",
     "label": "Sanitized execution summary · One synthetic fixture · Private source excluded",
     "captions": [
-      "Encrypted dispatch ran verification in the same private repository. One baseline failure became four unchanged test cases passing.",
-      "A separate approval preceded a real draft. This validates one fixture. Private setup currently requires an operator-approved verifier and repository key."
+      "The private pilot used Nano investigation and Super patching and review. Encrypted source went to a pinned verifier in the same private repository. Independent approval preceded the real draft."
     ]
   },
   {
@@ -377,8 +409,27 @@
     ],
     "label": "Actual product page · Planning projections are not measured field outcomes",
     "captions": [
-      "The Workshop planner allocates declared parts, technician time, and budget. Today it is browser-local, without automatic inventory synchronization into Review.",
-      "A shared record connecting planning, diagnosis, and verified repair outcomes is future work."
+      "The Workshop allocates declared parts, time and budget. It stays browser-local; authenticated Review has separate organization records. Their handoff is explicit, without automatic inventory synchronization."
+    ]
+  },
+  {
+    "id": "16d-review-queue",
+    "name": "The reviewer attention queue",
+    "chapter": "REVIEW INSIGHTS",
+    "title": "See what needs\na closer look.",
+    "eyebrow": "READ-ONLY WORKFLOW INSIGHTS",
+    "detail": "Evidence and proof references.\nDelayed work and missing records.\nServer authority stays intact.",
+    "image": "review-queue-release.jpg",
+    "crop": [
+      1080,
+      202,
+      1470,
+      795
+    ],
+    "label": "Actual app capture · Synthetic queue · Loaded-record checks only",
+    "captions": [
+      "Review insights compare loaded evidence revisions, verification references and approval bindings. Filters bring stale records, delayed jobs and cases requiring attention into one queue.",
+      "This is read-only guidance. It does not rerun tests, validate repository head, change permissions, or execute a job. Refresh the server record before deciding."
     ]
   },
   {
@@ -439,8 +490,7 @@
     "note": "Commercial hypothesis: paid pilot → company subscription with usage caps. Pricing is unvalidated.",
     "label": "Recommended pilot plan · Not a claim of completed customer onboarding",
     "captions": [
-      "Start with one owned diagnostic project, one repeatable failure, versioned evidence, and a separate reviewer.",
-      "A commercial hypothesis is a supervised paid pilot, then a company subscription with explicit usage caps. Pricing and demand remain unvalidated."
+      "Start with one owned diagnostics project, one reproducible failure and a separate reviewer. A supervised pilot and usage-capped subscription are commercial hypotheses that still need buyer validation."
     ]
   },
   {
@@ -470,8 +520,7 @@
     "note": "Today’s software proof does not establish repair rates, savings or emissions avoided.",
     "label": "Current gaps · Future implementation requires validation",
     "captions": [
-      "Google login works; custom company email remains deferred. Managed SSO needs identity-policy enforcement and deprovisioning, plus provider setup.",
-      "Runner coverage remains constrained. Customer repair rates and field savings need real pilots measured against recorded baselines."
+      "Google sign-in works. Company email is deferred; managed SSO requires enforcement and deprovisioning. Broader runners and physical repair outcomes need additional implementation and real field measurement."
     ]
   },
   {
@@ -501,8 +550,7 @@
     "note": "Run supervised design-partner pilots alongside the first reliability work.",
     "label": "Proposed roadmap after investment · Not available today",
     "captions": [
-      "Begin customer pilots alongside reliable onboarding. Next, fund recoverable jobs, cancellation, reconciled usage, and evaluations. Then enforced SSO, shared data, and broader tested runners.",
-      "Dedicated Nebius capacity is a future option when measured load or residency needs justify it."
+      "Fund reliable onboarding and supervised pilots first. Then failure recovery, usage reconciliation and evaluations. Enforced SSO, shared stock and broader runner profiles follow only after their acceptance gates."
     ]
   },
   {
@@ -529,11 +577,10 @@
         "body": "Technician effort saved\nRepeat use and willingness to pay"
       }
     ],
-    "note": "Repair throughput and environmental impact need separate, defensible field measurement.",
+    "note": "200 selected roadmap capabilities: planned, with acceptance gates. No fabricated shipped-feature count.",
     "label": "Future evaluation plan · Metrics are not measured results",
     "captions": [
-      "Measure accepted fixes, regressions, review time, and total cost per accepted fix: inference, verification, and support, including rejected attempts.",
-      "Each funded stage needs an acceptance gate. Measure physical throughput separately; environmental claims require field evidence."
+      "Measure accepted fixes, regressions, review time and total cost, including rejected attempts. The selected two hundred roadmap capabilities are planned work with acceptance criteria, not two hundred shipped features."
     ]
   },
   {
@@ -550,10 +597,9 @@
       1480,
       335
     ],
-    "label": "Nebius Token Factory · NVIDIA Nemotron · Supabase · GitHub · Vercel",
+    "label": "Nebius Token Factory · NVIDIA Nemotron · Tavily · Supabase · GitHub · Vercel",
     "captions": [
-      "SpareCycle Review connects asset evidence to controlled software changes, using real Nebius inference and NVIDIA Nemotron reasoning.",
-      "Inspect the product, draft, backend evidence, and roadmap. The next step is a focused pilot with measurable outcomes."
+      "Inspect the live application, public draft, backend ledger, project dossier and roadmap. SpareCycle uses actual Nebius and NVIDIA inference to make the next action reviewable."
     ]
   }
 ]
