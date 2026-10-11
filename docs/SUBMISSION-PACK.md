@@ -16,11 +16,11 @@ Prepared 11 October 2026 against the [published release](RELEASE.md) and [backen
 
 **Public source:** https://github.com/Golden007-prog/sparecycle
 
-**Primary demonstration:** https://www.youtube.com/watch?v=i21ilQRw4go — published publicly; YouTube displays **2:59**. This is the preserved **2m58.6s competition cut**. Use this link as the primary Devpost video.
+**Primary demonstration:** https://www.youtube.com/watch?v=ErTLptg5Lr4 — replacement published publicly and playback verified; **2m33.7s** (Studio rounds to **2:34**). Use this link as the primary Devpost video.
 
-**Optional supporting walkthrough:** https://www.youtube.com/watch?v=pdLFzA9sT6A — published publicly; YouTube displays **5:39**. The local file is **338.136 seconds**. This is supplementary; the supporting watch page is https://sparecycle-topaz.vercel.app/demo.
+**Optional supporting walkthrough:** https://www.youtube.com/watch?v=oAcolH9AdcQ — replacement published publicly and playback verified; **5m41.9s** (Studio rounds to **5:42**). This is supplementary; the supporting watch page is https://sparecycle-topaz.vercel.app/demo.
 
-**Built with:** Nebius Token Factory, NVIDIA Nemotron, TypeScript, React, Vite, Node.js, Vercel, Supabase, PostgreSQL, GitHub Apps, GitHub Actions, Docker, LangSmith, Zod.
+**Built with:** Nebius Token Factory, NVIDIA Nemotron, Tavily, TypeScript, React, Vite, Node.js, Vercel, Supabase, PostgreSQL, GitHub Apps, GitHub Actions, Docker, LangSmith, Zod.
 
 ### Confirmed entrant responses and draft status
 
@@ -46,6 +46,8 @@ The demonstrated defect is concrete: a parser treats a valid zero-percent batter
 
 The records and reviewer accounts are synthetic. The inference calls, tests and draft PRs are real. The workflow does not merge code or certify that a physical laptop was repaired.
 
+The Research desk makes a runtime Tavily Search call for public manufacturer references, filters sources for the exact model, then uses Nebius-hosted Nemotron Lightning to produce a cited brief with uncertainty. A real production request returned five matching T480 sources, including the official hardware maintenance manual. Research does not send passport evidence or private code to Tavily. The Pilot desk tracks browser-local assignments, actual effort, blocks and manual release checks. Developer review adds queue filters, evidence/test-reference checks and redacted handoffs.
+
 ### How it was built
 
 React and TypeScript provide the organization, passport and review interface. Vercel hosts the application. Supabase Auth and PostgreSQL row-level security scope evidence, jobs and approvals to organization members.
@@ -65,7 +67,8 @@ Private execution also needed explicit organization/repository binding, pinned v
 - A complete, deployed evidence-to-draft workflow with real Nebius inference and inspectable public test/PR evidence.
 - A real private synthetic pilot with unchanged tests, separate-account approval and one parser file changed.
 - Rejected outsider access and self-approval in the recorded integration checks.
-- A release with 200 automated tests and a passing production build, plus desktop and narrow-screen checks. These are scoped validation results, not enterprise certification.
+- A release with 249 automated tests and a passing production build, plus desktop and narrow-screen checks. These are scoped validation results, not enterprise certification.
+- A real deployed Tavily-to-Nebius research request, with model-matched sources and explicit limits; a designed 14-page project dossier and updated narrated demonstrations.
 
 ### What was learned
 
@@ -77,7 +80,7 @@ The product's value must ultimately be measured in accepted fixes and better tec
 
 Run supervised design-partner pilots alongside reliability work. Measure accepted fixes, regressions, technician effort and total cost, including failed attempts. Complete customer email delivery, membership lifecycle and guided private setup; then add durable job recovery, enforced company identity and evaluated execution profiles.
 
-The separate SpareCycle Workshop plans repairs from declared parts, time and budget. Its inventory is browser-local today; shared inventory and links to actual bench QA are future work. Google login works, but managed company SSO is not enforced. Private setup still requires an operator-approved verifier and key. No customer revenue, field savings or physical recovery improvement is claimed. The [investment roadmap](https://github.com/Golden007-prog/sparecycle/blob/main/docs/INVESTMENT-ROADMAP.md) defines measurable gates for the next phase.
+The separate SpareCycle Workshop plans repairs from declared parts, time and budget. Its inventory and new Pilot work/QA declarations are browser-local today; shared inventory, trustworthy physical observations and cross-team synchronization are future work. The 200-capability balanced expansion plan is planned delivery scope, not 200 shipped features. Google login works, but managed company SSO is not enforced. Private setup still requires an operator-approved verifier and key. No customer revenue, field savings or physical recovery improvement is claimed. The [investment roadmap](https://github.com/Golden007-prog/sparecycle/blob/main/docs/INVESTMENT-ROADMAP.md) defines measurable gates for the next phase.
 
 ## Platform feedback field
 

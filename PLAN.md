@@ -14,9 +14,9 @@ The user requested a balanced expansion of workshop operations and developer rev
 
 ## Current status
 
-- Tavily direct provider and actual local application calls succeeded; research UI, Pilot operations and Review insights are implemented. 249 automated tests pass; production verification remains next.
+- Tavily direct provider, local application and production application calls succeeded; research UI, Pilot operations and Review insights are implemented. 249 automated tests pass; GitHub verification and Vercel deployment passed for runtime 61014aa.
 - Vercel production is configured for Tavily's explicit keyless access mode. Provider limits still apply.
-- Both previous YouTube uploads remain public until verified replacements exist.
+- Both replacement YouTube uploads are public and playback-verified. Previous uploads remain public pending link updates and action-time permanent-deletion confirmation.
 - Devpost remains a draft; personal eligibility declarations are outstanding.
 - Customer SMTP was explicitly deferred by the user. Managed company SSO is not enforced.
 

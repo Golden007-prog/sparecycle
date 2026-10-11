@@ -2,7 +2,7 @@
 
 Updated 11 October 2026. The workshop remains a browser-local pilot; SpareCycle Review is a separate authenticated, tenant-isolated service with tested public and private diagnostic workflows. Neither is an audited enterprise platform, and the 520-story roadmap is not a claim that all features are implemented.
 
-## Balanced expansion — release candidate, 11 October 2026
+## Balanced expansion — published 11 October 2026
 
 Implemented the Research desk, Pilot operations desk and developer-review insights described in [BALANCED-RELEASE.md](BALANCED-RELEASE.md). The [200-capability plan](EXPANSION-PLAN.md) is future scope, not 200 newly completed features.
 
@@ -13,7 +13,13 @@ Implemented the Research desk, Pilot operations desk and developer-review insigh
 - The replacement [competition video and deep dive](VIDEO-RELEASE-20261011.md) passed full decode, caption bounds, audio checks and visual inspection. The competition cut is 153.700 seconds; the deep dive is 341.873 seconds. Both include actual research/Pilot/Review captures and distinguish recorded evidence from planned expansion.
 - A designed 14-page PDF dossier covers the product, model harness, runtime evidence, setup, business hypothesis and investment gaps. Pending production checks remain labeled until verified below.
 
-Deployment and new YouTube URLs will be recorded after their external checks complete. The earlier sections below are historical snapshots, including superseded media links.
+Runtime commit `61014aa1dff69e5405f747f2fbc86a76997d60b6` passed [GitHub verification](https://github.com/Golden007-prog/sparecycle/actions/runs/38114447888). Vercel deployment `dpl_4eWG18Cf6MoYDnVfJRfNefcbkNr6` is READY at the [immutable deployment](https://sparecycle-683mmeyu7-basuoikantik-7538s-projects.vercel.app), aliased to the public application.
+
+The production research request returned HTTP 200 at `2026-10-11T05:21:27.309Z`: Tavily request `cbbb55f0-2a43-439d-b944-b5c33aa33781`, five accepted sources, one reported search credit, followed by Nebius `nvidia/Nemotron-3_5-Lightning` synthesis. The reported workflow latency was 2,324 ms and trace correlation was `908a6207-766d-4286-a992-53d7a6719a4f`. The answer identified the T480 manual and stated that the full document scope was not verified. This confirms a functional runtime Tavily API call in the deployed solution, not only a development connector search.
+
+Replacement videos are public: [competition cut](https://www.youtube.com/watch?v=ErTLptg5Lr4) and [supporting deep dive](https://www.youtube.com/watch?v=oAcolH9AdcQ). Public watch playback advanced with no media error; browser durations were 153.721 and 341.901 seconds. Burned captions are in the uploaded files; the app also serves selectable VTT captions. YouTube reported deep-dive HD processing still pending during publication; public playback was available. Old uploads are preserved until replacement links are updated and permanent deletion is confirmed.
+
+The earlier sections below are historical snapshots, including superseded media links.
 
 ## Backend and business video release — 11 October 2026
 

@@ -7,7 +7,7 @@
 #let ink = rgb("1c3044")
 #let app = "https://sparecycle-topaz.vercel.app"
 #let repo = "https://github.com/Golden007-prog/sparecycle"
-#let research-status = "Real local runtime verified: five model-matched Tavily sources, one reported search credit and Nebius Nemotron Lightning synthesis in 6.354 seconds. Production verification is pending."
+#let research-status = "Production runtime verified on 11 October 2026 at 05:21 UTC: HTTP 200, five model-matched T480 sources and one reported Tavily credit. NVIDIA Nemotron Lightning on Nebius returned the referenced summary; reported latency was 2.324 seconds."
 #let pilot-status = "Implemented and browser-checked: frozen plans, assignment, work records, blockers, referenced manual checks, scorecards and recoverable local exports. Full current checks gate declared checklist readiness; changed work and recovered copies reset that readiness."
 
 #set document(title: "SpareCycle — product, backend evidence and investment dossier", author: "Oikantik Basu", description: "A bounded workshop and diagnostic-code review application using Nebius Token Factory and NVIDIA Nemotron.")
@@ -144,7 +144,8 @@ Maximum Review JSON context is 100,000 bytes. Provider calls have a 40-second de
 
 #newpage[Tavily: useful public references][Research official documentation, then ask Nemotron to explain only the supplied evidence.]
 #panel[Runtime verification status][#research-status]
-#v(12pt)
+#caption[Recorded Tavily request: cbbb55f0-2a43-439d-b944-b5c33aa33781. Explicit keyless search mode; full manual scope remains unverified. #link(repo + "/blob/main/docs/RELEASE.md")[Production release ledger].]
+#v(4pt)
 #step[1][Ask a public model question][A technician enters a model name and a documentation question. No passport, serial number, inventory or project code is automatically included.]
 #step[2][Call Tavily at runtime][The server performs one bounded search, restricted to configured official support/documentation domains. Up to five accepted results become source IDs.]
 #step[3][Synthesize on Nebius][Nemotron receives plain-text snippets as untrusted data. A strict result schema requires findings to reference existing source IDs.]
@@ -189,6 +190,8 @@ Maximum Review JSON context is 100,000 bytes. Provider calls have a 40-second de
 Private transport encrypts the bounded source package, binds the organization and repository, and retains a metadata-only proof artifact. The recorded flow denied self-approval, accepted a separate reviewer and denied an unrelated account.
 
 #small[The detailed #link(repo + "/blob/main/docs/BACKEND-EVIDENCE.md")[evidence ledger] contains timestamps, digests, inspected trace scope and limitations. A screenshot or replay is not a fresh execution.]
+#v(7pt)
+#small[*Release checks:* 249 tests passed, zero failed. #link(repo + "/actions/runs/38114447888")[GitHub CI succeeded] for commit 61014aa, deployed on Vercel. This regression suite is distinct from the four-case diagnostic verifier shown above.]
 
 #newpage[Start a company pilot simply][Use the public Workshop first; provision the protected code workflow deliberately.]
 #grid(columns: (1fr, 1fr), gutter: 17pt,
