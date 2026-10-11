@@ -4,7 +4,7 @@ import { planRecovery } from '../lib/recovery';
 import { defaultRecoveryLimits, sampleRecoveryBatch } from '../lib/recovery-data';
 import './marketing.css';
 
-const links = [{ href: '/how-it-works', label: 'How it works' }, { href: '/for-teams', label: 'For teams' }, { href: '/review', label: 'Review' }, { href: '/data', label: 'Data & evidence' }];
+const links = [{ href: '/how-it-works', label: 'How it works' }, { href: '/for-teams', label: 'For teams' }, { href: '/review', label: 'Review' }, { href: '/demo', label: 'Watch demo' }, { href: '/data', label: 'Data & evidence' }];
 const github = 'https://github.com/Golden007-prog/sparecycle';
 const kaggle = 'https://www.kaggle.com/datasets/anas123siddiqui/laptops';
 const kit = '/samples/sparecycle-pilot-kit.zip';

@@ -1,0 +1,55 @@
+name: Private repository diagnostic verification
+run-name: SpareCycle verification ${{ inputs.nonce }}
+on:
+  workflow_dispatch:
+    inputs:
+      envelope:
+        description: Authenticated ciphertext for this repository only
+        required: true
+        type: string
+      nonce:
+        description: Server-generated correlation nonce
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: sparecycle-private-review-${{ inputs.nonce }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: github.event.repository.private == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Read the approved verifier commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          sparse-checkout: |
+            scripts/review-verify.mjs
+            scripts/review-parser-policy.mjs
+            scripts/review-integrity.mjs
+            scripts/review-private-payload.mjs
+          sparse-checkout-cone-mode: false
+      - name: Prepare the pinned syntax parser on the trusted host
+        env:
+          SPARECYCLE_ACORN_ROOT: ${{ runner.temp }}/sparecycle-parser
+        run: npm install --prefix "$SPARECYCLE_ACORN_ROOT" --ignore-scripts --no-audit --no-fund --package-lock=false --no-save acorn@8.19.0
+      - name: Decrypt in memory and verify inside restricted containers
+        env:
+          REVIEW_EXECUTION_SCOPE: private-repository
+          REVIEW_ENCRYPTED_PAYLOAD: ${{ inputs.envelope }}
+          REVIEW_NONCE: ${{ inputs.nonce }}
+          SPARECYCLE_REVIEW_PRIVATE_KEY: ${{ secrets.SPARECYCLE_REVIEW_PRIVATE_KEY }}
+          SPARECYCLE_ACORN_ROOT: ${{ runner.temp }}/sparecycle-parser
+        run: node scripts/review-verify.mjs
+      - name: Retain metadata-only proof in this private repository
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sparecycle-proof-${{ inputs.nonce }}
+          path: review-proof/proof.json
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0

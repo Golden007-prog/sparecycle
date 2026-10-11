@@ -19,6 +19,7 @@ export interface VerificationProof {
   baselineFailed: number; baselinePassed: number; candidatePassed: number; candidateFailed: number;
   testNamesHash: string;
   networkDisabled: true; completedAt: string;
+  executionScope?: 'private-repository'; runnerRepositoryId?: number; runnerInstallationId?: number; bindingHash?: string; envelopeHash?: string;
 }
 export interface PublishInput {
   snapshot: RepositorySnapshot; candidate: CandidatePatch; verification: VerificationProof; review: IndependentReview;
@@ -99,6 +100,7 @@ export function validatePublishInput(input: PublishInput): void {
   validateCandidate(snapshot, candidate);
   if (!/^[A-Za-z0-9-]{1,80}$/.test(input.changeId) || !input.title.trim() || input.title.length > 200) throw new ReviewEngineError('INVALID_CHANGE', 'Invalid change request.');
   if (input.currentEvidenceHash !== candidate.evidenceHash || v.evidenceHash !== candidate.evidenceHash || v.snapshotHash !== snapshot.hash || v.candidateHash !== candidate.hash || !HASH.test(v.testNamesHash) || !v.networkDisabled || !v.imageId || !v.baselineOperationId || !v.candidateOperationId || v.baselineOperationId === v.candidateOperationId || !Number.isInteger(v.baselineFailed) || v.baselineFailed < 1 || !Number.isInteger(v.baselinePassed) || v.baselinePassed < 0 || v.candidateFailed !== 0 || v.candidatePassed !== v.baselinePassed + v.baselineFailed || !Number.isFinite(Date.parse(v.completedAt))) throw new ReviewEngineError('VERIFICATION_REQUIRED', 'A matching, isolated failing-baseline and passing-candidate test record is required.', 409);
+  if (snapshot.repository.isPrivate === true && (v.provider !== 'GitHub Actions isolated container' || v.executionScope !== 'private-repository' || v.runnerRepositoryId !== snapshot.repository.repositoryId || v.runnerInstallationId !== snapshot.repository.installationId || !HASH.test(v.bindingHash ?? '') || !HASH.test(v.envelopeHash ?? ''))) throw new ReviewEngineError('PRIVATE_VERIFICATION_REQUIRED', 'Private publication requires encrypted verification in this exact private repository and installation.', 409);
   if (!review.approved || review.candidateHash !== candidate.hash || !approval.approvedBy || approval.approvedBy === approval.requestedBy || approval.candidateHash !== candidate.hash || approval.evidenceHash !== candidate.evidenceHash || approval.snapshotHash !== snapshot.hash) throw new ReviewEngineError('APPROVAL_REQUIRED', 'An independent reviewer must approve this exact patch, evidence, and snapshot.', 409);
 }
 export function createGitHubClient(env: EngineEnvironment = process.env, options: GitHubOptions = {}) {
@@ -112,7 +114,7 @@ export function createGitHubClient(env: EngineEnvironment = process.env, options
   const prefix = (repo: RepositoryBinding) => `/repos/${encodeURIComponent(repo.owner)}/${encodeURIComponent(repo.name)}`;
   const checkRepo = async (repo: RepositoryBinding, auth: string) => {
     const found = await request(prefix(repo), auth);
-    if (found.id !== repo.repositoryId || found.full_name?.toLowerCase() !== `${repo.owner}/${repo.name}`.toLowerCase() || found.default_branch !== repo.defaultBranch || found.archived || found.disabled) throw new ReviewEngineError('REPOSITORY_CHANGED', 'Repository identity, branch, or availability changed. Reconnect this project.', 409);
+    if (found.id !== repo.repositoryId || found.full_name?.toLowerCase() !== `${repo.owner}/${repo.name}`.toLowerCase() || found.default_branch !== repo.defaultBranch || found.archived || found.disabled || (repo.isPrivate === true && found.private !== true)) throw new ReviewEngineError('REPOSITORY_CHANGED', 'Repository identity, privacy, branch, or availability changed. Reconnect this project.', 409);
     return found;
   };
   const head = async (repo: RepositoryBinding, auth: string): Promise<string> => {
@@ -183,6 +185,7 @@ export function createGitHubClient(env: EngineEnvironment = process.env, options
         throw new ReviewEngineError('PR_ALREADY_EXISTS', 'This change already has a pull request with a different state. Inspect it before continuing.', 409);
       }
       if (!commitSha) {
+        if (repo.isPrivate) await checkRepo(repo,auth);
         const blob = await request(`${prefix(repo)}/git/blobs`, auth, 'POST', { content: candidate.content, encoding: 'utf-8' });
         if (!SHA.test(blob.sha)) throw new ReviewEngineError('GITHUB_RESPONSE_INVALID', 'GitHub returned an invalid blob.', 502);
         const tree = await request(`${prefix(repo)}/git/trees`, auth, 'POST', { base_tree: snapshot.treeSha, tree: [{ path: candidate.path, mode: '100644', type: 'blob', sha: blob.sha }] });
@@ -197,6 +200,7 @@ export function createGitHubClient(env: EngineEnvironment = process.env, options
       // Only the explicitly reviewed patch and non-personal verification metadata cross into GitHub.
       // The organization's case title and model rationale/risk can contain private laptop evidence.
       const body = `## Recovery change ${input.changeId}\n\nDiagnostic parser: \`${candidate.path}\`.\n\n### Verification\n\n- Baseline: ${input.verification.baselineFailed} failing, ${input.verification.baselinePassed} passing tests.\n- Candidate: ${input.verification.candidatePassed} passing, zero failing tests.\n- Network disabled; provider: ${input.verification.provider ?? 'Nebius Sandboxes'}; image \`${input.verification.imageId}\`.\n- Base commit: \`${snapshot.baseSha}\`.\n- Candidate SHA-256: \`${candidate.hash}\`.\n- Evidence SHA-256: \`${candidate.evidenceHash}\`.\n- Named-test SHA-256: \`${input.verification.testNamesHash}\`.\n\nThis draft needs repository review. Software tests do not certify a physical laptop or authorize fleet deployment.`;
+      if (repo.isPrivate) await checkRepo(repo,auth);
       const pr = await request(`${prefix(repo)}/pulls`, auth, 'POST', { title: `[SpareCycle] ${publicTitle}`, body, head: branch, base: repo.defaultBranch, draft: true, maintainer_can_modify: false });
       if (!pr.draft || !Number.isInteger(pr.number) || !/^https:\/\/github\.com\//.test(pr.html_url)) throw new ReviewEngineError('GITHUB_WRITE_UNCERTAIN', 'GitHub returned an unexpected draft result. Inspect the recorded branch before retrying.', 502);
       return { url: pr.html_url, number: pr.number, branch, commitSha: commitSha! };

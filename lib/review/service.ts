@@ -1,6 +1,6 @@
 import type { authenticateReviewRequest, ReviewEnvironment } from './auth.js';
 import { ReviewAccessError } from './auth.js';
-import { createActionsRunner, type ActionsReceipt } from './actions-runner.js';
+import { createActionsRunner, privateRunnerForRepository, resolvePrivateRunner, type ActionsReceipt } from './actions-runner.js';
 import { createGitHubClient, ReviewEngineError, validateSnapshot, validateCandidate, type RepositorySnapshot, type CandidatePatch, type VerificationProof, type IndependentReview, type RepositoryBinding } from './github.js';
 import { investigateChange, proposePatch, reviewCandidate, evidenceDigest, stageReservationCents } from './harness.js';
 import { createNebiusSandbox, buildVerificationProof, type SandboxReceipt, type SandboxResult } from './sandbox.js';
@@ -77,10 +77,15 @@ export function createReviewService(options: ServiceOptions) {
         if (!context.project) throw new ReviewEngineError('PROJECT_REQUIRED','Connect a project to this recovery change before generating a patch.',409);
         if (!cp.snapshot) {
           // Snapshotting and inference use separate requests to stay inside serverless deadlines.
-          cp.snapshot=await github().readSnapshot(repositoryBinding(context.project),context.project.targetPath,context.project.testPaths);
+          const repository=repositoryBinding(context.project);
+          if (privateRunnerForRepository(env,organizationId,repository)) repository.isPrivate=true;
+          cp.snapshot=await github().readSnapshot(repository,context.project.targetPath,context.project.testPaths);
+          if (repository.isPrivate && cp.snapshot.repository.isPrivate !== true) throw new ReviewEngineError('PRIVATE_RUNNER_SCOPE','The configured private source repository changed visibility. Reconnect it after an administrator reviews the boundary.',409);
+          if (cp.snapshot.repository.isPrivate) resolvePrivateRunner(env,organizationId,cp.snapshot.repository);
           return complete('waiting','Repository snapshot saved. Continue to ask Nemotron for the patch.');
         }
         validateSnapshot(cp.snapshot);
+        if (cp.snapshot.repository.isPrivate || privateRunnerForRepository(env,organizationId,cp.snapshot.repository)) resolvePrivateRunner(env,organizationId,cp.snapshot.repository);
         await beginExternal('nebius-patch'); charged=job.reservedCents;
         const candidate=await (options.propose ?? proposePatch)({title:context.change.title,evidence,snapshot:cp.snapshot,modelTier},{env});
         if (candidate.usage.estimatedCostCents > job.reservedCents) throw new ReviewEngineError('USAGE_RESERVATION_EXCEEDED','Reported model usage exceeded the stage reservation. Stop and inspect provider usage before retrying.',409);
@@ -90,15 +95,18 @@ export function createReviewService(options: ServiceOptions) {
       }
       if (!cp.snapshot || !cp.candidate) throw new ReviewEngineError('PATCH_REQUIRED','Generate a patch for this exact evidence before continuing.',409);
       validateCandidate(cp.snapshot,cp.candidate);
+      const privateBinding=cp.snapshot.repository.isPrivate || privateRunnerForRepository(env,organizationId,cp.snapshot.repository) ? resolvePrivateRunner(env,organizationId,cp.snapshot.repository) : null;
+      if (privateBinding && cp.verification && job.stage !== 'verify' && (cp.verification.executionScope !== 'private-repository' || cp.verification.bindingHash !== privateBinding.bindingHash || cp.verification.runnerRepositoryId !== privateBinding.repositoryId || cp.verification.runnerInstallationId !== privateBinding.installationId)) throw new ReviewEngineError('PRIVATE_VERIFICATION_REQUIRED','The private repository binding changed or its proof is missing. Reverify under the current approved private runner.',409);
       if (job.stage === 'verify') {
-        cp.backend ??= env.NEBIUS_SANDBOX_IMAGE_ID ? 'nebius' : 'actions';
+        if (privateBinding && cp.backend && cp.backend !== 'actions') throw new ReviewEngineError('PRIVATE_RUNNER_REQUIRED','Private source cannot fall back to another execution provider.',409);
+        cp.backend ??= privateBinding ? 'actions' : env.NEBIUS_SANDBOX_IMAGE_ID ? 'nebius' : 'actions';
         if (cp.backend === 'actions') {
           if (!cp.actions) {
             await beginExternal('actions-dispatch');
-            cp.actions=await actions().startActionsVerification(cp.snapshot,cp.candidate,digest); delete cp.inFlight;
+            cp.actions=await actions().startActionsVerification(cp.snapshot,cp.candidate,digest,{organizationId}); delete cp.inFlight;
             return complete('waiting','Isolated GitHub verification started. Check progress to retrieve the result.');
           }
-          const result=await actions().pollActionsVerification(cp.actions);
+          const result=await actions().pollActionsVerification(cp.actions,{organizationId});
           if (result.status === 'pending') return complete('waiting',result.message);
           if (result.status === 'failed') throw new ReviewEngineError('TESTS_FAILED',result.message,409);
           cp.verification=result.proof;
@@ -167,7 +175,10 @@ export function createReviewService(options: ServiceOptions) {
         const org=(await store.listOrganizations()).find(o=>o.id===action.organizationId);
         if (!org || !['owner','admin'].includes(org.role)) throw new ReviewAccessError(403,'ACCESS_DENIED','An organization owner or administrator must connect repositories.');
         const repo=await github().discoverRepository(action.installationId,action.repository,action.githubUserToken);
-        if (repo.isPrivate !== false) throw new ReviewEngineError('PRIVATE_RUNNER_REQUIRED','This verification pilot accepts public diagnostic repositories only. Private source requires a dedicated, approved private runner.',409);
+        if (repo.isPrivate !== false || privateRunnerForRepository(env,action.organizationId,repo)) {
+          resolvePrivateRunner(env,action.organizationId,repo);
+          await actions().probePrivateRepository(repo,{organizationId:action.organizationId});
+        }
         return store.connectProject(action.organizationId,{repository:`${repo.owner}/${repo.name}`,repositoryId:repo.repositoryId,installationId:repo.installationId,defaultBranch:repo.defaultBranch,targetPath:action.targetPath,testPaths:action.testPaths},secret());
       }
       case 'runJob': {

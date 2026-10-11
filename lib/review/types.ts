@@ -17,7 +17,8 @@ export interface ReviewJob { id: string; organizationId: string; changeId: strin
 export interface ReviewAuditEvent { id: string; organizationId: string; actorId: string; action: string; subjectId: string | null; createdAt: string; details: Record<string, unknown> }
 export interface ReviewMember { userId: string; role: ReviewRole; joinedAt: string }
 export interface ReviewOverview { organization: ReviewOrganization; laptops: LaptopPassport[]; evidence: LaptopEvidence[]; projects: ReviewProject[]; changes: RecoveryChange[]; jobs: ReviewJob[]; audit: ReviewAuditEvent[]; members: ReviewMember[] }
-export interface ReviewConfig { version: '2'; authConfigured: boolean; supabaseUrl: string | null; supabasePublishableKey: string | null; githubConfigured: boolean; githubInstallUrl: string | null; nebiusConfigured: boolean; sandboxConfigured: boolean; runnerConfigured?: boolean; models: Array<{ tier: ModelTier; id: string; label: string }>; limitations: string[] }
+export interface ReviewSsoProvider { id: `custom:${string}`; label: string }
+export interface ReviewConfig { version: '2'; authConfigured: boolean; googleSignInEnabled?: boolean; ssoProvider?: ReviewSsoProvider | null; supabaseUrl: string | null; supabasePublishableKey: string | null; githubConfigured: boolean; githubInstallUrl: string | null; nebiusConfigured: boolean; sandboxConfigured: boolean; runnerConfigured?: boolean; models: Array<{ tier: ModelTier; id: string; label: string }>; limitations: string[] }
 export type ReviewAction =
   | { action: 'organizations' }
   | { action: 'createOrganization'; name: string }

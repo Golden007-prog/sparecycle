@@ -14,7 +14,7 @@ function safeError(error: DbError): ReviewStoreError {
     case '28000': return new ReviewStoreError(401, 'INVALID_SESSION', 'Sign in to continue.');
     case '42501': return new ReviewStoreError(403, 'ACCESS_DENIED', 'Your role cannot perform this action, or a separate reviewer is required.');
     case 'P0002': return new ReviewStoreError(404, 'NOT_FOUND', 'This record or invitation is unavailable.');
-    case '40001': case '23505': return new ReviewStoreError(409, 'CONFLICT', 'This record changed or a stage is already running. Refresh and try again.');
+    case 'PT409': case '40001': case '40P01': case '23505': return new ReviewStoreError(409, 'CONFLICT', 'This record changed, a prerequisite is incomplete, or a stage is already running. Refresh and try again.');
     case 'P0001': return new ReviewStoreError(429, 'QUOTA_EXCEEDED', 'The organization or service limit has been reached.');
     case '22023': case '22P02': case '23502': case '23503': case '23514': return new ReviewStoreError(400, 'INVALID_INPUT', 'The request contains an invalid value or linked record.');
     default: return new ReviewStoreError(503, 'DATABASE_UNAVAILABLE', 'The review database is unavailable. Please retry shortly.');

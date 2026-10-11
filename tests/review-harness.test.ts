@@ -196,7 +196,7 @@ const runnerToken = () => response({ token: 'runner-scoped-token', expires_at: n
 test('Actions runner rejects private source before any dispatch', async () => {
   const { snapshot, candidate } = fixture(); snapshot.repository.isPrivate = true; snapshot.hash = snapshotHash(snapshot); candidate.snapshotHash = snapshot.hash; candidate.hash = candidateHash(candidate);
   let calls = 0;
-  await assert.rejects(createActionsRunner(runnerEnv, { fetch: async () => { calls += 1; return response({}); } }).startActionsVerification(snapshot, candidate, candidate.evidenceHash), code('PUBLIC_RUNNER_SCOPE'));
+  await assert.rejects(createActionsRunner(runnerEnv, { fetch: async () => { calls += 1; return response({}); } }).startActionsVerification(snapshot, candidate, candidate.evidenceHash), code('PRIVATE_RUNNER_REQUIRED'));
   assert.equal(calls, 0);
 });
 test('Actions dispatch is scoped to the pinned runner and omits private narrative', async () => {

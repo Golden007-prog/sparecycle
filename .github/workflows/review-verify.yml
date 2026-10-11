@@ -29,6 +29,7 @@ jobs:
             scripts/review-verify.mjs
             scripts/review-parser-policy.mjs
             scripts/review-integrity.mjs
+            scripts/review-private-payload.mjs
           sparse-checkout-cone-mode: false
       - name: Prepare the pinned syntax parser on the trusted host
         env:

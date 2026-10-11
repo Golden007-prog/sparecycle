@@ -108,6 +108,41 @@ test('worker proof is mandatory for test results, repo connections and reservati
   await assert.rejects(rpc('completeJob',primaryOrg,{jobId:changeId,status:'completed'}),/Trusted worker required/);
 });
 
+test('incomplete stage returns nonretryable PT409 and leaves jobs, audit and budgets untouched',async()=>{
+  await as(users.owner);
+  const snapshot=async()=>({
+    jobs:(await db.query('select id,status,reserved_cents from public.review_jobs order by id')).rows,
+    audits:(await db.query('select id from public.review_audit order by id')).rows,
+    budgets:(await db.query('select organization_id,spent_cents,reserved_cents from public.review_budgets order by organization_id')).rows,
+  });
+  const before=await snapshot();
+  for(const stage of ['patch','verify','review','publish']) {
+    await assert.rejects(rpc('reserveJob',primaryOrg,{changeId,stage,idempotencyKey:`missing-prerequisite-${stage}`,reservedCents:1},secret),
+      (error:any)=>error.code==='PT409' && error.message==='Prerequisite stage is incomplete');
+  }
+  assert.deepEqual(await snapshot(),before);
+});
+
+test('deployed mutation definition uses runtime then organization then child locks and no synthetic serialization failures',async()=>{
+  const row=(await raw("select pg_get_functiondef('review_private.mutate(text,uuid,jsonb,text)'::regprocedure) as definition")).rows[0] as {definition:string};
+  assert.doesNotMatch(row.definition,/errcode\s*=\s*'40001'/i);
+  const runtime=row.definition.indexOf('where singleton=true for update');
+  const organization=row.definition.indexOf('where id=p_org for no key update');
+  const firstChild=row.definition.indexOf("where id=(p_data->>'laptopId')::uuid and organization_id=p_org for update");
+  assert.ok(runtime>0 && runtime<organization && organization<firstChild);
+  assert.equal(row.definition.match(/where singleton=true for update/g)?.length,1);
+  assert.doesNotMatch(row.definition,/review_organizations[^;]+for update/i);
+  await as(users.owner);
+});
+
+test('store maps nonretryable conflict to sanitized 409 without repeating the mutation',async()=>{
+  let calls=0;
+  const client={rpc:async()=>{calls++;return {data:null,error:{code:'PT409',message:'private database context'}};}} as unknown as SupabaseClient;
+  await assert.rejects(new ReviewStore(client,users.owner).reserveJob(primaryOrg,changeId,'publish','blocked-publication',0,secret),
+    (error:any)=>error instanceof ReviewStoreError && error.status===409 && error.code==='CONFLICT' && !error.message.includes('private database context'));
+  assert.equal(calls,1);
+});
+
 test('job reservations are idempotent, exclusive and charged atomically',async()=>{
   await as(users.owner);
   const input={changeId,stage:'investigate',idempotencyKey:'reservation-001',reservedCents:5};
@@ -310,6 +345,22 @@ test('real auth client bounds a stalled response body and reports a sanitized se
   await assert.rejects(authenticateReviewRequest('Bearer valid-looking-user-token-1234567890',env,createClient,{fetch:transport,timeoutMs:25}),
     (e:any)=>e instanceof ReviewAccessError && e.status===503 && e.code==='AUTH_UNAVAILABLE' && !e.message.includes('token'));
   assert.equal(calls,1); assert.equal(aborted,true); assert.ok(Date.now()-started<1000);
+});
+
+test('Google authentication validates the user but never grants membership from provider metadata',async()=>{
+  const env={SUPABASE_URL:'https://example.supabase.co',SUPABASE_PUBLISHABLE_KEY:'sb_publishable_public'};
+  const requests:string[]=[];
+  const transport:typeof fetch=async(input,init)=>{
+    requests.push(`${init?.method ?? 'GET'} ${String(input)}`);
+    if(String(input).includes('/auth/v1/user')) return Response.json({id:users.outsider,email:'person@gmail.com',is_anonymous:false,app_metadata:{provider:'google'},user_metadata:{role:'owner',organization_id:primaryOrg}});
+    return Response.json([]);
+  };
+  const auth=await authenticateReviewRequest('Bearer valid-looking-user-token-1234567890',env,createClient,{fetch:transport});
+  assert.equal(auth.userId,users.outsider);
+  assert.equal('role' in auth,false);
+  assert.deepEqual(await new ReviewStore(auth.client,auth.userId).listOrganizations(),[]);
+  assert.equal(requests.length,2);
+  assert.ok(requests.every(request=>request.startsWith('GET ')));
 });
 
 test('database requests share the bounded transport and do not retry transient errors',async()=>{

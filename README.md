@@ -6,7 +6,7 @@ SpareCycle is a planning desk for laptop refurbishing coordinators. It combines 
 
 Built for the **Best Apps and Agents** track of the Nebius x NVIDIA Global AI Hackathon.
 
-**SpareCycle Review** adds authenticated organizations, laptop passports, versioned evidence and a GitHub workflow: investigate with Nebius Nemotron, propose a bounded diagnostics patch, verify it in isolation, obtain a different person's approval, and publish a draft PR. The initial company pilot supports public repositories and a narrow JavaScript diagnostics profile. Private enterprise execution and fleet administration remain later work.
+**SpareCycle Review** adds authenticated organizations, laptop passports, versioned evidence and a GitHub workflow: investigate with Nebius Nemotron, propose a bounded diagnostics patch, verify it in isolation, obtain a different person's approval, and publish a draft PR. The company pilot supports public repositories and explicitly configured private repositories within a narrow JavaScript diagnostics profile. Private verification uses encrypted dispatch to a pinned workflow inside the same private repository, with an operator-approved organization binding and a dedicated repository key. Arbitrary application builds and fleet administration remain later work.
 
 - Live application: [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app)
 - Workshop: [Open the planner](https://sparecycle-topaz.vercel.app/app) · [Start company setup](https://sparecycle-topaz.vercel.app/app?setup=1)
@@ -25,11 +25,13 @@ Actual browser capture of the public website. The interactive synthetic example 
 
 1. Sign in, create an organization and invite a second reviewer using a single-use invitation code.
 2. Register a laptop passport and append a sourced technician note, diagnostic log or test result.
-3. Install the [SpareCycle Review GitHub App](https://github.com/apps/sparecycle-review/installations/new) on a selected public repository. Connect one `src/diagnostics/*.mjs` parser and its unchanged `tests/diagnostics/*.test.mjs` tests.
+3. Install the [SpareCycle Review GitHub App](https://github.com/apps/sparecycle-review/installations/new) on a selected repository. For private code, complete the [private verifier setup](docs/REVIEW-PRIVATE-REPOSITORIES.md) with your operator first. Connect one `src/diagnostics/*.mjs` parser and its unchanged `tests/diagnostics/*.test.mjs` tests.
 4. Open a recovery change and run investigation, patch proposal, isolated testing and model review. Hardware findings stop for technician work. New evidence invalidates earlier proof and approval.
 5. Have a different organization reviewer inspect and approve the exact evidence, base commit and patch. Publish a **draft** PR for normal repository review; the app never merges it or marks a laptop repaired.
 
 The [company setup guide](docs/REVIEW-COMPANY-SETUP.md) covers account/email prerequisites, repository connection, roles and operational limits. The synthetic Review workspace is clearly labeled and does not run models, tests or publication.
+
+A real synthetic private-repository flow completed on **11 October 2026**: Nebius Nano investigated the case, Nemotron Super proposed and independently reviewed the parser change, and the same four existing tests changed from one baseline failure to four candidate passes inside the private repository's isolated workflow. A separate synthetic reviewer account approved the change before the App created a private draft PR. The inspected run logs and proof contained none of the exact source, patch or known credentials checked, and the draft preserved the test file unchanged. This verifies that controlled diagnostic profile, not arbitrary customer builds or enterprise certification. See the [private integration evidence and boundaries](docs/REVIEW-PRIVATE-REPOSITORIES.md#recorded-private-pilot-verification).
 
 Nebius Token Factory supplies all AI inference. The router offers Nano for economical investigation, Lightning for investigation, Super for patch generation and an independent review with fresh context, and an explicitly enabled Ultra escalation. LangSmith records operational metadata. The current verification option is **GitHub Actions isolated container** because Nebius Sandboxes beta access has not been activated; the proof names the actual execution provider. No missing integration is replaced by a simulated pass. See the [harness and model routing](docs/review-harness.md).
 
@@ -197,7 +199,7 @@ The original Workshop `/api/analyze` bounds payloads, tool execution, output and
 
 Browser storage is not an encrypted vault, a team database, or a reliable backup. Export records you need to keep, and use synthetic information in the public demo.
 
-Review passports, evidence and review history are stored in the selected Supabase project under organization membership controls. The public-source runner accepts public repositories only. Customer-specific private runners, retention/deletion workflows, SSO provisioning and audited production guarantees are not included in this pilot.
+Review passports, evidence and review history are stored in the selected Supabase project under organization membership controls. The shared public-source runner accepts public repositories only. Private projects require an explicit organization/repository/installation binding, a dedicated transport key and a pinned verifier in that same private repository. Plaintext private code is not dispatched to the shared public runner. Customer retention/deletion workflows, enforced enterprise identity provisioning and audited production guarantees are separate operational requirements.
 
 AI requests send supplied notes and relevant workshop context through the server to Nebius. Local storage does not mean on-device inference. Never submit customer files, passwords, device contents, or unnecessary personal information.
 
@@ -214,6 +216,7 @@ Review can publish an independently approved diagnostic patch as a draft GitHub 
 - [Company quickstart and CSV preparation](docs/COMPANY-QUICKSTART.md)
 - [Company adoption and pilot scope](docs/COMPANY-ADOPTION.md)
 - [Review company setup and operator prerequisites](docs/REVIEW-COMPANY-SETUP.md)
+- [Private repository setup, data boundaries and recorded pilot verification](docs/REVIEW-PRIVATE-REPOSITORIES.md)
 - [Review API contract](docs/REVIEW-API.md) · [OpenAPI specification](docs/review-openapi.json)
 - [Review harness, model routing and execution providers](docs/review-harness.md)
 - [Review database and authorization boundaries](docs/review-database.md)

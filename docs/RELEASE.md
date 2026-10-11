@@ -1,6 +1,19 @@
 # SpareCycle release record
 
-Recorded 10 October 2026. SpareCycle is a working browser-local pilot prototype. It is not a shared enterprise service, and the 520-story roadmap is not a claim that all features are implemented.
+Updated 11 October 2026. The workshop remains a browser-local pilot; SpareCycle Review is a separate authenticated, tenant-isolated service with tested public and private diagnostic workflows. Neither is an audited enterprise platform, and the 520-story roadmap is not a claim that all features are implemented.
+
+## Private review and authentication release — 11 October 2026
+
+The synthetic private pilot completed real Nebius Nano investigation, Super patching and review, encrypted verification in the same private GitHub repository, a separate test-account approval, and draft PR publication. The unchanged four-test suite had one failing baseline test and four passing candidate tests. Self-approval and access from an unrelated account were rejected. The supported target remains a bounded JavaScript diagnostic parser, with operator-provisioned private runners; this is not arbitrary project execution or unattended repair.
+
+- Local validation: 200 automated tests and the production build passed. Auth screens were checked at desktop and 390px widths.
+- Google is enabled in the selected Supabase project. The app exposes Google login only when its server configuration enables it. Login does not grant organization membership.
+- Optional custom OIDC login is implemented and disabled pending a company identity provider. It is not enforced enterprise SSO or domain-based access.
+- Customer SMTP delivery and branded email-template installation were deferred by the user. Prepared templates are in `supabase/templates`; default Supabase delivery restrictions still apply.
+- The conflict-code/lock-order migration `20261010060900_review_conflict_codes_and_lock_order.sql` passed local database tests but remains unapplied to cloud while the Supabase connector is unavailable. No cloud migration is claimed by this release.
+- The narrated demo and watch page include real application captures, provider usage evidence, the bounded harness, captions and a transcript. Usage screenshot totals are rounded provider observations, not cost benchmarks.
+
+The sections below preserve earlier release evidence and limitations as recorded at those releases.
 
 ## Website and company pilot release
 

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { generateKeyPairSync } from 'node:crypto';
 import { createReviewService, focusedEvidence, type ServiceOptions, type StorePort } from '../lib/review/service.js';
 import { ReviewStoreError, type JobCompletion, type ReviewChangeContext } from '../lib/review/store.js';
 import { candidateHash, sha256, snapshotHash, type CandidatePatch, type IndependentReview, type PublishInput, type RepositorySnapshot, type VerificationProof } from '../lib/review/github.js';
@@ -10,6 +11,8 @@ import { demoOverview } from '../src/review-demo.js';
 const org = '11111111-1111-4111-8111-111111111111', changeId = '22222222-2222-4222-8222-222222222222', jobId = '33333333-3333-4333-8333-333333333333';
 const env = { REVIEW_WORKER_SECRET: 'test-worker-secret-at-least-thirty-two-characters', LANGSMITH_TRACING: 'false' };
 const usage = { estimatedCostCents: 1, promptTokens: 100, completionTokens: 50, usageReported: true };
+const privatePublicKey = generateKeyPairSync('rsa', { modulusLength: 3072 }).publicKey.export({ type: 'spki', format: 'pem' }).toString();
+const privateEnv = { ...env, REVIEW_PRIVATE_RUNNERS_JSON: JSON.stringify([{ organizationId: org, repository: 'company/diagnostics', repositoryId: 2, installationId: 1, ref: 'review-verifier-v2', sha: 'e'.repeat(40), image: `node:22-alpine@sha256:${'f'.repeat(64)}`, publicKeyPem: privatePublicKey }]) };
 function fixture(stage: JobStage = 'investigate', checkpoint: Record<string, unknown> = {}) {
   const context: ReviewChangeContext = { change: { ...structuredClone(demoOverview.changes[0]), id: changeId, organizationId: org }, laptop: { ...structuredClone(demoOverview.laptops[0]), organizationId: org }, evidence: structuredClone(demoOverview.evidence.slice(0, 1)), project: { ...structuredClone(demoOverview.projects[0]), organizationId: org, connectionStatus: 'connected', repository: 'company/diagnostics' } };
   const job: ReviewJob = { id: jobId, organizationId: org, changeId, stage, status: 'queued', createdBy: context.change.createdBy, createdAt: '2026-10-10T00:00:00.000Z', updatedAt: '2026-10-10T00:00:00.000Z', message: '', reservedCents: stageReservationCents('super', 'patch') };
@@ -195,7 +198,46 @@ test('project connection checks organization role before repository access', asy
 
 test('private project connection refuses the public verification runner', async () => {
   const { service } = fixture();
-  await assert.rejects(service({ github: { discoverRepository: async () => ({ installationId: 1, repositoryId: 2, owner: 'company', name: 'diagnostics', defaultBranch: 'main', isPrivate: true }) } as unknown as ServiceOptions['github'] })({ action: 'connectProject', organizationId: org, repository: 'company/diagnostics', installationId: 1, targetPath: 'src/diagnostics/battery.mjs', testPaths: ['tests/diagnostics/battery.test.mjs'], githubUserToken: 'one-time-proof-token' }), /public diagnostic repositories only/);
+  await assert.rejects(service({ github: { discoverRepository: async () => ({ installationId: 1, repositoryId: 2, owner: 'company', name: 'diagnostics', defaultBranch: 'main', isPrivate: true }) } as unknown as ServiceOptions['github'] })({ action: 'connectProject', organizationId: org, repository: 'company/diagnostics', installationId: 1, targetPath: 'src/diagnostics/battery.mjs', testPaths: ['tests/diagnostics/battery.test.mjs'], githubUserToken: 'one-time-proof-token' }), /administrator-approved verifier in the same repository/);
+});
+
+test('private connection probes its tenant-bound verifier before persisting the project', async () => {
+  const { core, service } = fixture(); const order: string[] = [];
+  const repository = { installationId: 1, repositoryId: 2, owner: 'company', name: 'diagnostics', defaultBranch: 'main', isPrivate: true };
+  core.connectProject = async (_organization, input) => { order.push('persist'); assert.equal(JSON.stringify(input).includes('one-time-proof-token'), false); return { ...demoOverview.projects[0], ...input }; };
+  await service({ env: privateEnv, github: { discoverRepository: async () => { order.push('discover'); return repository; } } as unknown as ServiceOptions['github'], actions: { probePrivateRepository: async (repo: typeof repository, context: { organizationId: string }) => { order.push('probe'); assert.deepEqual(repo, repository); assert.equal(context.organizationId, org); return { configured: true, executionScope: 'private-repository', runnerSha: 'e'.repeat(40) }; } } as unknown as ServiceOptions['actions'] })({ action: 'connectProject', organizationId: org, repository: 'company/diagnostics', installationId: 1, targetPath: 'src/diagnostics/battery.mjs', testPaths: ['tests/diagnostics/battery.test.mjs'], githubUserToken: 'one-time-proof-token' });
+  assert.deepEqual(order, ['discover', 'probe', 'persist']);
+});
+
+test('private source without a matching binding and configured private source changed to public cannot reach Nebius', async () => {
+  for (const visiblePrivate of [true, false]) {
+    const { state, service } = fixture('patch'); const { snapshot, candidate } = artifact(state.context);
+    snapshot.repository.isPrivate = visiblePrivate; snapshot.hash = snapshotHash(snapshot);
+    state.checkpoint = { snapshot };
+    state.context.change.investigation = { classification: 'software', summary: 'Synthetic parser issue', findings: [], nextSteps: ['Inspect parser'], model: 'Nebius-test' };
+    let called = false;
+    const result = await service({ env: visiblePrivate ? env : privateEnv, propose: async () => { called = true; return { ...candidate, model: 'unexpected', usage }; } })(resume) as ReviewJob;
+    assert.equal(result.status, 'failed'); assert.equal(called, false); assert.equal(state.completions[0].spentCents, 0);
+  }
+});
+
+test('private verification passes server organization context and never falls back to Nebius Sandboxes', async () => {
+  const { state, service } = fixture('verify'); const { snapshot, candidate } = artifact(state.context);
+  snapshot.repository.isPrivate = true; snapshot.hash = snapshotHash(snapshot); candidate.snapshotHash = snapshot.hash; candidate.hash = candidateHash(candidate);
+  state.checkpoint = { snapshot, candidate }; let starts = 0, polls = 0;
+  const dependencies: Partial<ServiceOptions> = { env: { ...privateEnv, NEBIUS_SANDBOX_IMAGE_ID: '10000000-0000-4000-8000-000000000001' }, actions: { startActionsVerification: async (_snapshot: unknown, _candidate: unknown, _digest: unknown, context: { organizationId: string }) => { assert.equal(context.organizationId, org); starts++; return { executionScope: 'private-repository', correlationId: 'fixture' }; }, pollActionsVerification: async (_receipt: unknown, context: { organizationId: string }) => { assert.equal(context.organizationId, org); polls++; return { status: 'pending', message: 'Pending private verification.' }; } } as unknown as ServiceOptions['actions'], sandbox: { startVerification: async () => { throw new Error('Private source must not reach Sandbox'); } } as unknown as ServiceOptions['sandbox'] };
+  assert.equal((await service(dependencies)(resume) as ReviewJob).status, 'waiting');
+  assert.equal(state.checkpoint.backend, 'actions');
+  assert.equal((await service(dependencies)(resume) as ReviewJob).status, 'waiting');
+  assert.equal(starts, 1); assert.equal(polls, 1);
+});
+
+test('private review refuses shared-runner proof before a model request', async () => {
+  const { state, service } = fixture('review'); const { snapshot, candidate, proof } = artifact(state.context);
+  snapshot.repository.isPrivate = true; snapshot.hash = snapshotHash(snapshot); candidate.snapshotHash = snapshot.hash; candidate.hash = candidateHash(candidate);
+  state.checkpoint = { snapshot, candidate, verification: proof }; let called = false;
+  const result = await service({ env: privateEnv, review: async () => { called = true; throw new Error('must not call model'); } })(resume) as ReviewJob;
+  assert.equal(result.status, 'failed'); assert.equal(called, false); assert.match(result.message, /private repository binding changed or its proof is missing/);
 });
 
 test('focused evidence is bounded and retains observed source information', () => {

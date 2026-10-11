@@ -49,6 +49,34 @@ test('unconfigured services return honest false flags and Ultra requires explici
   assert.equal(publicReviewConfig({ GITHUB_APP_INSTALL_URL: 'https://attacker.invalid/apps/foo/installations/new' }).githubInstallUrl, null);
 });
 
+test('Google login is an explicit operator option and requires valid Supabase auth configuration',()=>{
+  assert.equal(publicReviewConfig(env).googleSignInEnabled,false);
+  assert.equal(publicReviewConfig({...env,REVIEW_GOOGLE_SIGN_IN_ENABLED:'true'}).googleSignInEnabled,true);
+  for(const value of ['false','TRUE','1','yes',' true ']) assert.equal(publicReviewConfig({...env,REVIEW_GOOGLE_SIGN_IN_ENABLED:value}).googleSignInEnabled,false);
+  assert.equal(publicReviewConfig({REVIEW_GOOGLE_SIGN_IN_ENABLED:'true'}).googleSignInEnabled,false);
+  assert.equal(publicReviewConfig({...env,SUPABASE_PUBLISHABLE_KEY:'sb_secret_not_publishable',REVIEW_GOOGLE_SIGN_IN_ENABLED:'true'}).googleSignInEnabled,false);
+  const config=JSON.stringify(publicReviewConfig({...env,REVIEW_GOOGLE_SIGN_IN_ENABLED:'true',GOOGLE_CLIENT_SECRET:'private-google-secret'}));
+  assert.equal(config.includes('private-google-secret'),false);
+  assert.equal(config.includes('ssoEnforced'),false);
+});
+
+test('custom OIDC login configuration requires explicit enablement and exposes no IdP secrets', () => {
+  const configured = { ...env, REVIEW_SSO_ENABLED: 'true', REVIEW_SSO_PROVIDER_ID: 'custom:company', REVIEW_SSO_DISPLAY_NAME: 'Company identity', SSO_CLIENT_SECRET: 'private-idp-secret', SSO_ISSUER: 'private-idp-issuer' };
+  assert.deepEqual(publicReviewConfig(configured).ssoProvider, { id: 'custom:company', label: 'Company identity' });
+  assert.equal(publicReviewConfig(env).ssoProvider, null);
+  assert.equal(publicReviewConfig({ ...configured, SUPABASE_PUBLISHABLE_KEY: 'sb_secret_not_public' }).ssoProvider, null);
+  for (const enabled of ['false', 'TRUE', '1', ' true ']) assert.equal(publicReviewConfig({ ...configured, REVIEW_SSO_ENABLED: enabled }).ssoProvider, null);
+  const serialized = JSON.stringify(publicReviewConfig(configured));
+  assert.doesNotMatch(serialized, /private-idp-secret|private-idp-issuer|ssoEnforced/);
+});
+
+test('custom provider configuration fails closed for malformed identifiers and display names', () => {
+  const configured = { ...env, REVIEW_SSO_ENABLED: 'true', REVIEW_SSO_PROVIDER_ID: 'custom:company' };
+  for (const id of ['', 'google', 'custom:', 'custom:Uppercase', 'custom:foo?token=secret', 'custom:foo/bar', 'custom:' + 'x'.repeat(44)]) assert.equal(publicReviewConfig({ ...configured, REVIEW_SSO_PROVIDER_ID: id }).ssoProvider, null);
+  for (const label of ['', ' ', '<script>', 'line\nbreak', 'x'.repeat(49)]) assert.equal(publicReviewConfig({ ...configured, REVIEW_SSO_DISPLAY_NAME: label }).ssoProvider, null);
+  assert.deepEqual(publicReviewConfig(configured).ssoProvider, { id: 'custom:company', label: 'Company SSO' });
+});
+
 test('POST authenticates before invoking action and passes the verified user context', async () => {
   const order: string[] = [];
   const result = await call(safeHandler({ authenticate: async (authorization, supplied) => { order.push('authenticate'); assert.match(authorization ?? '', /^Bearer /); assert.equal(supplied, env); return authenticated; }, invoke: async (action, auth, supplied) => { order.push('invoke'); assert.deepEqual(action, { action: 'organizations' }); assert.equal(auth, authenticated); assert.equal(supplied, env); return [{ id: organizationId }]; } }));

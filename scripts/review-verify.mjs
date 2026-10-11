@@ -1,13 +1,15 @@
 // Trusted runner entry point. Untrusted repository code executes only inside restricted Docker guests.
 import { createHash } from 'node:crypto';
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, statSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { validateParserReplacement } from './review-parser-policy.mjs';
 import { snapshotPreimage, candidatePreimage } from './review-integrity.mjs';
+import { openPrivatePayload } from './review-private-payload.mjs';
 
+function main() {
 const parserRoot = process.env.SPARECYCLE_ACORN_ROOT;
 if (!parserRoot) throw new Error('The trusted parser dependency is not configured.');
 const trustedRequire = createRequire(join(parserRoot, 'package.json'));
@@ -19,13 +21,30 @@ const fail = message => { throw new Error(message); };
 const sourcePath = value => /^src\/diagnostics\/[A-Za-z0-9_-]+\.mjs$/.test(value);
 const testPath = value => /^tests\/diagnostics\/[A-Za-z0-9_-]+\.test\.mjs$/.test(value);
 const hash = value => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
-const payloadEncoded = process.env.REVIEW_PAYLOAD || '';
-if (!/^[A-Za-z0-9+/]+={0,2}$/.test(payloadEncoded) || payloadEncoded.length > 60_000) fail('Invalid verification payload.');
-const payloadText = Buffer.from(payloadEncoded, 'base64').toString('utf8');
+const privateExecution = process.env.REVIEW_EXECUTION_SCOPE === 'private-repository';
+let payloadText; let privateContext; let envelopeHash;
+if (privateExecution) {
+  // These values come from GitHub's runner/event, never from plaintext in a dispatch input.
+  const eventPath = process.env.GITHUB_EVENT_PATH;
+  if (process.env.GITHUB_EVENT_NAME !== 'workflow_dispatch' || process.env.GITHUB_RUN_ATTEMPT !== '1' || process.env.RUNNER_ENVIRONMENT !== 'github-hosted' || !eventPath || statSync(eventPath).size > 200_000 || !/^[a-f0-9]{40}$/.test(process.env.GITHUB_SHA || '') || process.env.GITHUB_WORKFLOW_SHA !== process.env.GITHUB_SHA) fail('Invalid private runner identity.');
+  const event = JSON.parse(readFileSync(eventPath, 'utf8'));
+  const repositoryId = Number(process.env.GITHUB_REPOSITORY_ID);
+  if (!Number.isSafeInteger(repositoryId) || repositoryId < 1 || event.repository?.id !== repositoryId || event.repository?.private !== true || event.repository.full_name?.toLowerCase() !== process.env.GITHUB_REPOSITORY?.toLowerCase()) fail('The private runner must execute in its own private source repository.');
+  const opened = openPrivatePayload(process.env.REVIEW_ENCRYPTED_PAYLOAD || '', process.env.SPARECYCLE_REVIEW_PRIVATE_KEY || '', { repository: process.env.GITHUB_REPOSITORY, repositoryId, runnerSha: process.env.GITHUB_SHA, nonce: process.env.REVIEW_NONCE || '' });
+  payloadText = opened.plaintext; privateContext = opened.context; envelopeHash = opened.envelopeHash;
+  delete process.env.SPARECYCLE_REVIEW_PRIVATE_KEY;
+  delete process.env.REVIEW_ENCRYPTED_PAYLOAD;
+} else {
+  if (process.env.REVIEW_EXECUTION_SCOPE) fail('Unknown execution boundary.');
+  const payloadEncoded = process.env.REVIEW_PAYLOAD || '';
+  if (!/^[A-Za-z0-9+/]+={0,2}$/.test(payloadEncoded) || payloadEncoded.length > 60_000) fail('Invalid verification payload.');
+  payloadText = Buffer.from(payloadEncoded, 'base64').toString('utf8');
+}
 const data = JSON.parse(payloadText);
 const { snapshot, candidate, image, nonce, evidenceHash } = data;
 if (data.version !== 1 || !/^[a-f0-9]{32}$/.test(nonce) || !hash(evidenceHash) || !/^node:22-alpine@sha256:[a-f0-9]{64}$/.test(image)) fail('Invalid verification identity.');
-if (snapshot?.repository?.isPrivate !== false || !/^[a-f0-9]{40}$/.test(snapshot.baseSha) || !/^[a-f0-9]{40}$/.test(snapshot.treeSha) || !sourcePath(snapshot.targetPath) || !Array.isArray(snapshot.files) || snapshot.files.length < 2 || snapshot.files.length > 9) fail('Unsupported public diagnostic snapshot.');
+if (snapshot?.repository?.isPrivate !== privateExecution || !/^[a-f0-9]{40}$/.test(snapshot.baseSha) || !/^[a-f0-9]{40}$/.test(snapshot.treeSha) || !sourcePath(snapshot.targetPath) || !Array.isArray(snapshot.files) || snapshot.files.length < 2 || snapshot.files.length > 9) fail('Unsupported diagnostic snapshot.');
+if (privateExecution && (snapshot.repository.repositoryId !== privateContext.repositoryId || snapshot.repository.installationId !== privateContext.installationId || `${snapshot.repository.owner}/${snapshot.repository.name}`.toLowerCase() !== privateContext.repository.toLowerCase() || nonce !== privateContext.nonce)) fail('The private snapshot does not match its authenticated repository binding.');
 const seen = new Set(); let byteCount = 0;
 for (const file of snapshot.files) {
   if (!sourcePath(file.path) && !testPath(file.path)) fail('Unsupported file path.');
@@ -82,10 +101,18 @@ try {
     baselineFailed: baseline.failed, baselinePassed: baseline.passed, candidatePassed: fixed.passed, candidateFailed: 0,
     testNamesHash: baseline.testNamesHash,
     networkDisabled: true, baselineOutputHash: baseline.outputHash, candidateOutputHash: fixed.outputHash, completedAt: new Date().toISOString(),
+    ...(privateExecution ? { executionScope: 'private-repository', runnerRepositoryId: privateContext.repositoryId, runnerInstallationId: privateContext.installationId, bindingHash: privateContext.bindingHash, envelopeHash } : {}),
   };
   mkdirSync('review-proof', { recursive: true }); writeFileSync('review-proof/proof.json', JSON.stringify(proof), { mode: 0o600 });
   console.log(`Verified ${fixed.passed} tests; baseline failures: ${baseline.failed}. Source and test output are not logged or included in artifacts.`);
 } finally {
   // The path was created by mkdtemp under the OS temp directory, never supplied by a payload.
   rmSync(work, { recursive: true, force: true });
+}
+}
+try { main(); }
+catch {
+  // JSON/parser/runtime errors can contain snippets of private source. Never emit their message or stack.
+  console.error('Verification failed. No source, decrypted payload, test output, or credentials were logged.');
+  process.exitCode = 1;
 }

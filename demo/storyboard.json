@@ -1,0 +1,98 @@
+[
+  {
+    "id":"01-intro", "chapter":"SPARECYCLE REVIEW", "title":"Every second life\ndeserves a careful review.",
+    "eyebrow":"EVIDENCE → TESTED CHANGE → DRAFT PR", "detail":"Laptop recovery, connected to\nthe software behind it.",
+    "image":"landing.png", "crop":[1000,80,1430,1050], "label":"Live product tour · Synthetic demonstration records",
+    "captions":["A laptop can be held back by broken software as well as broken hardware.","SpareCycle Review connects what a team observes on the bench to a tested change in its project."]
+  },
+  {
+    "id":"02-workspace", "chapter":"01 / THE COMPANY WORKSPACE", "title":"One team.\nA shared review bench.",
+    "eyebrow":"ORGANIZATION ACCESS", "detail":"Projects, devices and change requests\nstay with the organization.",
+    "image":"review-overview.png", "crop":[1040,70,1530,1130], "label":"Actual signed-in workspace · Synthetic integration pilot",
+    "captions":["The company workspace brings laptop passports, project connections, and change requests together.","Access follows organization membership, so a different company cannot read this team's records."]
+  },
+  {
+    "id":"03-evidence", "chapter":"02 / THE LAPTOP PASSPORT", "title":"Start with evidence.\nKeep its history.",
+    "eyebrow":"VERSIONED OBSERVATIONS", "detail":"Every review refers to a specific\nevidence revision.",
+    "image":"passport-evidence.png", "crop":[1050,95,1540,860], "label":"Synthetic parser fixture · No physical hardware diagnosis",
+    "captions":["This passport contains an observed parser failure, with its source and evidence revision.","The records are synthetic. The failure, model calls, isolated tests, and published draft are real."]
+  },
+  {
+    "id":"04-problem", "chapter":"03 / A SMALL FAILURE, CLEARLY DEFINED", "title":"Zero is a reading.\nNot missing data.",
+    "eyebrow":"THE CONTROLLED REGRESSION", "detail":"A valid 0% battery log returns null.\nThe unchanged test expects zero.",
+    "image":"change-investigation.png", "crop":[1070,100,1500,1090], "label":"Actual completed change · Read back from the live database",
+    "captions":["Here, a valid zero-percent battery reading is incorrectly discarded as missing data.","The request defines the expected behavior and preserves the existing tests before any code is proposed."]
+  },
+  {
+    "id":"05a-provider", "chapter":"04 / NEBIUS TOKEN FACTORY", "title":"Cloud inference.\nNVIDIA reasoning.",
+    "eyebrow":"NEBIUS + NVIDIA NEMOTRON", "detail":"Real inference through\nNebius Token Factory.\nNo simulated provider results.",
+    "image":"nebius-overview.png", "crop":[0,0,1460,1000], "label":"User-supplied Token Factory view · Account strip excluded",
+    "captions":["Nebius Token Factory is the cloud inference provider. NVIDIA Nemotron supplies the reasoning models."]
+  },
+  {
+    "id":"05-nebius", "chapter":"04 / NEBIUS + NEMOTRON", "title":"Reasoning with\na bounded harness.",
+    "eyebrow":"REAL PROVIDER EXECUTION", "detail":"Lightning investigates.\nSuper proposes and independently reviews.\nNano and Ultra are also verified routes.",
+    "image":"change-investigation.png", "crop":[1080,690,1480,490], "label":"Actual Nebius response · NVIDIA Nemotron Lightning",
+    "captions":["In this completed change, Lightning investigated the evidence. Super generated the patch and independently reviewed it with fresh context."]
+  },
+  {
+    "id":"05b-usage", "layout":"wide", "chapter":"PROVIDER EVIDENCE", "title":"Four model tiers. Recorded usage.",
+    "eyebrow":"NANO · LIGHTNING · SUPER · ULTRA", "detail":"Nano and Ultra were separately checked. The completed patch used Lightning and Super.",
+    "image":"nebius-usage.png", "crop":[0,0,1454,480], "label":"User-supplied usage view · Displayed cost buckets are rounded, not a per-change invoice",
+    "captions":["The supplied Nebius usage screenshot records Nano, Lightning, Super, and Ultra.","That confirms use across four model tiers, not that every tier wrote this patch. The displayed cost buckets are rounded."]
+  },
+  {
+    "id":"05c-harness", "layout":"diagram", "chapter":"THE EXECUTION HARNESS", "title":"Reasoning is bounded. Publication is earned.",
+    "eyebrow":"TRUSTED CODE CONTROLS EVERY TRANSITION", "detail":"The model proposes structured output. Server checks decide what can happen next.",
+    "image":"change-tests.png", "crop":[1080,865,1120,320], "label":"Implemented controls · A diagram of the actual Review architecture",
+    "captions":["Trusted code controls every transition. Structured output, a forty-second model deadline, and reserved spend constrain each stage.","Exact code and evidence hashes, unchanged tests, stale-evidence rejection, and a separate approver protect publication. LangSmith traces contain metadata only."]
+  },
+  {
+    "id":"06-patch", "chapter":"05 / A BOUNDED CHANGE", "title":"One proposed fix.\nAn exact code version.",
+    "eyebrow":"PATCH BEFORE PUBLICATION", "detail":"The change is tied to a base commit,\na patch hash and an evidence hash.",
+    "image":"change-tests.png", "crop":[1080,350,1120,505], "label":"Actual generated patch · Default branch remains unchanged",
+    "captions":["The proposed patch is restricted to the selected diagnostic parser and checked against the harness rules.","It is bound to an exact repository version and evidence revision. Generating a patch does not make it approved."]
+  },
+  {
+    "id":"07-tests", "chapter":"06 / PROVE THE FAILURE AND THE FIX", "title":"A failing baseline.\nThe same tests pass.",
+    "eyebrow":"ISOLATED VERIFICATION", "detail":"Before: 1 failed, 3 passed.\nAfter: 4 passed, 0 failed.\nThe test cases were not changed.",
+    "image":"change-tests.png", "crop":[1080,865,1120,320], "label":"Real GitHub Actions execution · Network disabled in test container",
+    "captions":["An isolated GitHub Actions container first reproduces the failure: one test fails and three pass.","With the candidate, all four unchanged tests pass. Hashes bind this result to the exact code and evidence."]
+  },
+  {
+    "id":"08-approval", "chapter":"07 / REVIEW THE TESTED CHANGE", "title":"Approval belongs\nto this exact fix.",
+    "eyebrow":"SEPARATE REVIEWER REQUIRED", "detail":"An independent model review,\nthen a different organization member.",
+    "image":"change-approval.png", "crop":[1080,250,1120,665], "label":"Demonstrated with separate synthetic QA accounts",
+    "captions":["The independent review receives the original problem and evidence, without the writer's conversation.","A different organization member must approve the tested change. New evidence or code invalidates that approval."]
+  },
+  {
+    "id":"09-pr", "chapter":"08 / A REAL DRAFT PULL REQUEST", "title":"Evidence reaches\nthe repository.",
+    "eyebrow":"CREATED BY THE GITHUB APP", "detail":"Draft PR #1 contains the tested patch\nand verification metadata.\nIt has not been merged.",
+    "image":"draft-pr.png", "crop":[900,110,1320,705], "label":"github.com/Golden007-prog/sparecycle/pull/1",
+    "captions":["The SpareCycle GitHub App created this actual draft pull request with the tested patch and verification metadata.","Technician narratives stay in the workspace. Repository review is still required, and publishing does not mark a laptop repaired."]
+  },
+  {
+    "id":"09b-private", "layout":"proof", "chapter":"A SEPARATE PRIVATE-REPOSITORY PILOT", "title":"Private repository. Verified end to end.",
+    "eyebrow":"ACTUAL EXECUTION · SYNTHETIC QA ACCOUNTS", "detail":"Nano investigated. Super proposed and reviewed. The test cases stayed unchanged.",
+    "image":"change-tests.png", "crop":[1080,865,1120,320], "label":"Execution summary · 11 October 2026 · Private source and repository details excluded",
+    "captions":["A separate private-repository pilot also completed: encrypted dispatch, one baseline failure, four unchanged tests passing, independent approval, and a real draft pull request. Synthetic QA accounts were used."]
+  },
+  {
+    "id":"10-recovery", "chapter":"09 / THE LARGER RECOVERY WORKFLOW", "title":"Careful fixes.\nBetter recovery\nplans.",
+    "eyebrow":"CONNECTED PRODUCT WORKFLOWS", "detail":"The recovery planner helps teams\nallocate declared parts and workshop time.",
+    "image":"landing.png", "crop":[1010,100,1390,1030], "label":"Planning projections use declared inputs · Not measured field outcomes",
+    "captions":["Review complements the recovery planner, connecting declared parts, workshop time, and repair budgets with a traceable software handoff."]
+  },
+  {
+    "id":"11-scope", "chapter":"10 / BUILT TO BE CHECKED", "title":"Visible evidence.\nHonest boundaries.",
+    "eyebrow":"CONTROLLED PILOT", "detail":"A software fix is not a hardware repair.\nEnterprise connections require\nprovider configuration and verification.",
+    "image":"review-overview.png", "crop":[1040,70,1530,1130], "label":"Enterprise configuration status is documented with the release",
+    "captions":["This controlled parser demonstration does not certify physical repairs. Enterprise email, private repository execution, and single sign-on each require separate verified configuration."]
+  },
+  {
+    "id":"12-close", "chapter":"SPARECYCLE REVIEW", "title":"One change.\nClear evidence.",
+    "eyebrow":"TRY THE LIVE APPLICATION", "detail":"sparecycle-topaz.vercel.app/review\n\nSource and verification records:\ngithub.com/Golden007-prog/sparecycle",
+    "image":"review-overview.png", "crop":[1080,195,1480,335], "label":"Nebius Token Factory · NVIDIA Nemotron · Supabase · GitHub · Vercel",
+    "captions":["SpareCycle Review brings Nebius-powered reasoning into a workflow a team can inspect and control.","Open the live app, inspect the source and draft pull request, and see the evidence behind the change."]
+  }
+]

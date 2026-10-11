@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import type { HttpRequest, HttpResponse } from '../lib/http.js';
 import { authenticateReviewRequest, reviewAuthConfig, ReviewAccessError, type ReviewEnvironment } from '../lib/review/auth.js';
+import { reviewSsoProvider } from '../lib/review/auth-options.js';
 import { ReviewEngineError } from '../lib/review/github.js';
 import { REVIEW_MODELS } from '../lib/review/harness.js';
 import { REVIEW_MAX_BODY_BYTES, reviewActionSchema } from '../lib/review/request.js';
@@ -35,6 +36,8 @@ export function publicReviewConfig(env: ReviewEnvironment): ReviewConfig {
   const auth = reviewAuthConfig(env);
   return {
     version: '2', authConfigured: !!auth, supabaseUrl: auth?.url ?? null, supabasePublishableKey: auth?.publishableKey ?? null,
+    googleSignInEnabled: !!auth && env.REVIEW_GOOGLE_SIGN_IN_ENABLED === 'true',
+    ssoProvider: reviewSsoProvider(env, !!auth),
     githubConfigured: !!env.GITHUB_APP_ID?.trim() && !!env.GITHUB_APP_PRIVATE_KEY?.trim(), githubInstallUrl: installUrl(env),
     nebiusConfigured: !!env.NEBIUS_API_KEY?.trim(),
     sandboxConfigured: !!env.NEBIUS_API_KEY?.trim() && !!env.NEBIUS_PROJECT_ID?.trim() && /^[a-f0-9]{8}-[a-f0-9]{4}-[1-8][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(env.NEBIUS_SANDBOX_IMAGE_ID ?? ''),

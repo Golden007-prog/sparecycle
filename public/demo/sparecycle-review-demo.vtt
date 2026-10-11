@@ -1,0 +1,109 @@
+WEBVTT
+
+1
+00:00:00.300 --> 00:00:04.269
+A laptop can be held back by broken software as well as broken hardware.
+
+2
+00:00:04.449 --> 00:00:08.897
+SpareCycle Review connects what a team observes on the bench to a tested change in its project.
+
+3
+00:00:09.577 --> 00:00:14.696
+The company workspace brings laptop passports, project connections, and change requests together.
+
+4
+00:00:14.876 --> 00:00:19.834
+Access follows organization membership, so a different company cannot read this team's records.
+
+5
+00:00:20.514 --> 00:00:25.008
+This passport contains an observed parser failure, with its source and evidence revision.
+
+6
+00:00:25.188 --> 00:00:31.676
+The records are synthetic. The failure, model calls, isolated tests, and published draft are real.
+
+7
+00:00:32.356 --> 00:00:36.735
+Here, a valid zero-percent battery reading is incorrectly discarded as missing data.
+
+8
+00:00:36.915 --> 00:00:41.988
+The request defines the expected behavior and preserves the existing tests before any code is proposed.
+
+9
+00:00:42.668 --> 00:00:48.462
+Nebius Token Factory is the cloud inference provider. NVIDIA Nemotron supplies the reasoning models.
+
+10
+00:00:49.142 --> 00:00:56.475
+In this completed change, Lightning investigated the evidence. Super generated the patch and independently reviewed it with fresh context.
+
+11
+00:00:57.155 --> 00:01:01.668
+The supplied Nebius usage screenshot records Nano, Lightning, Super, and Ultra.
+
+12
+00:01:01.848 --> 00:01:08.387
+That confirms use across four model tiers, not that every tier wrote this patch. The displayed cost buckets are rounded.
+
+13
+00:01:09.067 --> 00:01:16.830
+Trusted code controls every transition. Structured output, a forty-second model deadline, and reserved spend constrain each stage.
+
+14
+00:01:17.010 --> 00:01:26.393
+Exact code and evidence hashes, unchanged tests, stale-evidence rejection, and a separate approver protect publication. LangSmith traces contain metadata only.
+
+15
+00:01:27.073 --> 00:01:31.911
+The proposed patch is restricted to the selected diagnostic parser and checked against the harness rules.
+
+16
+00:01:32.091 --> 00:01:37.944
+It is bound to an exact repository version and evidence revision. Generating a patch does not make it approved.
+
+17
+00:01:38.624 --> 00:01:43.903
+An isolated GitHub Actions container first reproduces the failure: one test fails and three pass.
+
+18
+00:01:44.083 --> 00:01:50.331
+With the candidate, all four unchanged tests pass. Hashes bind this result to the exact code and evidence.
+
+19
+00:01:51.011 --> 00:01:55.915
+The independent review receives the original problem and evidence, without the writer's conversation.
+
+20
+00:01:56.095 --> 00:02:01.953
+A different organization member must approve the tested change. New evidence or code invalidates that approval.
+
+21
+00:02:02.633 --> 00:02:08.011
+The SpareCycle GitHub App created this actual draft pull request with the tested patch and verification metadata.
+
+22
+00:02:08.191 --> 00:02:15.249
+Technician narratives stay in the workspace. Repository review is still required, and publishing does not mark a laptop repaired.
+
+23
+00:02:15.929 --> 00:02:28.417
+A separate private-repository pilot also completed: encrypted dispatch, one baseline failure, four unchanged tests passing, independent approval, and a real draft pull request. Synthetic QA accounts were used.
+
+24
+00:02:29.097 --> 00:02:36.035
+Review complements the recovery planner, connecting declared parts, workshop time, and repair budgets with a traceable software handoff.
+
+25
+00:02:36.715 --> 00:02:47.137
+This controlled parser demonstration does not certify physical repairs. Enterprise email, private repository execution, and single sign-on each require separate verified configuration.
+
+26
+00:02:47.817 --> 00:02:52.506
+SpareCycle Review brings Nebius-powered reasoning into a workflow a team can inspect and control.
+
+27
+00:02:52.686 --> 00:02:58.094
+Open the live app, inspect the source and draft pull request, and see the evidence behind the change.

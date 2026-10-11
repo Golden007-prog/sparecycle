@@ -797,6 +797,34 @@
           "authConfigured": {
             "type": "boolean"
           },
+          "googleSignInEnabled": {
+            "type": "boolean",
+            "description": "Operator-enabled Google OAuth login option. Requires Supabase Auth configuration; not a live provider check or managed enterprise SSO claim."
+          },
+          "ssoProvider": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Optional custom OIDC login choice; not SSO enforcement, automatic membership or a live IdP test.",
+            "required": [
+              "id",
+              "label"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^custom:[a-z0-9][a-z0-9:-]*$",
+                "maxLength": 50
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 48
+              }
+            }
+          },
           "supabaseUrl": {
             "type": [
               "string",
