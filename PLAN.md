@@ -14,10 +14,11 @@ The user requested a balanced expansion of workshop operations and developer rev
 
 ## Current status
 
-- Tavily direct provider, local application and production application calls succeeded; research UI, Pilot operations and Review insights are implemented. 249 automated tests pass; GitHub verification and Vercel deployment passed for runtime 61014aa.
+- Tavily direct provider, local application and production application calls succeeded; research UI, Pilot operations and Review insights are implemented. 249 automated tests pass. GitHub verification and the final Vercel deployment passed for release 1c9f839; public pages, video range delivery, captions and the PDF were verified.
 - Vercel production is configured for Tavily's explicit keyless access mode. Provider limits still apply.
-- Both replacement YouTube uploads are public and playback-verified. Previous uploads remain public pending link updates and action-time permanent-deletion confirmation.
-- Devpost remains a draft; personal eligibility declarations are outstanding.
+- Both replacement YouTube uploads are public and playback-verified. App and Devpost links use the replacements. The two previous uploads were deleted after specific user approval; local copies are preserved.
+- Eligibility was confirmed. Two isolated judge accounts passed sign-in, role and organization-isolation checks; their private instructions and the PDF are saved in Devpost's private attachment. Devpost remains a 4/5 draft at the user's explicit request; final terms were not accepted and the entry was not submitted.
+- The 14-page dossier is published. The 200-capability expansion plan remains planned work, not 200 newly shipped features.
 - Customer SMTP was explicitly deferred by the user. Managed company SSO is not enforced.
 
 Verification results and final URLs will be recorded in `docs/RELEASE.md` when the corresponding work actually passes.

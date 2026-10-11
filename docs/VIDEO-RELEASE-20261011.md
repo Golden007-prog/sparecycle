@@ -31,8 +31,10 @@ Upload-file SHA-256 digests:
 - All 16 competition and 38 deep-dive captions are ordered, have positive durations and stay within the media bounds.
 - Competition loudness: −16.38 LUFS; true peak −1.42 dBTP. Deep dive: −16.37 LUFS; true peak −1.46 dBTP. No clipping or detected silence longer than 1.8 seconds.
 - Watch-page chapters and transcripts are generated from the current storyboard and recorded scene timings. Local publication checks the intentional competition digest before and after publishing the deep dive.
+- Final production checks passed for the live routes, both media files, captions and the project PDF. Chapter seeking and selectable captions were exercised on the deployed watch pages.
+- Both replacement YouTube videos are public and playback was verified. Their browser media durations were 153.721 and 341.901 seconds; the source-file durations above are retained as the reproducible local measurements.
 
-These are machine audio checks and visual frame inspection. They do not claim a separate human listening pass, production playback check or YouTube processing verification. Those release checks remain with the final deployment/upload workflow.
+The audio measurements are machine checks, not a separate human listening pass. Public YouTube playback and production player behavior were verified; that does not assert that every YouTube resolution had finished processing at publication.
 
 ## What the added scenes establish
 
@@ -44,8 +46,13 @@ These are machine audio checks and visual frame inspection. They do not claim a 
 
 ## Publication and retention
 
-Local watch pages: `/demo/competition.html`, `/demo/deep-dive.html` and `/demo/`. Replacement YouTube links are pending; `demo/youtube-release.json` is the source of truth. After both replacement uploads are verified, put their exact watch URLs in that file and run `node demo/publish-deep-dive.mjs --pages-only`. This refreshes all three watch pages without rewriting media.
+Live watch pages: [competition](https://sparecycle-topaz.vercel.app/demo/competition.html), [deep dive](https://sparecycle-topaz.vercel.app/demo/deep-dive.html) and [demo entry](https://sparecycle-topaz.vercel.app/demo/). The verified replacement links are recorded in `demo/youtube-release.json` and published on these pages:
 
-The previous local videos, storyboards, watch pages and evidence were preserved in `test-results/video/previous-release/`; its manifest records their hashes. This media work did not upload, delete or change a YouTube video. Do not delete the previous uploads until the replacement processing, captions, accessibility and final links are verified.
+- **SpareCycle Review | Nebius Nemotron + Tavily | Evidence to Tested Draft PR** — [public competition video](https://www.youtube.com/watch?v=ErTLptg5Lr4), 2m33.7s locally; Studio displays 2:34.
+- **SpareCycle Deep Dive | Nebius, NVIDIA Nemotron, Tavily & the AI Harness** — [public supporting video](https://www.youtube.com/watch?v=oAcolH9AdcQ), 5m41.9s locally; Studio displays 5:42.
+
+The previous YouTube uploads `i21ilQRw4go` and `pdLFzA9sT6A` were deleted on 11 October 2026 after replacement verification and the user's approval. Studio showed the old two entries absent and both replacements present. Their local videos, storyboards, watch pages and evidence remain preserved in `test-results/video/previous-release/`; its manifest records their hashes.
+
+Devpost has the updated project story, primary video, Tavily tag and private judge kit saved at 4 of 5 draft sections. Two isolated judge accounts, their roles, sign-ins and organization isolation were verified. The user explicitly chose **KEEP DRAFT**. The project has not been submitted.
 
 Reproducible sources: `demo/storyboard.json`, `demo/storyboard-deep-dive.json`, the genuine files in `demo/assets`, narration/frame/video render scripts and `demo/validate-video.mjs`. Local render evidence is stored beside each upload file.

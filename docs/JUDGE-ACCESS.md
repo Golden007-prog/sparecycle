@@ -1,12 +1,16 @@
-# Judge access: prepared scope and operator instructions
+# Judge access: verified account setup and operator instructions
 
-Prepared **11 October 2026**. This document contains no credentials. The local setup script and its private outputs are ignored under `test-results/`. Preparation does not create cloud accounts, grant access, run inference or submit anything to Devpost.
+Provisioned with explicit user approval on **11 October 2026**. A separate verification at **05:28 UTC** confirmed fresh password sign-ins for both dedicated accounts, their exact technician/reviewer roles, the single approved project, and rejection of access to the original integration organization. One synthetic passport, evidence record and unexecuted change are ready. The approved plan and its hash were preserved; no model/runner job, PR, budget increase or permission expansion was performed.
 
-## Proposed access
+This document contains no credentials. The local setup script and its private outputs are ignored under `test-results/`. The private judge kit contains only the two dedicated account instructions and the public project dossier; it excludes source, environment files, operator credentials and provider keys. Access verification does not establish that a complete new judge workflow has executed successfully.
+
+The kit was **delivered privately to Devpost on 11 October 2026**. The saved Additional information form confirmed `Current File: sparecycle-private-judge-kit.zip` in its judges-and-organizers-only area, which explicitly states that it does not appear on the public project page. This confirms private delivery of the testing instructions; it does not establish final submission or execution of a new judge workflow.
+
+## Approved access
 
 Use a **separate judge organization**, with the existing operator-controlled account as its owner. Create two new confirmed synthetic Supabase Auth accounts: one **technician**, one **reviewer**. Do not share the original integration owner/reviewer accounts, personal Google/GitHub accounts or provider/API credentials.
 
-| Item | Exact proposed scope |
+| Item | Exact approved scope |
 | --- | --- |
 | Application | `https://sparecycle-topaz.vercel.app/review` |
 | Organization | A uniquely named `SpareCycle Judges <suffix>` organization, separate from the recorded integration pilot |
@@ -21,9 +25,9 @@ Use a **separate judge organization**, with the existing operator-controlled acc
 
 These roles are not globally read-only: an authenticated user can create up to three organizations and become owner there under the current application policy. The judge accounts cannot connect an arbitrary repository without independently proving GitHub write permission. They receive no GitHub token or App signing key. Sharing two dedicated test accounts demonstrates account separation, not proof of two independent humans reviewing a change.
 
-## Exact external actions awaiting authorization
+## External actions completed under the approved plan
 
-The prepared apply step would:
+The approved apply step completed the following actions, followed by an independent read-only verification:
 
 1. Verify the deployed app identifies the expected Supabase project and authenticate the operator.
 2. Create exactly two new synthetic `example.test` email/password Auth users with per-user confirmation enabled. This sends no email and does not disable email confirmation or change global Auth settings.

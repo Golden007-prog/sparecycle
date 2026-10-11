@@ -1,6 +1,6 @@
 # SpareCycle Review — submission pack
 
-Prepared 11 October 2026 against the [published release](RELEASE.md) and [backend evidence](BACKEND-EVIDENCE.md). Both YouTube videos have been published publicly; the confirmed links are below. The Devpost entry remains a draft pending eligibility confirmation and verified judge access. This document does not attest to eligibility or establish that submission is complete.
+Prepared 11 October 2026 against the [published release](RELEASE.md) and [backend evidence](BACKEND-EVIDENCE.md). Both replacement YouTube videos are public and playback-verified. The updated story, primary video, Tavily tag and private judge kit are saved in Devpost. The entrant confirmed eligibility and explicitly chose **KEEP DRAFT**: the project has not been submitted, and no final submission is authorized.
 
 ## Devpost fields
 
@@ -24,9 +24,9 @@ Prepared 11 October 2026 against the [published release](RELEASE.md) and [backen
 
 ### Confirmed entrant responses and draft status
 
-The entrant confirmed **Individual**, **India**, and **solo participation**. The project-learning response is **Moderate**; the career-value response is **Yes**. No Builders & Brews in-person event was attended; that optional field is left blank. These answers do not establish age, ownership, eligibility or acceptance of the rules.
+The entrant confirmed **Individual**, **India**, and **solo participation**. The project-learning response is **Moderate**; the career-value response is **Yes**. No Builders & Brews in-person event was attended; that optional field is left blank. Eligibility was separately confirmed by the entrant during final preparation; this records the entrant's confirmation rather than an independent eligibility audit.
 
-The saved project name is **SpareCycle Review**. Devpost draft ID is `1226942`; its existing project slug remains `sparecycle`. The last reported form progress was **3 of 5 sections**. This is a progress observation, not a submitted status.
+The saved project name is **SpareCycle Review**. Devpost draft ID is `1226942`; its existing project slug remains `sparecycle`. The verified saved progress is **4 of 5 sections**. The updated project story, replacement video, Tavily tag and private testing instructions are saved. The user's final choice is **KEEP DRAFT**, so this progress must not be described as a completed submission.
 
 ## Devpost project story
 
@@ -152,25 +152,27 @@ Public inspection requires no account:
 3. Read the [backend evidence](https://github.com/Golden007-prog/sparecycle/blob/main/docs/BACKEND-EVIDENCE.md) for the separate private pilot, execution boundaries and recorded checks.
 4. Try the separate [Workshop planner](https://sparecycle-topaz.vercel.app/app) with its labeled synthetic batch; change a planning limit or donor availability and inspect the recalculated proposal. Its data is local to the browser.
 
-**Authenticated judging access — complete in Devpost's private testing field after verification:** provide dedicated, verified test access to the existing synthetic organization, a supported selected repository and the separate approver role. Explain how judges can run the live supported workflow and obtain help if quota or provider availability blocks it. Ensure the allotted access and credits permit free judging throughout the required period. Do not paste credentials into this public file or reuse personal credentials. A read-only synthetic workspace alone does not establish unrestricted access to the authenticated execution workflow.
+**Authenticated judging access — verified and delivered privately:** two dedicated synthetic judge accounts have verified sign-ins, distinct roles and checked organization isolation. The private judge kit is saved in Devpost's private testing instructions and was delivered to the entrant. It explains the supported workflow and separate reviewer role. Credentials belong only in that private kit, never this public document or source control. This verification does not promise unlimited provider quota or arbitrary repository access; the documented bounded execution profile and provider availability still apply.
 
 ## YouTube: primary competition cut
 
-**Title:** SpareCycle Review | Evidence to Tested Draft PR | Nebius x NVIDIA Hackathon
+**Title:** SpareCycle Review | Nebius Nemotron + Tavily | Evidence to Tested Draft PR
 
-**Published public URL:** https://www.youtube.com/watch?v=i21ilQRw4go
+**Published public URL:** https://www.youtube.com/watch?v=ErTLptg5Lr4
 
 **Upload file:** `test-results/video/sparecycle-review-demo.mp4`
 
-**Duration:** 2m58.6s locally; YouTube displays 2:59. This is the preserved competition cut and primary Devpost video.
+**Duration:** 153.700104 seconds locally (2m33.7s); Studio displays 2:34. This replacement competition cut has 16 chapters and 16 English caption cues and is the primary Devpost video.
 
 **Description:**
 
-SpareCycle Review takes a supported laptop diagnostic defect from recorded evidence to a tested, separately approved draft pull request.
+SpareCycle joins public-source research, local refurbishment operations and a supported diagnostic defect's path to a tested, separately approved draft pull request.
 
 Built for the Best Apps and Agents track of the Nebius x NVIDIA Global AI Hackathon. NVIDIA Nemotron runs through Nebius Token Factory. The server checks scope, time, spend and evidence; GitHub Actions executes the same tests before and after; a different organization member approves the exact candidate before the GitHub App creates a draft.
 
 This edited tour uses genuine application captures and synthetic laptop records. The demonstrated provider calls, tests and draft PR are real. Original result: 3 tests passed, 1 failed. Candidate: all 4 unchanged tests passed. No automatic merge or physical-repair claim is made.
+
+Tavily retrieves official references for a public model question; NVIDIA Nemotron on Nebius synthesizes bounded excerpts with checked citations and uncertainty. Pilot Operations freezes a plan and records local work, effort and referenced manual checks. Review insights surface loaded-record issues without rerunning tests or granting approval. The separate 200-capability roadmap is planned work.
 
 Current scope is a restricted JavaScript diagnostic parser. Private repository use requires an operator-approved verifier and key. Google login works; customer SMTP and enforced company SSO remain unfinished.
 
@@ -178,25 +180,28 @@ Live app: https://sparecycle-topaz.vercel.app/review
 Source and setup: https://github.com/Golden007-prog/sparecycle
 Actual draft PR: https://github.com/Golden007-prog/sparecycle/pull/1
 Backend evidence: https://github.com/Golden007-prog/sparecycle/blob/main/docs/BACKEND-EVIDENCE.md
-Supporting deep dive: https://www.youtube.com/watch?v=pdLFzA9sT6A
+Supporting deep dive: https://www.youtube.com/watch?v=oAcolH9AdcQ
+Project dossier: https://sparecycle-topaz.vercel.app/sparecycle-project-dossier.pdf
 
 English captions included. Edited still captures, explanatory diagrams and locally synthesized narration; this is not an uninterrupted screen recording.
 
 ## YouTube: supporting deep dive
 
-**Title:** SpareCycle Review Deep Dive | Nebius Nemotron, Private PRs & the Investment Roadmap
+**Title:** SpareCycle Deep Dive | Nebius, NVIDIA Nemotron, Tavily & the AI Harness
 
-**Published public URL:** https://www.youtube.com/watch?v=pdLFzA9sT6A
+**Published public URL:** https://www.youtube.com/watch?v=oAcolH9AdcQ
 
 **Upload file:** `test-results/video/deep-dive/sparecycle-backend-deep-dive.mp4`
 
-**Duration:** 338.136 seconds locally; YouTube displays 5:39. Supplementary walkthrough, not the primary competition video.
+**Duration:** 341.872938 seconds locally (5m41.9s); Studio displays 5:42. This replacement has 26 chapters and 38 English caption cues. It is supplementary, not the primary competition video.
 
 **Description:**
 
 How does a laptop observation become a controlled software change—and what still needs work before broader company adoption?
 
 This supporting walkthrough explains SpareCycle Review's best initial customer hypothesis: refurbishment or IT asset recovery teams that own diagnostic software. Follow laptop evidence, the recorded backend execution, Nemotron stage routing, unchanged tests, separate approval and a real draft pull request.
+
+It also shows runtime Tavily research with Nebius synthesis, frozen local Pilot Operations records and the developer attention queue. Reference links do not authorize hardware work; manual pilot checks do not certify physical outcomes; queue insights compare loaded records without running tests. The investment section separates these implemented workflows from the 200 planned capabilities and unvalidated business hypotheses.
 
 Nebius Token Factory hosts inference; NVIDIA Nemotron supplies the models. Nano investigated the recorded private pilot; Super generated and reviewed the candidate in fresh context. GitHub Actions performed the isolated tests. Relevant private code is sent to Nebius for inference; private verification does not mean local-only reasoning.
 
@@ -208,16 +213,17 @@ Live app: https://sparecycle-topaz.vercel.app/review
 Source and setup: https://github.com/Golden007-prog/sparecycle
 Backend evidence: https://github.com/Golden007-prog/sparecycle/blob/main/docs/BACKEND-EVIDENCE.md
 Investment roadmap: https://github.com/Golden007-prog/sparecycle/blob/main/docs/INVESTMENT-ROADMAP.md
-Under-three-minute competition cut: https://www.youtube.com/watch?v=i21ilQRw4go
+Under-three-minute competition cut: https://www.youtube.com/watch?v=ErTLptg5Lr4
+Project dossier: https://sparecycle-topaz.vercel.app/sparecycle-project-dossier.pdf
 
-English captions included. Genuine application captures, explanatory diagrams and locally synthesized narration. This is the supplementary 5m38s tour for the Best Apps and Agents project, not the primary contest video.
+English captions included. Genuine application captures, explanatory diagrams and locally synthesized narration. This is the supplementary 5m41.9s tour for the Best Apps and Agents project, not the primary contest video.
 
 ## Submission operator notes — not project-story copy
 
 - Official rules checked on 11 October 2026 require a public YouTube demonstration under three minutes, a working project, public licensed source with setup instructions, track selection and platform feedback. They also require free testing access through judging. [Official rules](https://nebiusglobalaihackathon.devpost.com/rules).
 - The upload filenames above identify the captioned local copies. Both returned public YouTube URLs are recorded above. No new upload or media regeneration is required merely to update project links.
-- Keep the preserved short video as primary. The longer video's extra context is supplementary and judges are not required to watch it.
-- Verify entrant/team identity, eligibility, ownership, third-party permissions and any pre-hackathon history directly with the entrant or trusted account information. This document makes none of those attestations. If the project existed before the submission period, describe the actual significant updates in the relevant field.
+- Keep the verified replacement short video as primary. The longer video's extra context is supplementary and judges are not required to watch it. The previous uploads were deleted on 11 October 2026 after approval and replacement verification; their local backups remain preserved.
+- The entrant confirmed eligibility. Retain the actual entrant-provided information and any relevant project history; do not turn a saved draft into an independent eligibility or ownership audit.
 - The release record identifies the latest conflict-code/lock-order migration as locally tested but not applied to cloud while connector access was unavailable. Do not state that all production readiness work is complete. Current customer SMTP and enforced company SSO are also pending.
-- Complete and verify dedicated judge access before claiming it exists in private testing instructions. Confirm public source/license availability and that the deployed workflow matches the final description.
-- After successful external actions, update the returned video links and submission URL/status in the repository's release/submission records. Publication of a source file or application is not submission to the competition.
+- Dedicated judge accounts, roles, sign-ins and isolation were verified, and the private kit was delivered. Final live route, media and PDF checks passed; production video chapter seeking and captions were verified.
+- **Do not submit.** The user explicitly chose **KEEP DRAFT** after preparation. Devpost remains at 4 of 5 saved sections. Publishing the application, videos or this document does not submit the project, and a later final submission requires a new explicit user instruction.

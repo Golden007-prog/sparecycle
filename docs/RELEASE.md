@@ -11,13 +11,21 @@ Implemented the Research desk, Pilot operations desk and developer-review insigh
 - Pilot browser QA covered assignments, due dates, work records, blocking/rework, three evidence checks, reload persistence, stale-plan detection, archive controls and explicit foreign-workspace recovery with QA reset. Physical completion is still a user declaration.
 - Review queue search/filtering, detail checks and redacted export previews were exercised with synthetic records. The export can be copied if browser file saving is unavailable; a save request is not claimed as a completed download.
 - The replacement [competition video and deep dive](VIDEO-RELEASE-20261011.md) passed full decode, caption bounds, audio checks and visual inspection. The competition cut is 153.700 seconds; the deep dive is 341.873 seconds. Both include actual research/Pilot/Review captures and distinguish recorded evidence from planned expansion.
-- A designed 14-page PDF dossier covers the product, model harness, runtime evidence, setup, business hypothesis and investment gaps. Pending production checks remain labeled until verified below.
+- A designed 14-page PDF dossier covers the product, model harness, runtime evidence, setup, business hypothesis and investment gaps. Its published bytes match the visually checked local artifact.
 
 Runtime commit `61014aa1dff69e5405f747f2fbc86a76997d60b6` passed [GitHub verification](https://github.com/Golden007-prog/sparecycle/actions/runs/38114447888). Vercel deployment `dpl_4eWG18Cf6MoYDnVfJRfNefcbkNr6` is READY at the [immutable deployment](https://sparecycle-683mmeyu7-basuoikantik-7538s-projects.vercel.app), aliased to the public application.
 
 The production research request returned HTTP 200 at `2026-10-11T05:21:27.309Z`: Tavily request `cbbb55f0-2a43-439d-b944-b5c33aa33781`, five accepted sources, one reported search credit, followed by Nebius `nvidia/Nemotron-3_5-Lightning` synthesis. The reported workflow latency was 2,324 ms and trace correlation was `908a6207-766d-4286-a992-53d7a6719a4f`. The answer identified the T480 manual and stated that the full document scope was not verified. This confirms a functional runtime Tavily API call in the deployed solution, not only a development connector search.
 
-Replacement videos are public: [competition cut](https://www.youtube.com/watch?v=ErTLptg5Lr4) and [supporting deep dive](https://www.youtube.com/watch?v=oAcolH9AdcQ). Public watch playback advanced with no media error; browser durations were 153.721 and 341.901 seconds. Burned captions are in the uploaded files; the app also serves selectable VTT captions. YouTube reported deep-dive HD processing still pending during publication; public playback was available. Old uploads are preserved until replacement links are updated and permanent deletion is confirmed.
+Replacement videos are public: [competition cut](https://www.youtube.com/watch?v=ErTLptg5Lr4) and [supporting deep dive](https://www.youtube.com/watch?v=oAcolH9AdcQ). Public watch playback advanced with no media error; browser durations were 153.721 and 341.901 seconds. Burned captions are in the uploaded files; the app also serves selectable VTT captions. YouTube reported deep-dive HD processing still pending during publication; public playback was available. After the replacement links were saved and the entrant confirmed permanent deletion, the two old uploads (`i21ilQRw4go`, `pdLFzA9sT6A`) were removed. Their local video copies and hash manifest are preserved.
+
+Final delivery commit `1c9f839f625fbeda31b61c77ffd9b4b68cfccc9f` passed [GitHub verification](https://github.com/Golden007-prog/sparecycle/actions/runs/38114892577). Vercel deployment `dpl_DVMym4jkDPpCSVqhToVvPCYFDPWk` is READY at the [immutable release](https://sparecycle-31emvv6nt-basuoikantik-7538s-projects.vercel.app), aliased to [sparecycle-topaz.vercel.app](https://sparecycle-topaz.vercel.app). Subsequent documentation records the publication outcomes; it does not change the application runtime.
+
+The final read-only delivery check passed all six public routes, exact local hashes and expected content types for both MP4s, both VTTs and the PDF, and HTTP 206 range delivery for both videos. The PDF is 730,789 bytes, SHA-256 `2652cfb941c8f0cfd900b668921d9c8c760787f269622ca908a36b2d043ba44f`. The live watch page exposes both new YouTube links; its Tavily chapter sought to 41.66 seconds with captions showing, full duration loaded and no media error.
+
+Two dedicated synthetic judge accounts independently passed sign-in, technician/reviewer role checks and rejection of access to the original organization. A separate judge organization contains one approved supported public project and a synthetic passport/evidence/change. The setup made no model calls, runner jobs or PRs. Its verified private instructions and the final PDF were saved as `sparecycle-private-judge-kit.zip` in Devpost's private Additional info attachment. No judge or privileged credentials are in public documentation. See [judge access scope](JUDGE-ACCESS.md).
+
+Devpost has the replacement primary video, updated story, Tavily runtime declaration and eligibility responses saved. The entrant explicitly chose **Keep the submission as a draft** on 11 October 2026. The entry remains **4/5 steps done**; final Rules/Terms acceptance and submission were not performed.
 
 The earlier sections below are historical snapshots, including superseded media links.
 
@@ -102,13 +110,14 @@ Start with the [company quickstart](COMPANY-QUICKSTART.md): create a company wor
 
 A declared hold is incompatible with eligibility. The allocator excludes unverified parts and never infers exact part approval from the Kaggle catalog. Technician inspection, repairs, sanitization evidence and final QA remain separate physical responsibilities.
 
-## Remaining production and submission work
+## Current rollout boundaries
 
-- Authenticated company accounts, server-enforced tenant separation, concurrent stock reservations, durable audit records and shared quotas are planned.
+- Authenticated Review has organization accounts, tenant separation and durable workflow records. Workshop and Pilot Operations remain browser-local; shared inventory, concurrent stock reservations and durable Workshop quotas are planned.
 - Browser storage is not a server backup. Simultaneous editing across tabs is not coordinated.
 - Broad load/security/accessibility audits and customer acceptance testing remain future work. Reported synthetic outcomes are not customer gains.
-- Browser file-picker automation was blocked by the extension's file-URL permission. Pasted CSV and backup flows were verified; file-picker behavior is not claimed as an observed test.
-- The public YouTube demo and Devpost submission remain unfinished. Deployment and source publication are not submission.
+- The earlier browser file-picker restriction was resolved for publishing the replacement videos and private judging kit. Local app export previews and copying were verified; a browser save request alone is not claimed as a completed file download.
+- Both replacement YouTube videos are public. Devpost is intentionally retained as a draft at the entrant's request. Deployment and source publication are not submission.
+- Custom SMTP remains deferred. Managed company SSO, broader execution profiles, the pending cloud migration and customer acceptance gates are documented separately; this release does not claim complete enterprise readiness.
 - Keep the demo available to judges for the required period after entering.
 
 ## Deployment integration
